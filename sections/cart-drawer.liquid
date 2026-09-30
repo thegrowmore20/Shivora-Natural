@@ -1,3 +1,23 @@
+<style>
+  .cart-original-total-row, .cart-total-discounts-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 4px;
+    font-weight: 600;
+}
+
+.cart-original-total-row {
+    margin-top: 8px;
+}
+.cart-dicount-row-label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #34A853;
+}
+</style>
 <div class="cart-drawer-overlay" data-cart-drawer-dismiss></div>
 
 <aside class="cart-drawer" data-cart-drawer data-section-id="{{ section.id }}" aria-label="Your cart">
@@ -11,6 +31,9 @@
   </div>
 
   <div class="cart-drawer__target" data-cart-drawer-target>
+    {% if cart.item_count > 0 %}
+      {% render 'cart-shipping-bar' %}
+    {% endif %}
     {%- if cart.item_count > 0 -%}
       <div class="cart-drawer__items">
         {%- for item in cart.items -%}
@@ -19,6 +42,100 @@
       </div>
 
       <div class="cart-drawer__footer">
+        <div class="total-with-discount-wrapper">
+						{% liquid
+							
+							assign compare_at_total = 0
+							assign total_compare_at_savings = 0
+							assign c_savings_percent = 0
+							assign regular_price_total = 0
+							assign discount_total = cart.total_discount
+							
+							for item in cart.items
+							assign item_total_compare_price = 0
+							assign quantity = item.quantity
+							assign regular_price = item.variant.price
+							assign compare_price = item.variant.compare_at_price
+							assign item_total_regular_price = regular_price | times: quantity
+							
+							if compare_price and compare_price > regular_price
+							assign item_total_compare_price = compare_price | times: quantity
+							else
+							assign item_total_compare_price = regular_price | times: quantity
+							endif
+							
+							assign compare_at_total = compare_at_total | plus: item_total_compare_price
+							assign regular_price_total = regular_price_total | plus: item_total_regular_price
+							
+							if compare_price and compare_price > regular_price
+							assign single_item_save = compare_price | minus: regular_price
+							assign line_item_save = single_item_save | times: quantity
+							assign total_compare_at_savings = total_compare_at_savings | plus: line_item_save
+							endif
+							
+							assign item_level_discount_percentage = 0
+							if item.line_level_discount_allocations.size > 0
+							for discount in item.line_level_discount_allocations
+							assign item_level_discount_percentage = item_level_discount_percentage | plus: discount.discount_application.value | round
+							endfor
+							endif
+							endfor
+							
+							if compare_at_total > 0 and total_compare_at_savings > 0
+							assign c_savings_percent = total_compare_at_savings | times: 100.0 | divided_by: compare_at_total | round
+							endif
+							
+							assign cart_level_discount_percentage = 0
+							for discount in cart.cart_level_discount_applications
+							assign cart_level_discount_percentage = cart_level_discount_percentage | plus: discount.value | round
+							endfor
+							
+							assign grand_saving = c_savings_percent | plus: item_level_discount_percentage | plus: cart_level_discount_percentage
+							
+							assign total_line_price = compare_at_total | minus: regular_price_total
+							assign total_saved_amount = total_line_price | plus: discount_total
+							
+						%}  
+						
+						<style>
+							#grand-saving {
+								font-size: 12px;
+								display: flex;
+								align-items: center;
+								gap: 4px;
+                border: 1px solid;
+                padding: 2px 6px;
+                border-radius: 4px;
+							}
+							.summary-total-discount-price {
+								color: #34A853;
+							}
+							#grand-saving svg {
+								width: 12px;
+							}
+							
+						</style>
+						
+						<div class="cart-original-total-row cart__summary-item cart__total summary-total-price-wrapper">
+							<span class="cart__original-total-label">
+								Total Price
+							</span>
+							<span class="summary-total-price" id="summary-total-price">
+							{{ compare_at_total | money }}
+						</span>
+					</div>
+					{% if total_saved_amount > 0 %}
+					<div class="cart-total-discounts-row cart__summary-item cart__total summary-total-compare-wrapper font-600 color-green">
+						<span class="cart-dicount-row-label">
+							Discount <span id="grand-saving" class="grand-saving"> {% render 'icon-discount' %} {{ grand_saving | append: '%' }}  </span>
+						</span>
+						<span class="summary-total-discount-price">
+						-{{ total_saved_amount | money }}
+					</span>
+				</div>
+					{% endif %}
+
+        </div>
         <div class="cart-drawer__subtotal">
           <span>Subtotal</span>
           <strong>{{ cart.total_price | money }}</strong>
@@ -89,6 +206,48 @@
 {
   "name": "Cart drawer",
   "settings": [
+    {
+      "type": "header",
+      "content": "Free shipping bar"
+    },
+    {
+      "type": "checkbox",
+      "id": "free_shipping_bar_enable",
+      "label": "Show free shipping progress bar in cart",
+      "default": true
+    },
+    {
+      "type": "number",
+      "id": "free_shipping_bar_threshold",
+      "label": "Free shipping threshold",
+      "info": "Amount in your store's currency, e.g. 75 for $75.00",
+      "default": 75
+    },
+    {
+      "type": "text",
+      "id": "free_shipping_bar_message_below",
+      "label": "Message before threshold is reached",
+      "info": "Use [amount] to insert the remaining amount",
+      "default": "Spend [amount] more for free shipping!"
+    },
+    {
+      "type": "text",
+      "id": "free_shipping_bar_message_achieved",
+      "label": "Message once threshold is reached",
+      "default": "You've unlocked free shipping!"
+    },
+    {
+      "type": "color",
+      "id": "free_shipping_bar_fill_color",
+      "label": "Progress bar fill color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "free_shipping_bar_track_color",
+      "label": "Progress bar track color",
+      "default": "#E5E5E5"
+    },
     {
       "type": "collection",
       "id": "upsell_collection",

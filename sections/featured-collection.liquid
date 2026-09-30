@@ -105,6 +105,16 @@
   display: block;
 }
 
+.product-grid-slider__nav {
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.product-grid-slider__nav:disabled {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
 @media screen and (max-width: 749px) {
   .product-grid-section__header {
     padding-right: 15px;

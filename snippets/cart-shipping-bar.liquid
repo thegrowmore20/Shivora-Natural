@@ -1,0 +1,83 @@
+{%- comment -%}
+Free shipping progress bar. Usage: {% render 'cart-shipping-bar' %}
+Reads cart.total_price for the current state. Self-updates on cart-change events via
+assets/cart-shipping-bar.js.
+{%- endcomment -%}
+
+{%- if section.settings.free_shipping_bar_enable -%}
+	{%- liquid
+		assign threshold_cents = section.settings.free_shipping_bar_threshold | times: 100
+		assign remaining_cents = threshold_cents | minus: cart.total_price
+		if remaining_cents < 0
+			assign remaining_cents = 0
+		endif
+			
+		assign is_achieved = false
+		assign progress = 0
+		if threshold_cents <= 0 or cart.total_price >= threshold_cents
+		assign is_achieved = true
+		assign progress = 100
+		else
+		assign progress = cart.total_price | times: 100 | divided_by: threshold_cents
+		endif
+		
+		assign remaining_amount = remaining_cents | money
+	-%}
+			
+	<cart-shipping-bar
+		class="cart-shipping-bar"
+		data-threshold-cents="{{ threshold_cents }}"
+		data-message-below="{{ section.settings.free_shipping_bar_message_below }}"
+		data-message-achieved="{{ section.settings.free_shipping_bar_message_achieved | escape }}"
+		data-money-format="{{ shop.money_format }}"
+		style="--shipping-bar-fill-color: {{ section.settings.free_shipping_bar_fill_color }}; --shipping-bar-track-color: {{ section.settings.free_shipping_bar_track_color }};"
+	>
+		<p class="cart-shipping-bar__message" data-shipping-bar-message>
+			{%- if is_achieved -%}
+				{{ section.settings.free_shipping_bar_message_achieved }}
+			{%- else -%}
+				{{ section.settings.free_shipping_bar_message_below | replace: '[amount]', remaining_amount }}
+			{%- endif -%}
+		</p>
+		<div class="cart-shipping-bar__track">
+			<div class="cart-shipping-bar__fill" data-shipping-bar-fill style="width: {{ progress }}%;"></div>
+		</div>
+	</cart-shipping-bar>
+			
+	<script src="{{ 'cart-shipping-bar.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
+		
+		
+		
+<style>
+	.cart-shipping-bar {
+		display: block;
+		margin: 0;
+		padding: 16px 24px;
+        background: #fff;
+        position: sticky;
+        top: 0;
+	}
+	.cart-shipping-bar__message {
+		margin: 0 0 8px;
+		font-size: 13px;
+	}
+	.cart-shipping-bar__track {
+		width: 100%;
+		height: 6px;
+		border-radius: 999px;
+		background: var(--shipping-bar-track-color, #e5e5e5);
+		overflow: hidden;
+	}
+	.cart-shipping-bar__fill {
+		height: 100%;
+		border-radius: 999px;
+		background: var(--shipping-bar-fill-color, #000);
+		transition: width 0.4s ease;
+	}
+    @media (max-width: 749px) {
+        .cart-shipping-bar {
+		    padding-inline: 15px
+	    }
+    }
+</style>

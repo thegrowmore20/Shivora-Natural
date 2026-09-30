@@ -11,22 +11,33 @@
   </a>
 
   <div class="cart-item__info">
-    <a href="{{ item.url }}" class="cart-item__title">{{ item.product.title }}</a>
+    <div class="cart-item__header">
+      <a href="{{ item.url }}" class="cart-item__title">{{ item.product.title }}</a>
+      <a href="{{ item.url_to_remove }}" class="cart-item__remove" data-cart-remove data-key="{{ item.key }}" aria-label="Remove {{ item.product.title }}">
+        {% render 'icon', name: 'trash' %}
+      </a>
+    </div>
+    
     {%- if item.variant.title != 'Default Title' -%}
       <p class="cart-item__variant">{{ item.variant.title }}</p>
     {%- endif -%}
 
     <div class="cart-item__row">
+      <div class="u-flex cart-drawer__item-price">
+        <span class="price-item price-item--regular">{{ item.final_line_price | money }}</span>
+        {%- if item.variant.compare_at_price > item.variant.price -%}
+          {%- assign line_compare_at = item.variant.compare_at_price | times: item.quantity -%}
+          <s class="price-item price-item--compare">{{ line_compare_at | money }}</s>
+          <span class="cart-drawer__save-badge">Save {{ line_compare_at | minus: item.final_line_price | money | remove: '.00' }}</span>
+        {%- endif -%}
+      </div>
       <div class="quantity-selector quantity-selector--sm" data-cart-quantity data-key="{{ item.key }}">
         <button type="button" data-quantity-minus aria-label="Decrease quantity">{% render 'icon', name: 'minus' %}</button>
         <input type="number" class="quantity-selector__input" name="updates[{{ item.key }}]" value="{{ item.quantity }}" min="0" inputmode="numeric" aria-label="Quantity">
         <button type="button" data-quantity-plus aria-label="Increase quantity">{% render 'icon', name: 'plus' %}</button>
       </div>
-      <p class="cart-item__price">{{ item.final_line_price | money }}</p>
     </div>
   </div>
 
-  <a href="{{ item.url_to_remove }}" class="cart-item__remove" data-cart-remove data-key="{{ item.key }}" aria-label="Remove {{ item.product.title }}">
-    {% render 'icon', name: 'trash' %}
-  </a>
+  
 </div>

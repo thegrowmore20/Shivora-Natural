@@ -165,17 +165,59 @@ class LoadMoreGrid {
 
 class CardSlider {
   #track
+  #prev
+  #next
+  #raf = 0
 
   constructor(root) {
     this.#track = root
-    root.parentElement?.querySelector('[data-slider-prev]')?.addEventListener('click', () => this.#scroll(-1))
-    root.parentElement?.querySelector('[data-slider-next]')?.addEventListener('click', () => this.#scroll(1))
+    const wrapper = root.parentElement
+    this.#prev = wrapper?.querySelector('[data-slider-prev]')
+    this.#next = wrapper?.querySelector('[data-slider-next]')
+
+    this.#prev?.addEventListener('click', () => this.#scroll(-1))
+    this.#next?.addEventListener('click', () => this.#scroll(1))
+
+    this.#track.addEventListener('scroll', () => this.#queueUpdate(), { passive: true })
+
+    // Catches resize, images loading, and cards being added/removed
+    if ('ResizeObserver' in window) {
+      const ro = new ResizeObserver(() => this.#queueUpdate())
+      ro.observe(this.#track)
+      Array.from(this.#track.children).forEach((child) => ro.observe(child))
+    } else {
+      window.addEventListener('resize', () => this.#queueUpdate())
+    }
+
+    this.#update()
   }
 
   #scroll(direction) {
     const card = this.#track.querySelector(':scope > *')
-    const amount = card ? card.getBoundingClientRect().width + 16 : this.#track.clientWidth
+    const gap = parseFloat(getComputedStyle(this.#track).columnGap) || 16
+    const amount = card ? card.getBoundingClientRect().width + gap : this.#track.clientWidth
     this.#track.scrollBy({ left: amount * direction, behavior: 'smooth' })
+  }
+
+  #queueUpdate() {
+    cancelAnimationFrame(this.#raf)
+    this.#raf = requestAnimationFrame(() => this.#update())
+  }
+
+  #update() {
+    const { scrollWidth, clientWidth } = this.#track
+    const scrollLeft = Math.abs(this.#track.scrollLeft) // abs() keeps RTL working
+    const maxScroll = scrollWidth - clientWidth
+    const hasOverflow = maxScroll > 1
+
+    // 1px tolerance: scrollLeft is fractional on high-DPI screens
+    this.#setDisabled(this.#prev, !hasOverflow || scrollLeft <= 1)
+    this.#setDisabled(this.#next, !hasOverflow || scrollLeft >= maxScroll - 1)
+  }
+
+  #setDisabled(button, isDisabled) {
+    if (!button) return
+    button.disabled = isDisabled
   }
 }
 

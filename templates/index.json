@@ -30,8 +30,8 @@
           "settings": {
             "image": "shopify://shop_images/Main_Banner_2.webp",
             "image_mobile": "shopify://shop_images/Mobile_2.png",
-            "eyebrow": "",
-            "heading": "GLASS SKIN.  GROWN IN PAKISTAN.",
+            "eyebrow": "From our own snail farm",
+            "heading": "GLASS SKIN. GROWN IN PAKISTAN.",
             "content": "<p>Snail mucin serum + cream, 78.5% pure, from our own farm in Mansehra.</p>",
             "button_label": "Shop the Duo",
             "link": "shopify://collections/bundles",
@@ -40,6 +40,7 @@
         },
         "slide_dwyfd6": {
           "type": "slide",
+          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/Main_Banner_3.webp",
             "image_mobile": "shopify://shop_images/Mobile_3.png",
@@ -70,7 +71,7 @@
       "settings": {
         "heading": "Shop Products",
         "content": "",
-        "collection": "all-products",
+        "collection": "best-sellers",
         "products_to_show": 4,
         "padding_top": 56,
         "padding_bottom": 56,

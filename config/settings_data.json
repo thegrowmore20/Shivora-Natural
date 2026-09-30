@@ -113,8 +113,14 @@
       "cart-drawer": {
         "type": "cart-drawer",
         "settings": {
-          "upsell_collection": "offers",
-          "upsell_heading": "You may also like"
+          "free_shipping_bar_enable": true,
+          "free_shipping_bar_threshold": 5000,
+          "free_shipping_bar_message_below": "Spend [amount] more for free shipping!",
+          "free_shipping_bar_message_achieved": "You've unlocked free shipping!",
+          "free_shipping_bar_fill_color": "#1F3A52",
+          "free_shipping_bar_track_color": "#e5e5e5",
+          "upsell_collection": "",
+          "upsell_heading": ""
         }
       }
     },
