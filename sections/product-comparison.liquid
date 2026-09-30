@@ -1,0 +1,126 @@
+{%- comment -%}
+  Spec rows pull their value from a product metafield you choose per row, so
+  the same table works for any product category. For each "Metafield key"
+  below, enter it as namespace.key (e.g. custom.skin_type) after creating
+  that metafield definition under Settings > Custom data > Products.
+{%- endcomment -%}
+{%- assign products = '' | split: '' -%}
+{%- if section.settings.include_current -%}
+  {%- assign products = products | push: product -%}
+{%- endif -%}
+{%- for p in section.settings.products -%}
+  {%- unless p.id == product.id -%}
+    {%- assign products = products | push: p -%}
+  {%- endunless -%}
+{%- endfor -%}
+{%- assign products = products | slice: 0, 5 -%}
+
+{%- if products.size > 1 -%}
+  <section class="product-comparison">
+    <div class="container">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="section-heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+
+      <div class="comparison-table__scroll">
+        <div class="comparison-table" style="--comparison-cols: {{ products.size }};">
+          <div class="comparison-table__row comparison-table__row--header">
+            <div class="comparison-table__label"></div>
+            {%- for p in products -%}
+              <div class="comparison-table__col comparison-table__col--product">
+                <a href="{{ p.url }}" class="comparison-table__image">
+                  {{ p.featured_image | image_url: width: 300 | image_tag: loading: 'lazy' }}
+                </a>
+                <a href="{{ p.url }}" class="comparison-table__title">{{ p.title | truncate: 32 }}</a>
+                <div class="comparison-table__price">
+                  <strong>{{ p.price | money }}</strong>
+                  {%- if p.compare_at_price > p.price -%}
+                    <s>{{ p.compare_at_price | money }}</s>
+                  {%- endif -%}
+                </div>
+                {%- form 'product', p -%}
+                  <button type="submit" class="button button--accent comparison-table__add" {% unless p.available %}disabled{% endunless %}>
+                    {% render 'icon', name: 'cart' %} {%- if p.available -%}Add to cart{%- else -%}Sold out{%- endif -%}
+                  </button>
+                {%- endform -%}
+              </div>
+            {%- endfor -%}
+          </div>
+
+          {%- for block in section.blocks -%}
+            {%- assign key_parts = block.settings.metafield_key | split: '.' -%}
+            <div class="comparison-table__row" {{ block.shopify_attributes }}>
+              <div class="comparison-table__label">{{ block.settings.label }}</div>
+              {%- for p in products -%}
+                {%- assign spec_value = '' -%}
+                {%- if key_parts.size == 2 -%}
+                  {%- assign spec_value = p.metafields[key_parts[0]][key_parts[1]].value -%}
+                {%- endif -%}
+                <div class="comparison-table__col">{{ spec_value | default: '—' }}</div>
+              {%- endfor -%}
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Product comparison",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Choose What Suits You Best"
+    },
+    {
+      "type": "checkbox",
+      "id": "include_current",
+      "label": "Include the current product as the first column",
+      "default": true
+    },
+    {
+      "type": "product_list",
+      "id": "products",
+      "label": "Products to compare",
+      "limit": 4
+    }
+  ],
+  "blocks": [
+    {
+      "type": "spec_row",
+      "name": "Spec row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Row label",
+          "default": "Skin Type"
+        },
+        {
+          "type": "text",
+          "id": "metafield_key",
+          "label": "Metafield key",
+          "info": "Format: namespace.key, e.g. custom.skin_type",
+          "default": "custom.skin_type"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product comparison",
+      "blocks": [
+        { "type": "spec_row", "settings": { "label": "Skin Type", "metafield_key": "custom.skin_type" } },
+        { "type": "spec_row", "settings": { "label": "Key Ingredient", "metafield_key": "custom.key_ingredient" } },
+        { "type": "spec_row", "settings": { "label": "Volume", "metafield_key": "custom.volume" } },
+        { "type": "spec_row", "settings": { "label": "Texture", "metafield_key": "custom.texture" } },
+        { "type": "spec_row", "settings": { "label": "Best For", "metafield_key": "custom.best_for" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,379 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "vendor": {
+          "type": "vendor",
+          "settings": {}
+        },
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "judge_me_reviews_preview_badge_P33Gz9": {
+          "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {}
+        },
+        "rating": {
+          "type": "rating",
+          "disabled": true,
+          "settings": {
+            "average_rating": 4.7,
+            "review_count": 34
+          }
+        },
+        "price": {
+          "type": "price",
+          "settings": {}
+        },
+        "variant-picker": {
+          "type": "variant_picker",
+          "settings": {}
+        },
+        "short-description": {
+          "type": "short_description",
+          "settings": {}
+        },
+        "addons": {
+          "type": "addons",
+          "settings": {
+            "heading": "Frequently Added Together"
+          }
+        },
+        "buy-buttons": {
+          "type": "buy_buttons",
+          "settings": {}
+        },
+        "quantity": {
+          "type": "quantity",
+          "settings": {
+            "show_dynamic_checkout": true,
+            "show_wishlist": true
+          }
+        },
+        "custom_tab_3LwPmf": {
+          "type": "custom_tab",
+          "settings": {
+            "title": "Beauty Gains",
+            "content": "{{ product.metafields.custom.beauty_gains | metafield_tag }}"
+          }
+        },
+        "custom_tab_QKHMXK": {
+          "type": "custom_tab",
+          "settings": {
+            "title": "What's inside",
+            "content": "{{ product.metafields.custom.what_s_inside | metafield_tag }}"
+          }
+        },
+        "custom_tab_xhYNV9": {
+          "type": "custom_tab",
+          "settings": {
+            "title": "Ingredients",
+            "content": "{{ product.metafields.custom.ingredients | metafield_tag }}"
+          }
+        },
+        "custom_tab_gHwFDi": {
+          "type": "custom_tab",
+          "settings": {
+            "title": "How it works",
+            "content": "{{ product.metafields.custom.how_it_works | metafield_tag }}"
+          }
+        },
+        "custom_tab_Cdm43U": {
+          "type": "custom_tab",
+          "settings": {
+            "title": "How to use",
+            "content": "{{ product.metafields.custom.how_to_use | metafield_tag }}"
+          }
+        },
+        "custom_tab_fEd9di": {
+          "type": "custom_tab",
+          "settings": {
+            "title": "Who can use",
+            "content": "{{ product.metafields.custom.who_can_use | metafield_tag }}"
+          }
+        },
+        "custom_tab_8ht6ry": {
+          "type": "custom_tab",
+          "settings": {
+            "title": "Caution",
+            "content": "{{ product.metafields.custom.caution | metafield_tag }}"
+          }
+        },
+        "tabs-accordion": {
+          "type": "tabs_accordion",
+          "disabled": true,
+          "settings": {}
+        },
+        "tab-shipping": {
+          "type": "custom_tab",
+          "settings": {
+            "title": "Shipping and Returns",
+            "content": "<ul><li>All orders are processed within <strong>1–3 business days</strong> (excluding weekends and holidays) after receiving your order confirmation email.</li><li>If we experience a high volume of orders, processing may be delayed by a few days. You will be notified of any significant delays.</li><li><strong>Pakistan Orders</strong>: Free shipping is available for orders over <strong>PKR 30,000/</strong>.</li></ul>"
+          }
+        },
+        "tab-returns": {
+          "type": "custom_tab",
+          "settings": {
+            "title": "Return Policies",
+            "content": "<p>We accept returns under the following conditions:</p><ul><li>The item must be <strong>unused</strong>, <strong>unopened</strong>, and in the same condition that you received it.</li><li>The return must be initiated within <strong>7 days</strong> of receiving the product.</li><li>The item must be in its original packaging, with all tags and labels intact</li></ul><p>Certain items are not eligible for return, including:</p><ul><li>Products that have been opened or used.</li><li>Items purchased on clearance or as part of a final sale.</li><li>Gift cards or promotional items.</li><li>Custom or personalized products.</li></ul>"
+          }
+        },
+        "quick-links": {
+          "type": "quick_links",
+          "settings": {
+            "question_label": "Ask a question",
+            "question_link": "",
+            "share_label": "Share"
+          }
+        },
+        "image_Q39FgC": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Frame_15177.png"
+          }
+        }
+      },
+      "block_order": [
+        "vendor",
+        "title",
+        "judge_me_reviews_preview_badge_P33Gz9",
+        "rating",
+        "price",
+        "variant-picker",
+        "short-description",
+        "addons",
+        "buy-buttons",
+        "quantity",
+        "custom_tab_3LwPmf",
+        "custom_tab_QKHMXK",
+        "custom_tab_xhYNV9",
+        "custom_tab_gHwFDi",
+        "custom_tab_Cdm43U",
+        "custom_tab_fEd9di",
+        "custom_tab_8ht6ry",
+        "tabs-accordion",
+        "tab-shipping",
+        "tab-returns",
+        "quick-links",
+        "image_Q39FgC"
+      ],
+      "settings": {}
+    },
+    "product_meta_shorts_JCCCeL": {
+      "type": "product-meta-shorts",
+      "name": "Product Shorts",
+      "settings": {
+        "metafield_namespace": "custom",
+        "metafield_key": "product_short_videos",
+        "heading": "Follow us on YouTube",
+        "heading_size_desktop": 44,
+        "heading_size_mobile": 34,
+        "subheading_text": "@ShivoraNatural",
+        "subheading_link": "https://www.youtube.com/@ShivoraNatural",
+        "subheading_icon_start": "",
+        "subheading_icon_end": "",
+        "header_spacing": 32,
+        "muted": false,
+        "play_button_size": 68,
+        "play_button_color": "#ff0000",
+        "video_border_radius": 12,
+        "slides_desktop": 4,
+        "slides_medium": 3,
+        "slides_mobile": 2,
+        "slide_gap": 15,
+        "desktop_width_percent": 100,
+        "padding_top": 48,
+        "padding_bottom": 48,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 32,
+        "show_arrows": true,
+        "show_dots": true,
+        "controls_spacing": 25,
+        "arrow_size": 40,
+        "arrow_background": "#000000",
+        "arrow_color": "#ffffff",
+        "arrow_hover_background": "#333333",
+        "arrow_hover_color": "#ffffff",
+        "dot_size": 8,
+        "dot_color": "#cccccc",
+        "dot_active_color": "#000000"
+      }
+    },
+    "highlights": {
+      "type": "product-highlights",
+      "blocks": {
+        "usp1": {
+          "type": "usp",
+          "settings": {
+            "image": "shopify://shop_images/dermatologist_tested.svg",
+            "title": "Dermatologically Tested",
+            "text": "Gentle enough for daily use, tested to be safe and effective for all skin types."
+          }
+        },
+        "usp2": {
+          "type": "usp",
+          "settings": {
+            "image": "shopify://shop_images/halal_certified.svg",
+            "title": "Halal Certified",
+            "text": "Formulated and certified halal, so you can use it with complete peace of mind."
+          }
+        },
+        "usp3": {
+          "type": "usp",
+          "settings": {
+            "image": "shopify://shop_images/cruelty_free.svg",
+            "title": "Cruelty-Free",
+            "text": "Never tested on animals, at any stage of formulation or production."
+          }
+        },
+        "usp4": {
+          "type": "usp",
+          "settings": {
+            "image": "shopify://shop_images/Made_in_pakistan.svg",
+            "title": "Made in Pakistan",
+            "text": "Produced locally under GMP-certified processes, for skin that knows our climate."
+          }
+        }
+      },
+      "block_order": [
+        "usp1",
+        "usp2",
+        "usp3",
+        "usp4"
+      ],
+      "settings": {
+        "usps_heading": "Why You'll Love It",
+        "center_align": false,
+        "heading_size": 20,
+        "header_space_bottom": 12
+      }
+    },
+    "comparison": {
+      "type": "product-comparison",
+      "settings": {
+        "heading": "Choose What Suits You Best",
+        "include_current": true,
+        "products": []
+      }
+    },
+    "custom_section_UXfA7U": {
+      "type": "custom-section",
+      "blocks": {
+        "judge_me_reviews_review_widget_LAcLkE": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "review_data": "sample_data",
+            "max_width": 1200,
+            "show_shop_reviews": false,
+            "empty_state": "empty_widget"
+          }
+        },
+        "header": {
+          "type": "heading",
+          "static": true,
+          "settings": {
+            "heading": "Customer Reviews",
+            "heading_size_desktop": 44,
+            "heading_size_mobile": 34,
+            "subheading": "",
+            "subheading_link": "",
+            "subheading_icon_start": "",
+            "subheading_icon_end": "",
+            "description": "",
+            "header_spacing_bottom": 32
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_review_widget_LAcLkE"
+      ],
+      "name": "Custom Section",
+      "settings": {
+        "width": "page",
+        "padding_top": 32,
+        "padding_bottom": 32,
+        "padding_top_mobile": 16,
+        "padding_bottom_mobile": 16
+      }
+    },
+    "reviews": {
+      "type": "product-reviews",
+      "blocks": {
+        "r1": {
+          "type": "review",
+          "settings": {
+            "name": "Ayesha K.",
+            "date": "",
+            "rating": 5,
+            "text": "This product is really highly recommended, I loved it and my skin feels so much better."
+          }
+        },
+        "r2": {
+          "type": "review",
+          "settings": {
+            "name": "Sana M.",
+            "date": "",
+            "rating": 5,
+            "text": "Great texture and absorbs quickly. Noticed a difference under my eyes within a couple of weeks."
+          }
+        },
+        "r3": {
+          "type": "review",
+          "settings": {
+            "name": "Fatima R.",
+            "date": "",
+            "rating": 4,
+            "text": "Good product overall, a little goes a long way."
+          }
+        }
+      },
+      "block_order": [
+        "r1",
+        "r2",
+        "r3"
+      ],
+      "disabled": true,
+      "settings": {
+        "heading": "Customer Reviews",
+        "average_rating": 4.5,
+        "review_count": 34
+      }
+    },
+    "recommendations": {
+      "type": "product-recommendations",
+      "settings": {
+        "heading": "Signature Products",
+        "products_to_show": 8,
+        "initial_count": 4
+      }
+    },
+    "faq": {
+      "type": "product-faq",
+      "settings": {
+        "heading": "Frequently Asked Questions"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "product_meta_shorts_JCCCeL",
+    "highlights",
+    "comparison",
+    "custom_section_UXfA7U",
+    "reviews",
+    "recommendations",
+    "faq"
+  ]
+}

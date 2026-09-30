@@ -1,0 +1,207 @@
+{%- comment -%}
+  CSS-only tabs (no JS): each tab is a hidden radio + label, and the matching
+  panel is toggled via `.product-tabs:has(#radio:checked) #panel` (generated
+  below), so the radio/label pair can live inside its own scrollable nav
+  strip while the panels stay full-width underneath — :has() lets the state
+  jump across that boundary instead of relying on strict sibling adjacency.
+
+  Built with capture/append instead of array filters (push/concat), since
+  those didn't behave as expected in testing on this store's Liquid runtime.
+
+  Content sources, in order:
+    1. Description  — product.description (always shown, if present)
+    2. Metafields    — How It Works / How to Use / Who Can Use / Caution /
+                        Beauty Gains, each shown only when filled. These
+                        assume namespace "custom" with snake_case keys
+                        matching the field label (Shopify's default when a
+                        merchant creates a metafield from the admin UI) —
+                        adjust the keys below if your store's differ.
+    3. Section blocks — e.g. "Shipping and Returns", "Return Policies",
+                        editable from the theme editor, shown only when the
+                        block has content.
+{%- endcomment -%}
+
+{%- assign tab_count = 0 -%}
+{%- capture tabs_nav -%}{%- endcapture -%}
+{%- capture tabs_panels -%}{%- endcapture -%}
+{%- capture tabs_style -%}{%- endcapture -%}
+
+{%- if product.description != blank -%}
+  {%- assign tab_count = tab_count | plus: 1 -%}
+  {%- capture this_nav -%}
+    <input type="radio" name="product-tabs-{{ section.id }}" id="product-tab-{{ section.id }}-{{ tab_count }}" class="product-tabs__radio"{% if tab_count == 1 %} checked{% endif %}>
+    <label class="product-tabs__label" for="product-tab-{{ section.id }}-{{ tab_count }}">Description</label>
+  {%- endcapture -%}
+  {%- assign tabs_nav = tabs_nav | append: this_nav -%}
+  {%- capture this_panel -%}
+    <div class="product-tabs__panel" id="product-panel-{{ section.id }}-{{ tab_count }}">{{ product.description }}</div>
+  {%- endcapture -%}
+  {%- assign tabs_panels = tabs_panels | append: this_panel -%}
+  {%- capture this_style -%}
+    .product-tabs:has(#product-tab-{{ section.id }}-{{ tab_count }}:checked) #product-panel-{{ section.id }}-{{ tab_count }} { display: block; }
+  {%- endcapture -%}
+  {%- assign tabs_style = tabs_style | append: this_style -%}
+{%- endif -%}
+
+{%- assign mf_how_it_works = product.metafields.custom.how_it_works -%}
+{%- if mf_how_it_works.value != blank -%}
+  {%- assign tab_count = tab_count | plus: 1 -%}
+  {%- capture this_nav -%}
+    <input type="radio" name="product-tabs-{{ section.id }}" id="product-tab-{{ section.id }}-{{ tab_count }}" class="product-tabs__radio"{% if tab_count == 1 %} checked{% endif %}>
+    <label class="product-tabs__label" for="product-tab-{{ section.id }}-{{ tab_count }}">How It Works</label>
+  {%- endcapture -%}
+  {%- assign tabs_nav = tabs_nav | append: this_nav -%}
+  {%- capture this_panel -%}
+    <div class="product-tabs__panel" id="product-panel-{{ section.id }}-{{ tab_count }}">{{ mf_how_it_works.value }}</div>
+  {%- endcapture -%}
+  {%- assign tabs_panels = tabs_panels | append: this_panel -%}
+  {%- capture this_style -%}
+    .product-tabs:has(#product-tab-{{ section.id }}-{{ tab_count }}:checked) #product-panel-{{ section.id }}-{{ tab_count }} { display: block; }
+  {%- endcapture -%}
+  {%- assign tabs_style = tabs_style | append: this_style -%}
+{%- endif -%}
+
+{%- assign mf_how_to_use = product.metafields.custom.how_to_use -%}
+{%- if mf_how_to_use.value != blank -%}
+  {%- assign tab_count = tab_count | plus: 1 -%}
+  {%- capture this_nav -%}
+    <input type="radio" name="product-tabs-{{ section.id }}" id="product-tab-{{ section.id }}-{{ tab_count }}" class="product-tabs__radio"{% if tab_count == 1 %} checked{% endif %}>
+    <label class="product-tabs__label" for="product-tab-{{ section.id }}-{{ tab_count }}">How to Use</label>
+  {%- endcapture -%}
+  {%- assign tabs_nav = tabs_nav | append: this_nav -%}
+  {%- capture this_panel -%}
+    <div class="product-tabs__panel" id="product-panel-{{ section.id }}-{{ tab_count }}">{{ mf_how_to_use.value }}</div>
+  {%- endcapture -%}
+  {%- assign tabs_panels = tabs_panels | append: this_panel -%}
+  {%- capture this_style -%}
+    .product-tabs:has(#product-tab-{{ section.id }}-{{ tab_count }}:checked) #product-panel-{{ section.id }}-{{ tab_count }} { display: block; }
+  {%- endcapture -%}
+  {%- assign tabs_style = tabs_style | append: this_style -%}
+{%- endif -%}
+
+{%- assign mf_who_can_use = product.metafields.custom.who_can_use -%}
+{%- if mf_who_can_use.value != blank -%}
+  {%- assign tab_count = tab_count | plus: 1 -%}
+  {%- capture this_nav -%}
+    <input type="radio" name="product-tabs-{{ section.id }}" id="product-tab-{{ section.id }}-{{ tab_count }}" class="product-tabs__radio"{% if tab_count == 1 %} checked{% endif %}>
+    <label class="product-tabs__label" for="product-tab-{{ section.id }}-{{ tab_count }}">Who Can Use</label>
+  {%- endcapture -%}
+  {%- assign tabs_nav = tabs_nav | append: this_nav -%}
+  {%- capture this_panel -%}
+    <div class="product-tabs__panel" id="product-panel-{{ section.id }}-{{ tab_count }}">{{ mf_who_can_use.value }}</div>
+  {%- endcapture -%}
+  {%- assign tabs_panels = tabs_panels | append: this_panel -%}
+  {%- capture this_style -%}
+    .product-tabs:has(#product-tab-{{ section.id }}-{{ tab_count }}:checked) #product-panel-{{ section.id }}-{{ tab_count }} { display: block; }
+  {%- endcapture -%}
+  {%- assign tabs_style = tabs_style | append: this_style -%}
+{%- endif -%}
+
+{%- assign mf_caution = product.metafields.custom.caution -%}
+{%- if mf_caution.value != blank -%}
+  {%- assign tab_count = tab_count | plus: 1 -%}
+  {%- capture this_nav -%}
+    <input type="radio" name="product-tabs-{{ section.id }}" id="product-tab-{{ section.id }}-{{ tab_count }}" class="product-tabs__radio"{% if tab_count == 1 %} checked{% endif %}>
+    <label class="product-tabs__label" for="product-tab-{{ section.id }}-{{ tab_count }}">Caution</label>
+  {%- endcapture -%}
+  {%- assign tabs_nav = tabs_nav | append: this_nav -%}
+  {%- capture this_panel -%}
+    <div class="product-tabs__panel" id="product-panel-{{ section.id }}-{{ tab_count }}">{{ mf_caution.value }}</div>
+  {%- endcapture -%}
+  {%- assign tabs_panels = tabs_panels | append: this_panel -%}
+  {%- capture this_style -%}
+    .product-tabs:has(#product-tab-{{ section.id }}-{{ tab_count }}:checked) #product-panel-{{ section.id }}-{{ tab_count }} { display: block; }
+  {%- endcapture -%}
+  {%- assign tabs_style = tabs_style | append: this_style -%}
+{%- endif -%}
+
+{%- assign mf_beauty_gains = product.metafields.custom.beauty_gains -%}
+{%- if mf_beauty_gains.value != blank -%}
+  {%- assign tab_count = tab_count | plus: 1 -%}
+  {%- capture this_nav -%}
+    <input type="radio" name="product-tabs-{{ section.id }}" id="product-tab-{{ section.id }}-{{ tab_count }}" class="product-tabs__radio"{% if tab_count == 1 %} checked{% endif %}>
+    <label class="product-tabs__label" for="product-tab-{{ section.id }}-{{ tab_count }}">Beauty Gains</label>
+  {%- endcapture -%}
+  {%- assign tabs_nav = tabs_nav | append: this_nav -%}
+  {%- capture this_panel -%}
+    <div class="product-tabs__panel" id="product-panel-{{ section.id }}-{{ tab_count }}">{{ mf_beauty_gains.value }}</div>
+  {%- endcapture -%}
+  {%- assign tabs_panels = tabs_panels | append: this_panel -%}
+  {%- capture this_style -%}
+    .product-tabs:has(#product-tab-{{ section.id }}-{{ tab_count }}:checked) #product-panel-{{ section.id }}-{{ tab_count }} { display: block; }
+  {%- endcapture -%}
+  {%- assign tabs_style = tabs_style | append: this_style -%}
+{%- endif -%}
+
+{%- for block in section.blocks -%}
+  {%- if block.settings.content != blank -%}
+    {%- assign tab_count = tab_count | plus: 1 -%}
+    {%- capture this_nav -%}
+      <input type="radio" name="product-tabs-{{ section.id }}" id="product-tab-{{ section.id }}-{{ tab_count }}" class="product-tabs__radio"{% if tab_count == 1 %} checked{% endif %} {{ block.shopify_attributes }}>
+      <label class="product-tabs__label" for="product-tab-{{ section.id }}-{{ tab_count }}">{{ block.settings.title }}</label>
+    {%- endcapture -%}
+    {%- assign tabs_nav = tabs_nav | append: this_nav -%}
+    {%- capture this_panel -%}
+      <div class="product-tabs__panel" id="product-panel-{{ section.id }}-{{ tab_count }}">{{ block.settings.content }}</div>
+    {%- endcapture -%}
+    {%- assign tabs_panels = tabs_panels | append: this_panel -%}
+    {%- capture this_style -%}
+      .product-tabs:has(#product-tab-{{ section.id }}-{{ tab_count }}:checked) #product-panel-{{ section.id }}-{{ tab_count }} { display: block; }
+    {%- endcapture -%}
+    {%- assign tabs_style = tabs_style | append: this_style -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- if tab_count > 0 -%}
+  <section class="product-tabs-section">
+    <div class="container container--narrow">
+      <div class="product-tabs">
+        <div class="product-tabs__nav">
+          {{ tabs_nav }}
+        </div>
+        <div class="product-tabs__panels">
+          {{ tabs_panels }}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    {{ tabs_style }}
+  </style>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Product tabs",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "Tab",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Shipping and Returns"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product tabs",
+      "blocks": [
+        { "type": "tab", "settings": { "title": "Shipping and Returns" } },
+        { "type": "tab", "settings": { "title": "Return Policies" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

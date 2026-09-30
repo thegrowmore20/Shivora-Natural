@@ -1,0 +1,218 @@
+{% style %}
+  section.section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    section.section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{% endstyle %}
+
+{%- assign collection = collections[section.settings.collection] -%}
+<section class="product-grid-section section-{{ section.id }}-padding">
+  <div class="container">
+    <div class="product-grid-section__header">
+      <h2 class="section-heading">
+        {{ section.settings.heading | default: 'Best Sellers' }}
+      </h2>
+
+      {%- if section.settings.collection != blank and collection.all_products_count > section.settings.products_to_show -%}
+        <a href="{{ collection.url }}" class="collection-view-all collection-view-all-desktop">
+          View All
+          {% render 'icon', name: 'chevron-right' %}
+        </a>
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.content != blank -%}
+      <div class="product-grid-section__content">{{ section.settings.content }}</div>
+    {%- endif -%}
+
+    <div class="product-grid-slider">
+      <button type="button" class="product-grid-slider__nav product-grid-slider__nav--prev" data-slider-prev aria-label="Previous products">
+        {% render 'icon', name: 'chevron-left' %}
+      </button>
+      <div class="product-grid" data-slider>
+        
+        {%- if collection != blank and collection.products.size > 0 -%}
+          {%- for product in collection.products limit: section.settings.products_to_show -%}
+            {% render 'product-card', product: product %}
+          {%- endfor -%}
+        {%- else -%}
+          {%- for i in (1..section.settings.products_to_show) -%}
+            {% render 'product-card' %}
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+      <button type="button" class="product-grid-slider__nav product-grid-slider__nav--next" data-slider-next aria-label="Next products">
+        {% render 'icon', name: 'chevron-right' %}
+      </button>
+    </div>
+
+    {%- if section.settings.collection != blank and collection.all_products_count > section.settings.products_to_show -%}
+      <div class="collection-view-all-mobile">
+        <a href="{{ collection.url }}" class="collection-view-all">
+          View All
+          {% render 'icon', name: 'chevron-right' %}
+        </a>
+      </div>
+    {%- endif -%}
+
+  </div>
+</section>
+
+
+<style>
+.product-grid-section__header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 32px;
+}
+
+.product-grid-section__header .section-heading {
+  margin: 0;
+  text-align: center;
+}
+
+.collection-view-all {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.collection-view-all svg {
+  width: 14px;
+  height: 14px;
+}
+
+.collection-view-all-mobile {
+  display: none;
+}
+.collection-view-all-desktop {
+  display: block;
+}
+
+@media screen and (max-width: 749px) {
+  .product-grid-section__header {
+    padding-right: 15px;
+    margin-bottom: 16px;
+  }
+
+
+  .product-grid-section__header .section-heading {
+    text-align: left;
+  }
+
+  .collection-view-all {
+    position: static;
+    transform: unset
+  }
+  .collection-view-all-mobile {
+    display: block;
+    text-align: center;
+    margin-top: 16px;
+  }
+  .collection-view-all-desktop {
+    display: none;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Product grid",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Best Sellers"
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Content"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Products to show",
+      "min": 4,
+      "max": 8,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Padding — desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "header",
+      "content": "Padding — mobile"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Top padding",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product grid"
+    }
+  ]
+}
+{% endschema %}

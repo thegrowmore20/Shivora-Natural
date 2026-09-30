@@ -1,0 +1,255 @@
+{%- comment -%}
+  Real Search & Discovery filters for the shop sidebar: active-filter pills
+  + accordion groups (price range with dual-handle slider, list/boolean
+  checkboxes). Rendered from category-sidebar.liquid, below the existing
+  category block links.
+
+  No quick-links or nav-menu-as-filter here — this store's category-sidebar
+  blocks already serve that purpose.
+
+  Accepts: results (collection object), section
+{%- endcomment -%}
+
+{%- liquid
+  assign has_active_filters = false
+  for filter in results.filters
+    if filter.type == 'price_range'
+      if filter.min_value.value != blank
+        assign has_active_filters = true
+      endif
+      if filter.max_value.value != blank
+        assign has_active_filters = true
+      endif
+    elsif filter.active_values.size > 0
+      assign has_active_filters = true
+    endif
+  endfor
+-%}
+
+<facet-filters-form>
+  <form id="ShopFacetsForm-{{ section.id }}" class="facets" data-section-id="{{ section.id }}">
+    <input type="hidden" name="sort_by" value="{{ results.sort_by }}">
+
+    {%- if has_active_filters -%}
+      <div class="active-filters" id="ActiveFilters-{{ section.id }}">
+        <div class="active-filters__pills">
+          {%- for filter in results.filters -%}
+            {%- if filter.type == 'price_range' -%}
+              {%- if filter.min_value.value != blank or filter.max_value.value != blank -%}
+                <span
+                  class="active-filters__pill active-filters__pill--price"
+                  data-price-pill
+                  data-min-name="{{ filter.min_value.param_name }}"
+                  data-max-name="{{ filter.max_value.param_name }}"
+                >
+                  {{ filter.min_value.value | default: 0 | money }}&ndash;{{ filter.max_value.value | default: filter.range_max | money }}
+                  <button type="button" class="active-filters__remove" aria-label="{{ 'collections.filters.remove' | t }}">&times;</button>
+                </span>
+              {%- endif -%}
+            {%- else -%}
+              {%- for value in filter.active_values -%}
+                <a href="{{ value.url_to_remove }}" class="active-filters__pill">
+                  {{ value.label }}
+                  <span class="active-filters__remove-icon" aria-hidden="true">&times;</span>
+                </a>
+              {%- endfor -%}
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+        <a href="{{ results.url }}" class="active-filters__clear-all body-text">
+          Remove All 
+        </a>
+      </div>
+    {%- endif -%}
+
+    {%- for filter in results.filters -%}
+      {%- if filter.type == 'price_range' -%}
+        <details class="facets__group" data-filter-param="{{ filter.param_name }}" open>
+          <summary class="facets__summary">
+            <span>{{ filter.label }}</span>
+            <span class="facets__chevron facets__chevron--down" aria-hidden="true"></span>
+          </summary>
+          <div class="facets__body">
+            {%- render 'price-range', filter: filter -%}
+          </div>
+        </details>
+      {%- elsif filter.values.size > 0 -%}
+        <details class="facets__group" data-filter-param="{{ filter.param_name }}" open>
+          <summary class="facets__summary">
+            <span>{{ filter.label }}</span>
+            <span class="facets__chevron facets__chevron--down" aria-hidden="true"></span>
+          </summary>
+          <div class="facets__body">
+            <ul class="facets__list" role="list">
+              {%- for value in filter.values -%}
+                <li class="facets__item{% if value.count == 0 and value.active == false %} facets__item--disabled{% endif %}">
+                  <label class="facets__checkbox-label">
+                    <input
+                      type="checkbox"
+                      class="facets__checkbox"
+                      name="{{ value.param_name }}"
+                      value="{{ value.value }}"
+                      {% if value.active %}checked{% endif %}
+                      {% if value.count == 0 and value.active == false %}disabled{% endif %}
+                    >
+                    <span>{{ value.label }}</span>
+                    <span class="facets__count text-muted">({{ value.count }})</span>
+                  </label>
+                </li>
+              {%- endfor -%}
+            </ul>
+          </div>
+        </details>
+      {%- endif -%}
+    {%- endfor -%}
+  </form>
+</facet-filters-form>
+
+{% stylesheet %}
+  .facets__group {
+    border-bottom: 1px solid var(--color-border, #e5e5e5);
+    padding: var(--space-3, 0.75rem) 0;
+  }
+
+  .facets__summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    list-style: none;
+    font-weight: 500;
+  }
+
+  .facets__summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .facets__chevron {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+  }
+
+  .facets__chevron--down {
+    transform: rotate(45deg);
+  }
+
+  .facets__group[open] > .facets__summary .facets__chevron--down {
+    transform: rotate(225deg);
+  }
+
+  .facets__body {
+    padding-top: var(--space-3, 0.75rem);
+  }
+
+  .facets__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2, 0.5rem);
+  }
+
+  .facets__checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2, 0.5rem);
+    cursor: pointer;
+  }
+
+  /* Custom checkbox color/size — replaces the native blue tick. */
+  .facets__checkbox {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--color-secondary);
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .facets__item--disabled {
+    opacity: 0.4;
+  }
+
+  .facets__item--disabled .facets__checkbox-label {
+    cursor: not-allowed;
+  }
+
+  .facets__count {
+    margin-left: auto;
+    font-size: 0.85em;
+  }
+
+  facet-filters-form {
+    margin-top: 15px;
+    display: block;
+  }
+
+  .active-filters {
+    margin-bottom: var(--space-4, 1rem);
+    padding-bottom: var(--space-4, 1rem);
+    border-bottom: 1px solid var(--color-border, #e5e5e5);
+  }
+
+  .active-filters__pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2, 0.5rem);
+    margin-bottom: var(--space-3, 0.75rem);
+  }
+
+  .active-filters__pill {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2, 0.5rem);
+    padding: var(--space-2, 0.5rem) var(--space-3, 0.75rem);
+    border: 1px solid var(--color-border, #e5e5e5);
+    border-radius: 999px;
+    font-size: 0.85em;
+    text-decoration: none;
+    color: inherit;
+    background: none;
+    cursor: pointer;
+  }
+
+  .active-filters__remove,
+  .active-filters__remove-icon {
+    font-size: 1em;
+    line-height: 1;
+  }
+
+  .active-filters__remove {
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    color: inherit;
+  }
+
+  .active-filters__clear-all {
+    display: inline-block;
+    font-size: 0.9em;
+    text-decoration: underline;
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  @media (max-width: 989px) {
+    facet-filters-form {
+        margin-top: 0;
+    }
+  }
+{% endstylesheet %}

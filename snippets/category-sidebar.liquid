@@ -1,0 +1,107 @@
+{%- comment -%}
+  Accepts: title (string), blocks (array of section blocks, type "category")
+  NEW params: results (collection object, for filters), section (for id + settings)
+
+  Everything between the ORIGINAL START / ORIGINAL END markers below is
+  your existing code, untouched. Everything else is new: a close button and
+  drawer-only sort control before it, real filters + an apply button after
+  it — so the whole <aside> doubles as the mobile filter drawer, with your
+  category list sitting exactly where it always did, filters appearing
+  below it as asked.
+{%- endcomment -%}
+<aside class="shop-sidebar" id="ShopSidebar-{{ section.id }}" aria-hidden="true">
+  {%- comment -%} NEW: mobile drawer close — absolutely positioned, doesn't touch the layout below {%- endcomment -%}
+  <button type="button" class="shop-sidebar__close" data-sidebar-close aria-label="{{ 'accessibility.close' | t }}">&times;</button>
+
+  
+
+  {%- comment -%} ---- ORIGINAL START ---- {%- endcomment -%}
+  {%- if title != blank -%}
+    <h2 class="shop-sidebar__title">{{ title }}</h2>
+  {%- endif -%}
+  <ul class="shop-sidebar__list">
+    {%- for block in blocks -%}
+      {%- assign sidebar_collection = collections[block.settings.collection] -%}
+      <li class="shop-sidebar__item" {{ block.shopify_attributes }}>
+        <a
+          class="shop-sidebar__link{% if collection.handle == sidebar_collection.handle %} is-active{% endif %}"
+          href="{{ sidebar_collection.url | default: '#' }}"
+        >
+          {{ block.settings.label | default: sidebar_collection.title }} {% if sidebar_collection != blank and sidebar_collection.all_products_count > 0 %}({{ sidebar_collection.all_products_count }}){% endif %}
+        </a>
+      </li>
+    {%- endfor -%}
+  </ul>
+  {%- comment -%} ---- ORIGINAL END ---- {%- endcomment -%}
+
+  {%- comment -%} NEW: drawer-only sort control (desktop sort lives in the toolbar instead) {%- endcomment -%}
+  {%- if section.settings.enable_sorting -%}
+    {%- render 'sort-by', results: results, section: section, variant: 'drawer', id_suffix: 'Drawer' -%}
+  {%- endif -%}
+
+  {%- comment -%} NEW: real filters, below the category links as requested {%- endcomment -%}
+  {%- if section.settings.enable_filtering -%}
+    {%- render 'shop-filters', results: results, section: section -%}
+  {%- endif -%}
+
+  {%- comment -%} NEW: mobile drawer apply button {%- endcomment -%}
+  <button type="button" class="button button--accent shop-sidebar__apply" data-sidebar-close>
+    View results ({{ results.products_count }})
+  </button>
+</aside>
+
+{% stylesheet %}
+  /* Desktop: plain static sidebar column, as it already was. */
+  .shop-sidebar__close,
+  .shop-sidebar__apply {
+    display: none;
+  }
+
+  /* Mobile: the SAME <aside> becomes the off-canvas drawer — no separate
+     drawer markup, no duplicated content, just a transform + fixed
+     positioning applied to what's already there. */
+  @media (max-width: 989px) {
+    .shop-sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: min(340px, 88vw);
+      background: var(--color-background, #fff);
+      transform: translateX(-100%);
+      transition: transform 0.25s ease;
+      z-index: 41;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      padding: 15px;
+    }
+
+    .shop-sidebar.is-open {
+      transform: translateX(0);
+    }
+
+    .shop-sidebar__close {
+      display: block;
+      position: absolute;
+      top: var(--space-4, 1rem);
+      right: var(--space-4, 1rem);
+      background: none;
+      border: 0;
+      font-size: 1.5rem;
+      line-height: 1;
+      cursor: pointer;
+      z-index: 1;
+    }
+
+    .shop-sidebar__apply {
+      display: block;
+      margin-top: auto;
+      width: 100%;
+      padding-block: 11px;
+    }
+    .facets__summary {
+      font-size: 14px;
+    }
+  }
+{% endstylesheet %}

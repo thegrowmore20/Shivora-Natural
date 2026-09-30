@@ -1,0 +1,124 @@
+{%- comment -%}
+  Large lifestyle image (with an optional text overlay) beside a
+  horizontally-scrollable row of products from a chosen collection.
+{%- endcomment -%}
+{%- assign banner_collection = collections[section.settings.collection] -%}
+
+<section class="feature-banner">
+  <div class="container">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="feature-banner__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+    {%- if section.settings.subheading != blank -%}
+      <p class="feature-banner__subheading">{{ section.settings.subheading }}</p>
+    {%- endif -%}
+
+    <div class="feature-banner__grid">
+      <div class="feature-banner__media">
+        {%- if section.settings.image -%}
+          {{ section.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '400, 600, 900, 1200', alt: section.settings.image.alt }}
+        {%- endif -%}
+
+        {%- if section.settings.overlay_eyebrow != blank or section.settings.overlay_heading != blank or section.settings.overlay_text != blank -%}
+          <div class="feature-banner__overlay">
+            {%- if section.settings.overlay_eyebrow != blank -%}
+              <p class="feature-banner__overlay-eyebrow">{{ section.settings.overlay_eyebrow }}</p>
+            {%- endif -%}
+            {%- if section.settings.overlay_heading != blank -%}
+              <h3 class="feature-banner__overlay-heading">{{ section.settings.overlay_heading }}</h3>
+            {%- endif -%}
+            {%- if section.settings.overlay_text != blank -%}
+              <p class="feature-banner__overlay-text">{{ section.settings.overlay_text }}</p>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div class="feature-banner__products">
+        {%- if banner_collection.products.size > 2 -%}
+          <button type="button" class="feature-banner__nav feature-banner__nav--prev" data-slider-prev aria-label="Previous products">
+            {% render 'icon', name: 'chevron-left' %}
+          </button>
+          <button type="button" class="feature-banner__nav feature-banner__nav--next" data-slider-next aria-label="Next products">
+            {% render 'icon', name: 'chevron-right' %}
+          </button>
+        {%- endif -%}
+
+        <div class="feature-banner__slider" data-slider style="--products-per-view: {{ section.settings.products_per_view }};">
+          {%- for product in banner_collection.products limit: section.settings.products_to_show -%}
+            {% render 'product-card', product: product %}
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Banner with products",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Cicaplast Has It All Covered"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Dermatologist recommended multi-purpose repair"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "overlay_eyebrow",
+      "label": "Overlay eyebrow text"
+    },
+    {
+      "type": "text",
+      "id": "overlay_heading",
+      "label": "Overlay heading"
+    },
+    {
+      "type": "textarea",
+      "id": "overlay_text",
+      "label": "Overlay text"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Products to show",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 6
+    },
+    {
+      "type": "select",
+      "id": "products_per_view",
+      "label": "Products visible at once (desktop)",
+      "options": [
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" }
+      ],
+      "default": "2"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Banner with products"
+    }
+  ]
+}
+{% endschema %}

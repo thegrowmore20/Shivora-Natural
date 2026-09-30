@@ -1,0 +1,106 @@
+<div class="cart-drawer-overlay" data-cart-drawer-dismiss></div>
+
+<aside class="cart-drawer" data-cart-drawer data-section-id="{{ section.id }}" aria-label="Your cart">
+  <div class="cart-drawer__header">
+    <p class="cart-drawer__title">
+      Your Cart <span data-cart-drawer-count>({{ cart.item_count }})</span>
+    </p>
+    <button type="button" class="cart-drawer__close" data-cart-drawer-dismiss aria-label="Close cart">
+      {% render 'icon', name: 'plus' %}
+    </button>
+  </div>
+
+  <div class="cart-drawer__target" data-cart-drawer-target>
+    {%- if cart.item_count > 0 -%}
+      <div class="cart-drawer__items">
+        {%- for item in cart.items -%}
+          {%- render 'cart-line-item', item: item -%}
+        {%- endfor -%}
+      </div>
+
+      <div class="cart-drawer__footer">
+        <div class="cart-drawer__subtotal">
+          <span>Subtotal</span>
+          <strong>{{ cart.total_price | money }}</strong>
+        </div>
+        <p class="cart-drawer__note">Shipping and taxes calculated at checkout.</p>
+        <a href="{{ routes.cart_url }}" class="button button--light cart-drawer__view-cart">View Cart</a>
+        <a href="{{ routes.cart_url }}/checkout" class="button button--accent cart-drawer__checkout">Checkout</a>
+      </div>
+
+      {%- assign upsell_collection = collections[section.settings.upsell_collection] -%}
+      {%- if upsell_collection != blank -%}
+        <div class="cart-drawer__upsell">
+          <p class="cart-drawer__upsell-title">{{ section.settings.upsell_heading | default: 'You may also like' }}</p>
+          <div class="cart-upsell-slider">
+            {%- assign upsell_shown = 0 -%}
+            {%- for product in upsell_collection.products -%}
+              {%- assign already_in_cart = false -%}
+              {%- for item in cart.items -%}
+                {%- if item.product_id == product.id -%}
+                  {%- assign already_in_cart = true -%}
+                {%- endif -%}
+              {%- endfor -%}
+              {%- unless already_in_cart or upsell_shown >= 8 -%}
+                {%- assign upsell_shown = upsell_shown | plus: 1 -%}
+                <div class="cart-upsell-item">
+                  <a href="{{ product.url }}" class="cart-upsell-item__media">
+                    {%- if product.featured_image -%}
+                      {{ product.featured_image | image_url: width: 200 | image_tag: loading: 'lazy', alt: product.title }}
+                    {%- else -%}
+                      {{ 'product-1' | placeholder_svg_tag }}
+                    {%- endif -%}
+                  </a>
+                  <p class="cart-upsell-item__title" title="{{ product.title }}">
+                    {{ product.title | truncate: 28 }}
+                  </p>
+                  <p class="cart-upsell-item__price">{{ product.price | money }}</p>
+                  {%- if product.variants.size > 1 -%}
+                    <a href="{{ product.url }}" class="button button--light cart-upsell-item__add">Options</a>
+                  {%- else -%}
+                    {%- form 'product', product -%}
+                      <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                      <input type="hidden" name="quantity" value="1">
+                      <button
+                        type="submit"
+                        class="button button--light cart-upsell-item__add"
+                        {% unless product.available %}disabled{% endunless %}
+                      >
+                        {%- if product.available -%}Add{%- else -%}Sold out{%- endif -%}
+                      </button>
+                    {%- endform -%}
+                  {%- endif -%}
+                </div>
+              {%- endunless -%}
+            {%- endfor -%}
+          </div>
+        </div>
+      {%- endif -%}
+    {%- else -%}
+      <div class="cart-drawer__empty">
+        <p>Your cart is empty.</p>
+        <a href="{{ routes.all_products_collection_url }}" class="button button--dark" data-cart-drawer-dismiss>Continue Shopping</a>
+      </div>
+    {%- endif -%}
+  </div>
+</aside>
+
+{% schema %}
+{
+  "name": "Cart drawer",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "upsell_collection",
+      "label": "Upsell collection",
+      "info": "Products from this collection appear as a slider at the bottom of the cart drawer."
+    },
+    {
+      "type": "text",
+      "id": "upsell_heading",
+      "label": "Upsell heading",
+      "default": "You may also like"
+    }
+  ]
+}
+{% endschema %}

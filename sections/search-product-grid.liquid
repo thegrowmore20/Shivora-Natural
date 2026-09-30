@@ -1,0 +1,101 @@
+<section class="shop-section">
+  <div class="container shop-layout">
+    {% render 'category-sidebar', title: section.settings.sidebar_title, blocks: section.blocks %}
+
+    <div class="shop-main">
+      {%- if search.performed -%}
+        {%- paginate search.results by section.settings.products_per_page -%}
+          {%- if search.results_count > 0 -%}
+            <div class="product-grid">
+              {%- for item in search.results -%}
+                {%- if item.object_type == 'product' -%}
+                  {% render 'product-card', product: item %}
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+
+            {%- if paginate.pages > 1 -%}
+              <nav class="pagination" aria-label="Pagination">
+                {%- if paginate.previous -%}
+                  <a class="pagination__link" href="{{ paginate.previous.url }}" aria-label="Previous page">{% render 'icon', name: 'chevron-left' %}</a>
+                {%- endif -%}
+                {%- for part in paginate.parts -%}
+                  {%- if part.is_link -%}
+                    <a class="pagination__link" href="{{ part.url }}">{{ part.title }}</a>
+                  {%- else -%}
+                    <span class="pagination__link{% if part.title == paginate.current_page %} is-current{% endif %}">{{ part.title }}</span>
+                  {%- endif -%}
+                {%- endfor -%}
+                {%- if paginate.next -%}
+                  <a class="pagination__link" href="{{ paginate.next.url }}" aria-label="Next page">{% render 'icon', name: 'chevron-right' %}</a>
+                {%- endif -%}
+              </nav>
+            {%- endif -%}
+          {%- else -%}
+            <p class="shop-empty">{{ section.settings.empty_text | default: 'No products matched your search.' }}</p>
+          {%- endif -%}
+        {%- endpaginate -%}
+      {%- else -%}
+        <p class="shop-empty">{{ section.settings.prompt_text | default: 'Enter a search term above to find products.' }}</p>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Search product grid",
+  "settings": [
+    {
+      "type": "text",
+      "id": "sidebar_title",
+      "label": "Sidebar title",
+      "default": "Shop by Category"
+    },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "label": "Products per page",
+      "min": 8,
+      "max": 24,
+      "step": 4,
+      "default": 12
+    },
+    {
+      "type": "text",
+      "id": "empty_text",
+      "label": "Empty state text",
+      "default": "No products matched your search."
+    },
+    {
+      "type": "text",
+      "id": "prompt_text",
+      "label": "Prompt text (before a search is made)",
+      "default": "Enter a search term above to find products."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Custom label (optional)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Search product grid"
+    }
+  ]
+}
+{% endschema %}

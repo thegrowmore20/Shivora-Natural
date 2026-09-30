@@ -1,0 +1,77 @@
+<section class="blogs-section">
+  <div class="container">
+    {%- paginate blog.articles by section.settings.articles_per_page -%}
+      {%- if blog.articles.size > 0 -%}
+        <div class="blog-grid">
+          {%- for article in blog.articles -%}
+            <article class="blog-card">
+              <a class="blog-card__media" href="{{ article.url }}">
+                {%- if article.image -%}
+                  {{ article.image | image_url: width: 700 | image_tag: loading: 'lazy' }}
+                {%- else -%}
+                  {{ 'lifestyle-2' | placeholder_svg_tag }}
+                {%- endif -%}
+              </a>
+              <div class="blog-card__body">
+                {%- if section.settings.show_date -%}
+                  <p class="blog-card__date">{{ article.published_at | date: '%B %d, %Y' }}</p>
+                {%- endif -%}
+                <h3 class="blog-card__title"><a href="{{ article.url }}">{{ article.title }}</a></h3>
+                <p class="blog-card__excerpt">{{ article.excerpt_or_content | strip_html | truncate: 120 }}</p>
+                <a class="blog-card__link" href="{{ article.url }}">Read More</a>
+              </div>
+            </article>
+          {%- endfor -%}
+        </div>
+
+        {%- if paginate.pages > 1 -%}
+          <nav class="pagination" aria-label="Pagination">
+            {%- if paginate.previous -%}
+              <a class="pagination__link" href="{{ paginate.previous.url }}" aria-label="Previous page">{% render 'icon', name: 'chevron-left' %}</a>
+            {%- endif -%}
+            {%- for part in paginate.parts -%}
+              {%- if part.is_link -%}
+                <a class="pagination__link" href="{{ part.url }}">{{ part.title }}</a>
+              {%- else -%}
+                <span class="pagination__link{% if part.title == paginate.current_page %} is-current{% endif %}">{{ part.title }}</span>
+              {%- endif -%}
+            {%- endfor -%}
+            {%- if paginate.next -%}
+              <a class="pagination__link" href="{{ paginate.next.url }}" aria-label="Next page">{% render 'icon', name: 'chevron-right' %}</a>
+            {%- endif -%}
+          </nav>
+        {%- endif -%}
+      {%- else -%}
+        <p class="shop-empty">No blog posts yet.</p>
+      {%- endif -%}
+    {%- endpaginate -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Blog list",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_date",
+      "label": "Show publish date",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "articles_per_page",
+      "label": "Articles per page",
+      "min": 6,
+      "max": 18,
+      "step": 3,
+      "default": 9
+    }
+  ],
+  "presets": [
+    {
+      "name": "Blog list"
+    }
+  ]
+}
+{% endschema %}

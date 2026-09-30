@@ -1,0 +1,756 @@
+
+{% assign show_left = section.settings.show_left_content %}
+<section class="contact-section section-{{ section.id }}-padding">
+  <div class="container">
+    <div class="contact-section__layout{% unless show_left %} contact-section__layout--form-only{% endunless %}">
+
+      {%- if show_left -%}
+        <div class="contact-section__left">
+          {%- for block in section.blocks -%}
+
+            {%- case block.type -%}
+
+              {%- when 'subheading' -%}
+                {%- if block.settings.text != blank -%}
+                  <p class="contact-section__subheading" {{ block.shopify_attributes }}>
+                    {{ block.settings.text }}
+                  </p>
+                {%- endif -%}
+
+              {%- when 'heading' -%}
+                {%- if block.settings.text != blank -%}
+                  <h2 class="contact-section__heading" {{ block.shopify_attributes }}>
+                    {{ block.settings.text }}
+                  </h2>
+                {%- endif -%}
+
+              {%- when 'description' -%}
+                {%- if block.settings.text != blank -%}
+                  <div class="contact-section__description" {{ block.shopify_attributes }}>
+                    {{ block.settings.text }}
+                  </div>
+                {%- endif -%}
+
+              {%- when 'cards' -%}
+                <div class="contact-cards" {{ block.shopify_attributes }}>
+                  {%- for i in (1..2) -%}
+                    {%- liquid
+                      if i == 1
+                        assign card_bg    = block.settings.card_1_bg
+                        assign card_color = block.settings.card_1_color
+                        assign card_image = block.settings.card_1_image
+                        assign card_svg   = block.settings.card_1_svg
+                        assign card_head  = block.settings.card_1_heading
+                        assign card_body  = block.settings.card_1_body
+                      else
+                        assign card_bg    = block.settings.card_2_bg
+                        assign card_color = block.settings.card_2_color
+                        assign card_image = block.settings.card_2_image
+                        assign card_svg   = block.settings.card_2_svg
+                        assign card_head  = block.settings.card_2_heading
+                        assign card_body  = block.settings.card_2_body
+                      endif
+                    -%}
+                    <div
+                      class="contact-card"
+                      style="background-color: {{ card_bg }}; color: {{ card_color }};"
+                    >
+                      <div class="contact-card-header">
+                        {% if card_image != blank or card_svg != blank %}
+                            <div class="contact-card__icon">
+                                {%- if card_image != blank -%}
+                                <img
+                                    src="{{ card_image | image_url: width: 48 }}"
+                                    alt="{{ card_image.alt | escape }}"
+                                    width="24"
+                                    height="24"
+                                    loading="lazy"
+                                >
+                                {%- elsif card_svg != blank -%}
+                                {{ card_svg }}
+                                {%- endif -%}
+                            </div>
+                        {% endif %}
+                        {%- if card_head != blank -%}
+                            <p class="contact-card__heading">{{ card_head }}</p>
+                        {%- endif -%}
+                      </div>
+                      
+                      {%- if card_body != blank -%}
+                        <div class="contact-card__body">{{ card_body }}</div>
+                      {%- endif -%}
+                    </div>
+                  {%- endfor -%}
+                </div>
+
+              {%- when 'social' -%}
+                <div class="contact-social" {{ block.shopify_attributes }}>
+                  {%- if block.settings.label != blank -%}
+                    <p class="contact-social__label">{{ block.settings.label }}</p>
+                  {%- endif -%}
+                  <div class="contact-social__icons">
+                    {%- assign social_keys = 'facebook,instagram,youtube,tiktok,x,pinterest,linkedin' | split: ',' -%}
+                    {%- for key in social_keys -%}
+                      {%- assign url_key = 'social_' | append: key | append: '_url' -%}
+                      {%- assign url_val = block.settings[url_key] -%}
+                      {%- if url_val != blank -%}
+                        <a href="{{ url_val }}" class="contact-social__link" target="_blank" rel="noopener noreferrer" aria-label="{{ key | capitalize }}">
+                          {%- case key -%}
+                            {%- when 'facebook' -%}
+                              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.313 0 2.686.236 2.686.236v2.97h-1.513c-1.491 0-1.956.93-1.956 1.883v2.271h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+                            {%- when 'instagram' -%}
+                              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                            {%- when 'youtube' -%}
+                              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                            {%- when 'tiktok' -%}
+                              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.73a8.18 8.18 0 004.78 1.53V6.79a4.85 4.85 0 01-1.01-.1z"/></svg>
+                            {%- when 'x' -%}
+                              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.911-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                            {%- when 'pinterest' -%}
+                              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.373 0 0 5.372 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 01.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.632-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
+                            {%- when 'linkedin' -%}
+                              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                          {%- endcase -%}
+                        </a>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </div>
+                </div>
+
+              {%- when 'richtext' -%}
+                {%- if block.settings.text != blank -%}
+                  <div class="contact-section__richtext" {{ block.shopify_attributes }}>
+                    {{ block.settings.text }}
+                  </div>
+                {%- endif -%}
+
+            {%- endcase -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      <div class="contact-section__form">
+        <div class="contact-form-wrap">
+          {%- if section.settings.form_heading != blank -%}
+            <h3 class="contact-form-wrap__heading">{{ section.settings.form_heading }}</h3>
+          {%- endif -%}
+
+          {%- form 'contact', id: 'ContactForm' -%}
+            {%- if form.posted_successfully? -%}
+              <p class="contact-form-wrap__success" role="alert">
+                Form submitted successfully
+              </p>
+            {%- endif -%}
+
+            {%- if form.errors -%}
+              <p class="contact-form-wrap__error" role="alert">
+                {{ form.errors | default_errors }}
+              </p>
+            {%- endif -%}
+
+            <div class="contact-form-wrap__row">
+              <div class="contact-form-wrap__field">
+                <label for="ContactForm-first-name">First Name</label>
+                <input
+                  type="text"
+                  id="ContactForm-first-name"
+                  name="contact[first_name]"
+                  autocomplete="given-name"
+                  value="{% if form.first_name %}{{ form.first_name }}{% endif %}"
+                >
+              </div>
+              <div class="contact-form-wrap__field">
+                <label for="ContactForm-last-name">Last Name</label>
+                <input
+                  type="text"
+                  id="ContactForm-last-name"
+                  name="contact[last_name]"
+                  autocomplete="family-name"
+                  value="{% if form.last_name %}{{ form.last_name }}{% endif %}"
+                >
+              </div>
+            </div>
+
+            <div class="contact-form-wrap__row">
+                <div class="contact-form-wrap__field">
+                <label for="ContactForm-email">
+                    Email
+                    <span aria-hidden="true">*</span>
+                </label>
+                <input
+                    type="email"
+                    id="ContactForm-email"
+                    name="contact[email]"
+                    autocomplete="email"
+                    autocorrect="off"
+                    autocapitalize="off"
+                    required
+                    value="{% if form.email %}{{ form.email }}{% endif %}"
+                >
+                </div>
+
+                <div class="contact-form-wrap__field">
+                <label for="ContactForm-phone">Phone</label>
+                <input
+                    type="tel"
+                    id="ContactForm-phone"
+                    name="contact[phone]"
+                    autocomplete="tel"
+                    value="{% if form.phone %}{{ form.phone }}{% endif %}"
+                >
+                </div>
+            </div>
+
+            <div class="contact-form-wrap__field">
+              <label for="ContactForm-body">
+                Message
+                <span aria-hidden="true">*</span>
+              </label>
+              <textarea
+                id="ContactForm-body"
+                name="contact[body]"
+                rows="4"
+                required
+              >{% if form.body %}{{ form.body }}{% endif %}</textarea>
+            </div>
+
+            <div class="contact-form-wrap__field">
+              <button type="submit" class="button button--accent btn--full">
+                Submit
+              </button>
+            </div>
+          {%- endform -%}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% style %}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{% endstyle %}
+
+{% stylesheet %}
+  .contact-section__layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+
+  .contact-section__layout--form-only {
+    grid-template-columns: 1fr;
+    max-width: 600px;
+    margin-inline: auto;
+  }
+
+  .contact-card-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  @media screen and (max-width: 989px) {
+    .contact-section__layout {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+  }
+
+  /* Left content */
+  .contact-section__subheading {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin: 0 0 12px;
+    opacity: 0.7;
+  }
+
+  .contact-section__heading {
+    font-size: 2.5rem;
+    font-weight: 600;
+    line-height: 1;
+    margin: 0 0 16px;
+    text-transform: uppercase;
+  }
+
+  @media screen and (max-width: 749px) {
+    .contact-section__heading {
+      font-size: 1.75rem;
+    }
+  }
+
+  .contact-section__description {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+
+  /* Info cards */
+  .contact-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+
+  @media screen and (max-width: 479px) {
+    .contact-cards {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .contact-card {
+    padding: 20px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .contact-card__icon {
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
+  }
+
+  .contact-card__icon img,
+  .contact-card__icon svg {
+    width: 24px;
+    height: 24px;
+    display: block;
+  }
+
+  .contact-card__heading {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .contact-card__body {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .contact-card__body p {
+    margin: 0;
+  }
+
+  /* Social */
+  .contact-social {
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    justify-content: space-between;
+  }
+
+  .contact-social__label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin: 0;
+    white-space: nowrap;
+  }
+
+  .contact-social__icons {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .contact-social__link {
+    display: flex;
+    align-items: center;
+    color: currentColor;
+    opacity: 0.75;
+    transition: opacity 0.2s;
+  }
+
+  .contact-social__link:hover {
+    opacity: 1;
+  }
+
+  /* Richtext / disclaimer */
+  .contact-section__richtext {
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+
+  .contact-section__richtext p {
+    margin: 0 0 12px;
+  }
+
+  .contact-section__richtext p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Form */
+  .contact-form-wrap {
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 12px;
+    padding: 32px;
+  }
+
+  .contact-form-wrap__heading {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0 0 24px;
+  }
+
+  .contact-form-wrap__row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  @media screen and (max-width: 768px) {
+    .contact-form-wrap__row {
+      grid-template-columns: 1fr;
+    }
+    .contact-form-wrap {
+        padding: 16px;
+    }
+  }
+
+  .contact-form-wrap__field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+
+  .contact-form-wrap__field:last-child {
+    margin-bottom: 0;
+  }
+
+  .contact-form-wrap__field label {
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
+  .contact-form-wrap__field input,
+  .contact-form-wrap__field textarea,
+  .contact-form-wrap__field select {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    font-size: 0.9375rem;
+    font-family: inherit;
+    background: transparent;
+    color: inherit;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+    appearance: none;
+  }
+
+  .contact-form-wrap__field input:focus,
+  .contact-form-wrap__field textarea:focus,
+  .contact-form-wrap__field select:focus {
+    outline: none;
+    border-color: currentColor;
+  }
+
+  .contact-form-wrap__field textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+
+  .contact-form-wrap__success {
+    color: green;
+    font-size: 16px;
+    margin-bottom: 16px;
+    font-weight: 600;
+  }
+
+  .contact-form-wrap__error {
+    color: red;
+    font-size: 16px;
+    margin-bottom: 16px;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Contact",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_left_content",
+      "label": "Show left content panel",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "form_heading",
+      "label": "Form heading",
+      "default": "Contact Us"
+    },
+    {
+      "type": "header",
+      "content": "Padding — desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "header",
+      "content": "Padding — mobile"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Top padding",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "subheading",
+      "name": "Subheading",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Subheading",
+          "default": "Got any questions?"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "name": "Heading",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Heading",
+          "default": "Get in touch"
+        }
+      ]
+    },
+    {
+      "type": "description",
+      "name": "Description",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Description",
+          "default": "<p>Your feedback is important to us. Whatever your needs, please don't hesitate to reach out.</p>"
+        }
+      ]
+    },
+    {
+      "type": "cards",
+      "name": "Info cards",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Card 1"
+        },
+        {
+          "type": "color",
+          "id": "card_1_bg",
+          "label": "Card 1 background",
+          "default": "#000000"
+        },
+        {
+          "type": "color",
+          "id": "card_1_color",
+          "label": "Card 1 text color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "image_picker",
+          "id": "card_1_image",
+          "label": "Card 1 icon image",
+          "info": "Used if provided. Otherwise the SVG below is used."
+        },
+        {
+          "type": "html",
+          "id": "card_1_svg",
+          "label": "Card 1 icon SVG",
+          "info": "Paste raw <svg> code here."
+        },
+        {
+          "type": "text",
+          "id": "card_1_heading",
+          "label": "Card 1 heading",
+          "default": "Location"
+        },
+        {
+          "type": "richtext",
+          "id": "card_1_body",
+          "label": "Card 1 content",
+          "default": "<p>123 Example Street, Suite 1, City, State 00000</p>"
+        },
+        {
+          "type": "header",
+          "content": "Card 2"
+        },
+        {
+          "type": "color",
+          "id": "card_2_bg",
+          "label": "Card 2 background",
+          "default": "#000000"
+        },
+        {
+          "type": "color",
+          "id": "card_2_color",
+          "label": "Card 2 text color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "image_picker",
+          "id": "card_2_image",
+          "label": "Card 2 icon image",
+          "info": "Used if provided. Otherwise the SVG below is used."
+        },
+        {
+          "type": "html",
+          "id": "card_2_svg",
+          "label": "Card 2 icon SVG",
+          "info": "Paste raw <svg> code here."
+        },
+        {
+          "type": "text",
+          "id": "card_2_heading",
+          "label": "Card 2 heading",
+          "default": "Email"
+        },
+        {
+          "type": "richtext",
+          "id": "card_2_body",
+          "label": "Card 2 content",
+          "default": "<p>hello@example.com</p>"
+        }
+      ]
+    },
+    {
+      "type": "social",
+      "name": "Social media",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Our social media"
+        },
+        {
+          "type": "url",
+          "id": "social_facebook_url",
+          "label": "Facebook URL"
+        },
+        {
+          "type": "url",
+          "id": "social_instagram_url",
+          "label": "Instagram URL"
+        },
+        {
+          "type": "url",
+          "id": "social_youtube_url",
+          "label": "YouTube URL"
+        },
+        {
+          "type": "url",
+          "id": "social_tiktok_url",
+          "label": "TikTok URL"
+        },
+        {
+          "type": "url",
+          "id": "social_x_url",
+          "label": "X (Twitter) URL"
+        },
+        {
+          "type": "url",
+          "id": "social_pinterest_url",
+          "label": "Pinterest URL"
+        },
+        {
+          "type": "url",
+          "id": "social_linkedin_url",
+          "label": "LinkedIn URL"
+        }
+      ]
+    },
+    {
+      "type": "richtext",
+      "name": "Text / Disclaimer",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Content",
+          "default": "<p>Add a disclaimer or extra information here.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact",
+      "blocks": [
+        { "type": "subheading" },
+        { "type": "heading" },
+        { "type": "description" },
+        { "type": "cards" },
+        { "type": "social" },
+        { "type": "richtext" }
+      ]
+    }
+  ]
+}
+{% endschema %}

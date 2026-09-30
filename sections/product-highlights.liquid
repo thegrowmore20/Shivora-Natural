@@ -1,0 +1,120 @@
+{%- comment -%}
+  Why You'll Love It — a USP list configured once here and shown the same
+  on every product, laid out as a row of boxed cards.
+{%- endcomment -%}
+{%- assign usp_blocks = section.blocks | where: 'type', 'usp' -%}
+
+{% style %}
+  .product-highlights-{{ section.id }} .product-highlights__heading {
+    font-size: {{ section.settings.heading_size }}px;
+    margin-bottom: {{ section.settings.header_space_bottom }}px;
+    {% if section.settings.center_align %}
+      text-align: center;
+    {% endif %}  
+  }
+  @media (max-width: 749px) {
+    .product-highlights-{{ section.id }} .product-highlights__heading {
+      font-size: 32px;
+      margin-bottom: 12px;
+    }
+  }
+{% endstyle %}
+
+{%- if usp_blocks.size > 0 -%}
+  <section class="product-highlights product-highlights-{{ section.id }}">
+    <div class="container">
+      <h2 class="product-highlights__heading">{{ section.settings.usps_heading | default: "Why You'll Love It" }}</h2>
+      <div class="usp-boxes">
+        {%- for block in usp_blocks -%}
+          <div class="usp-box" {{ block.shopify_attributes }}>
+            <span class="usp-box__icon">
+              {%- if block.settings.image -%}
+                {{ block.settings.image | image_url: width: 88 | image_tag: loading: 'lazy' }}
+              {%- else -%}
+                {% render 'icon', name: 'shield' %}
+              {%- endif -%}
+            </span>
+            <h3 class="usp-box__title">{{ block.settings.title }}</h3>
+            <p class="usp-box__text">{{ block.settings.text }}</p>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Product highlights",
+  "settings": [
+    {
+      "type": "text",
+      "id": "usps_heading",
+      "label": "Heading",
+      "default": "Why You'll Love It"
+    },
+    {
+      "id": "center_align",
+      "type": "checkbox",
+      "label": "Center align",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 16,
+      "max": 56,
+      "step": 1,
+      "unit": "px",
+      "label": "Heading Size",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "header_space_bottom",
+      "min": 12,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Bottom spacing",
+      "default": 12
+    }
+  ],
+  "blocks": [
+    {
+      "type": "usp",
+      "name": "USP",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Icon image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Dermatologically Tested"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "Gentle enough for daily use, tested to be safe and effective for all skin types."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product highlights",
+      "blocks": [
+        { "type": "usp", "settings": { "title": "Dermatologically Tested", "text": "Gentle enough for daily use, tested to be safe and effective for all skin types." } },
+        { "type": "usp", "settings": { "title": "Halal Certified", "text": "Formulated and certified halal, so you can use it with complete peace of mind." } },
+        { "type": "usp", "settings": { "title": "Cruelty-Free", "text": "Never tested on animals, at any stage of formulation or production." } },
+        { "type": "usp", "settings": { "title": "Made in Pakistan", "text": "Produced locally under GMP-certified processes, for skin that knows our climate." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

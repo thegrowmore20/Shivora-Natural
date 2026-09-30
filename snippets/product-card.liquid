@@ -1,0 +1,84 @@
+{%- comment -%}
+  Accepts: product, rating (float), review_count (int)
+{%- endcomment -%}
+{%- liquid
+  assign rating = rating | default: 5.0
+  assign review_count = review_count | default: 53
+-%}
+<div class="product-card">
+  
+  {% render 'wishlist-button', product: product %}
+  <a href="{{ product.url | default: '#' }}" class="product-card__media">
+    {%- if product.featured_image -%}
+      {{ product.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: product.title }}
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag }}
+    {%- endif -%}
+    {%- if product.compare_at_price > product.price -%}
+      {% assign card_saved_amount = product.compare_at_price | minus: product.price %}
+      <span class="product-card__badge">Save {{ card_saved_amount | money | remove: '.00' }}</span>
+    {%- endif -%}
+  </a>
+  {% comment %} <button type="button" class="product-card__wishlist" aria-label="Add to wishlist">
+    {% render 'icon', name: 'heart' %}
+  </button> {% endcomment %}
+  <div class="product-card__body">
+    <h3 class="product-card__title">
+      <a href="{{ product.url | default: '#' }}">{{ product.title | default: 'DE-LUM Snail Mucin Anti-Wrinkle Cream (50gm)' }}</a>
+    </h3>
+    <div class="product-card__rating">
+      {% comment %} {% render 'star-rating', rating: rating %}
+      <span>{{ rating }} ({{ review_count }} Reviews)</span> {% endcomment %}
+      <!-- Start of Judge.me code -->
+        <div style='{{ jm_style }}' class='jdgm-widget jdgm-preview-badge' data-id='{{ product.id }}' data-auto-install='false'>
+            {{ product.metafields.judgeme.badge }}
+        </div>
+      <!-- End of Judge.me code -->
+      {% comment %} <div class="product-card__rating">
+        <div class="jdgm-widget jdgm-preview-badge" data-id="{{ product.id }}" data-auto-install="false">
+          {{ product.metafields.judgeme.badge }}
+        </div>
+
+        <span class="custom-rating-text"></span>
+      </div>
+
+      <script>
+        document.querySelectorAll('.product-card__rating .jdgm-widget').forEach(function(widget) {
+          let badge = widget.querySelector('.jdgm-prev-badge');
+
+          if (badge) {
+            let rating = parseFloat(badge.getAttribute('data-average-rating')).toFixed(1);
+            let reviews = badge.getAttribute('data-number-of-reviews');
+
+            let output = widget.parentElement.querySelector('.custom-rating-text');
+
+            if (output && rating && reviews && reviews > 0) {
+              output.innerHTML = `${rating} (${reviews} Reviews)`;
+            }
+          }
+        });
+      </script> {% endcomment %}
+    </div>
+    <p class="product-card__price">
+      <strong>{{ product.price | money | default: 'Rs.2,960.00' }}</strong>
+      {%- if product.compare_at_price > product.price -%}
+        <s>{{ product.compare_at_price | money }}</s>
+      {%- else -%}
+        <s>Rs.2,960.00</s>
+      {%- endif -%}
+    </p>
+    {%- if product != blank -%}
+      {%- form 'product', product -%}
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+        <button type="submit" class="button button--accent" {% unless product.available %}disabled{% endunless %}>
+          {% render 'icon', name: 'cart' %}
+          {%- if product.available -%} Add to Cart {%- else -%} Sold Out {%- endif -%}
+        </button>
+      {%- endform -%}
+    {%- else -%}
+      <button type="button" class="button button--accent">
+        {% render 'icon', name: 'cart' %} Add to Cart
+      </button>
+    {%- endif -%}
+  </div>
+</div>

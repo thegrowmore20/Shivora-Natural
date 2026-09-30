@@ -1,0 +1,77 @@
+{%- comment -%}
+  Uses Shopify's native product recommendations engine. The section renders
+  empty on the normal page load; assets/global.js fetches this same section
+  through the Section Rendering API (which does populate `recommendations`)
+  and swaps the result in, so the picks stay off the critical render path.
+{%- endcomment -%}
+<section
+  class="product-recommendations"
+  data-product-recommendations
+  data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ section.settings.products_to_show }}&intent=related"
+>
+  <div data-product-recommendations-target>
+    {%- if recommendations.performed and recommendations.products_count > 0 -%}
+      <div class="container">
+        <h2 class="section-heading">{{ section.settings.heading }}</h2>
+        <div class="product-grid-slider">
+          <button type="button" class="product-grid-slider__nav product-grid-slider__nav--prev" data-slider-prev aria-label="Previous products">
+            {% render 'icon', name: 'chevron-left' %}
+          </button>
+          <div class="product-grid" data-slider>
+            {%- for rec_product in recommendations.products -%}
+              <div class="product-grid__item{% if forloop.index > section.settings.initial_count %} product-grid__item--more{% endif %}">
+                {% render 'product-card', product: rec_product %}
+              </div>
+            {%- endfor -%}
+          </div>
+          <button type="button" class="product-grid-slider__nav product-grid-slider__nav--next" data-slider-next aria-label="Next products">
+            {% render 'icon', name: 'chevron-right' %}
+          </button>
+        </div>
+
+        {%- if recommendations.products_count > section.settings.initial_count -%}
+          <p class="product-recommendations__load-more">
+            <button type="button" class="button button--light" data-load-more>Load More</button>
+          </p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "People also like",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "People Also Like"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Products to show",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "initial_count",
+      "label": "Products visible before \"Load More\"",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "default": 4
+    }
+  ],
+  "presets": [
+    {
+      "name": "People also like"
+    }
+  ]
+}
+{% endschema %}

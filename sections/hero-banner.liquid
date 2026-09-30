@@ -1,0 +1,288 @@
+{% style %}
+  .hero-slider-{{ section.id }} {
+    margin-top: {{ section.settings.margin_top }}px;
+    margin-bottom: {{ section.settings.margin_bottom }}px;
+  }
+  .hero-slider,
+  .hero-slider__slide {
+    position: relative;
+    overflow:hidden;
+  }
+  .hero-slider--small {
+  height: 350px;
+}
+
+.hero-slider--medium {
+  height: 550px;
+}
+
+.hero-slider--large {
+  height: 750px;
+}
+
+.hero-slider--auto {
+  height: auto;
+}
+
+.hero-slider__slide img {
+  max-height: 100%;
+}
+.hero-slider--auto .hero-slider__slide img {
+  max-height: 80vh;
+}
+
+
+.hero-slider--small .hero-slider__slide,
+.hero-slider--medium .hero-slider__slide,
+.hero-slider--large .hero-slider__slide {
+  height: 100%;
+}
+
+
+.hero-slider--small .hero-slider__image,
+.hero-slider--medium .hero-slider__image,
+.hero-slider--large .hero-slider__image {
+  height: 100%;
+  object-fit: cover;
+}
+
+  @media (max-width: 749px) {
+    .hero-slider-{{ section.id }} {
+      margin-top: {{ section.settings.margin_top | times: 0.5 }}px;
+      margin-bottom: {{ section.settings.margin_bottom | times: 0.5 }}px;
+    }
+    .hero-slider--small {
+    height: 300px;
+  }
+
+  .hero-slider--medium {
+    height: 400px;
+  }
+
+  .hero-slider--large {
+    height: 550px;
+  }
+  }
+{% endstyle %}
+<section
+  class="hero-slider hero-slider-{{ section.id }} hero-slider--{{ section.settings.section_height }}"
+  data-hero-slider
+  data-autoplay="{{ section.settings.autoplay }}"
+  data-autoplay-speed="{{ section.settings.autoplay_speed }}"
+>
+  {%- for block in section.blocks -%}
+    {%- if block.settings.image != blank -%}
+      {%- assign loading_attr = 'lazy' -%}
+      {%- assign fetchpriority_attr = 'auto' -%}
+      {%- if forloop.first -%}
+        {%- assign loading_attr = 'eager' -%}
+        {%- assign fetchpriority_attr = 'high' -%}
+      {%- endif -%}
+      {%- assign has_content = false -%}
+      {%- if block.settings.eyebrow != blank or block.settings.heading != blank or block.settings.content != blank or block.settings.button_label != blank -%}
+        {%- assign has_content = true -%}
+      {%- endif -%}
+
+      <div class="hero-slider__slide{% if forloop.first %} is-active{% endif %}" data-hero-slide {{ block.shopify_attributes }}>
+        {%- unless has_content -%}{%- if block.settings.link != blank -%}<a href="{{ block.settings.link }}" class="hero-slider__link">{%- endif -%}{%- endunless -%}
+        {{
+          block.settings.image
+          | image_url: width: 3200
+          | image_tag:
+          loading: loading_attr,
+          fetchpriority: fetchpriority_attr,
+          widths: '750, 990, 1200, 1500, 1920, 2400, 3200',
+          alt: block.settings.image.alt,
+          class: 'hero-slider__image hero-slider__image--desktop'
+        }}
+        {%- if block.settings.image_mobile -%}
+          {{
+            block.settings.image_mobile
+            | image_url: width: 1000
+            | image_tag:
+            loading: loading_attr,
+            widths: '750, 990, 1000',
+            alt: block.settings.image_mobile.alt,
+            class: 'hero-slider__image hero-slider__image--mobile'
+          }}
+        {%- else -%}
+          {{
+            block.settings.image
+            | image_url: width: 3200
+            | image_tag:
+            loading: loading_attr,
+            widths: '750, 990, 1200, 1500, 1920, 2400, 3200',
+            alt: block.settings.image.alt,
+            class: 'hero-slider__image hero-slider__image--mobile'
+          }}
+        {%- endif -%}
+        {%- unless has_content -%}{%- if block.settings.link != blank -%}</a>{%- endif -%}{%- endunless -%}
+
+        {%- if has_content -%}
+          <div class="hero-slider__content">
+          <div class="container">
+            <div class="container hero-slider__content-inner">
+              {%- if block.settings.eyebrow != blank -%}
+                <p class="hero-slider__eyebrow">{{ block.settings.eyebrow }}</p>
+              {%- endif -%}
+              {%- if block.settings.heading != blank -%}
+                <h2 class="hero-slider__heading">{{ block.settings.heading }}</h2>
+              {%- endif -%}
+              {%- if block.settings.content != blank -%}
+                <div class="hero-slider__text">{{ block.settings.content }}</div>
+              {%- endif -%}
+              {%- if block.settings.button_label != blank -%}
+                <a href="{{ block.settings.link | default: '#' }}" class="button button--dark hero-slider__button">{{ block.settings.button_label }}</a>
+              {%- endif -%}
+
+              {% if block.settings.custom_liquid != blank %}
+                <div class="hero-slider__rating">{{ block.settings.custom_liquid }}</div>
+              {% endif %}
+
+              </div>
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  {%- endfor -%}
+
+  {%- if section.blocks.size > 1 -%}
+    <button type="button" class="hero-slider__nav hero-slider__nav--prev" data-hero-prev aria-label="Previous slide">
+      {% render 'icon', name: 'chevron-left' %}
+    </button>
+    <button type="button" class="hero-slider__nav hero-slider__nav--next" data-hero-next aria-label="Next slide">
+      {% render 'icon', name: 'chevron-right' %}
+    </button>
+
+    <div class="hero-slider__dots" data-hero-dots>
+      {%- for block in section.blocks -%}
+        <button type="button" class="hero-slider__dot{% if forloop.first %} is-active{% endif %}" data-hero-dot data-index="{{ forloop.index0 }}" aria-label="Show slide {{ forloop.index }}"></button>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Hero banner",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Autoplay slides",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "label": "Autoplay speed (seconds)",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "default": 5
+    },
+    {
+      "type": "select",
+      "id": "section_height",
+      "label": "Section height",
+      "default": "auto",
+      "options": [
+        {
+          "label": "Auto",
+          "value": "auto"
+        },
+        {
+          "label": "Small",
+          "value": "small"
+        },
+        {
+          "label": "Medium",
+          "value": "medium"
+        },
+        {
+          "label": "Large",
+          "value": "large"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "label": "Top spacing",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "label": "Bottom spacing",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_mobile",
+          "label": "Image (mobile)"
+        },
+        {
+          "type": "header",
+          "content": "Optional content overlay"
+        },
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Eyebrow text"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link",
+          "info": "Used by the button above, or as the slide's click-through link when no text content is set."
+        },
+        {
+          "id": "custom_liquid",
+          "type": "liquid",
+          "label": "Ratings"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero banner",
+      "blocks": [{ "type": "slide" }]
+    }
+  ]
+}
+{% endschema %}

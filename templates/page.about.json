@@ -1,0 +1,175 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero_banner_hAEqDK": {
+      "type": "hero-banner",
+      "blocks": {
+        "slide_ykbab6": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Hero_Banner.webp",
+            "eyebrow": "",
+            "heading": "{{ page.title }}",
+            "content": "",
+            "button_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "slide_ykbab6"
+      ],
+      "name": "Hero banner",
+      "settings": {
+        "autoplay": true,
+        "autoplay_speed": 5,
+        "section_height": "small",
+        "margin_top": 0,
+        "margin_bottom": 80
+      }
+    },
+    "split_banner_xdwAQX": {
+      "type": "split-banner",
+      "settings": {
+        "layout": "image_left",
+        "style": "light",
+        "image": "shopify://shop_images/image_26_1.png",
+        "heading": "About Shivora Naturals",
+        "subheading": "",
+        "text": "<p>Welcome to <a href=\"https://shivoranatural.com/\" title=\"Shivora Naturals\">Shivora Natural</a>, a skincare brand that promises to bring organic skincare to Pakistan at the highest possible standards. We bring forth the miracles of nature and the magic of science in one package. We are proud to be the first snail mucin-based, natural skincare brand producing its snail mucin indigenously at our organic farms in Mansehra KPK, under the umbrella of Prime Snail Mucus Pvt. Ltd. Co. <br/><br/>We at Shivora craft our products with extreme care, combining the healing power of snail mucin with contemporary scientific explorations to present a skincare package in Pakistani markets, like never before. Our extraordinary, premium-quality products promise naturally glowing and deeply hydrated skin.<br/><br/></p>",
+        "button_label": "",
+        "button_link": ""
+      }
+    },
+    "split_banner_W79QBa": {
+      "type": "split-banner",
+      "settings": {
+        "layout": "image_right",
+        "style": "accent",
+        "image": "shopify://shop_images/image_26_1.png",
+        "heading": "Our Story",
+        "subheading": "Born from a research project in Mansehra",
+        "text": "<p>Sidra Sajjad, an entrepreneur from KPK, was curious about snail farming as it was a weird concept in Pakistan. She conducted research in collaboration with Hazara University. Thus, they built the first-ever snail farm in Pakistan at Mansehra KPK. Prime Snail Mucus Pvt. Ltd. Co. produces the best snail slime globally, as the snails are raised in a completely natural environment with purely organic food. <br/><br/>Shivora Natural is a co-brand of Prime Snail Mucus. They have hired team Prime Snail Mucus to produce their premium quality skincare products with the No. 1 snail mucin around the globe. Shivora Natural’s skincare bundle, powered by Prime Snail Mucus, is the best mucin-based skincare bundle, as we use 78% pure snail mucin in our products, in contrast with other brands, which use only 5 to 10% pure mucin in their products.<br/><br/></p>",
+        "button_label": "",
+        "button_link": ""
+      }
+    },
+    "richtext_brand_promise_iJe79R": {
+      "type": "richtext-brand-promise",
+      "blocks": {
+        "heading_J6GFCP": {
+          "type": "heading",
+          "settings": {
+            "heading": "Quality, Reliability & Sustainability"
+          }
+        },
+        "text_HMXYJi": {
+          "type": "text",
+          "settings": {
+            "text": "<p>At Shivora, we believe skincare is more than just a daily routine. It is a moment of care, confidence, and nourishment for your skin.<br/><br/>As an eco-conscious beauty brand in Pakistan, we focus on delivering effective skincare solutions with minimal, recyclable, and responsible packaging.</p>"
+          }
+        },
+        "button_RLQftK": {
+          "type": "button",
+          "settings": {
+            "button_label": "Explore our Products",
+            "button_link": "shopify://collections/all"
+          }
+        }
+      },
+      "block_order": [
+        "heading_J6GFCP",
+        "text_HMXYJi",
+        "button_RLQftK"
+      ],
+      "name": "Shivora Brand Promise",
+      "settings": {
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 40,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 20
+      }
+    },
+    "product_highlights_jyTPGj": {
+      "type": "product-highlights",
+      "blocks": {
+        "usp_q9YLXb": {
+          "type": "usp",
+          "settings": {
+            "title": "Visible Results",
+            "text": "We promise visible results in a few weeks."
+          }
+        },
+        "usp_efjCim": {
+          "type": "usp",
+          "settings": {
+            "title": "Honesty, Transparency & Integrity",
+            "text": "We deliver our products with honesty, transparency, and integrity.\n."
+          }
+        },
+        "usp_BVRhjL": {
+          "type": "usp",
+          "settings": {
+            "title": "Purely Organic & Natural",
+            "text": "Free from harsh chemicals, sulfates, parabens, and artificial scents."
+          }
+        },
+        "usp_zqCrhk": {
+          "type": "usp",
+          "settings": {
+            "title": "Suitable for All Skin Types",
+            "text": "This quality makes them suitable for all skin types."
+          }
+        }
+      },
+      "block_order": [
+        "usp_q9YLXb",
+        "usp_efjCim",
+        "usp_BVRhjL",
+        "usp_zqCrhk"
+      ],
+      "settings": {
+        "usps_heading": "Why choose Shivora Naturals?",
+        "center_align": true,
+        "heading_size": 44,
+        "header_space_bottom": 32
+      }
+    },
+    "about_brand_statement_zpF7k4": {
+      "type": "about-brand-statement",
+      "name": "Brand statement",
+      "settings": {
+        "text": "Join us and embark on a journey of hydration, glow, and youthful skin, like you have never experienced before, with Shivora Natural.",
+        "button_text": "",
+        "button_url": "",
+        "button_style": "primary",
+        "padding_top_desktop": 40,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 40
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {}
+    }
+  },
+  "order": [
+    "hero_banner_hAEqDK",
+    "split_banner_xdwAQX",
+    "split_banner_W79QBa",
+    "richtext_brand_promise_iJe79R",
+    "product_highlights_jyTPGj",
+    "about_brand_statement_zpF7k4",
+    "main"
+  ]
+}

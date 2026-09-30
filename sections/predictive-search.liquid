@@ -1,0 +1,111 @@
+{%- comment -%}
+  Rendered once in layout/theme.liquid (like discount-popup), so it's on
+  every page. On its own it renders just the empty shell below; JS
+  (PredictiveSearch in assets/global.js) fetches this same section through
+  Shopify's predictive search endpoint as the visitor types, which re-renders
+  it with `predictive_search` populated, and swaps the results in.
+{%- endcomment -%}
+<div class="predictive-search__overlay" data-predictive-search-dismiss></div>
+<div
+  class="predictive-search"
+  data-predictive-search
+  data-url="{{ routes.predictive_search_url }}?section_id=predictive-search&resources[type]=product,collection,query&resources[limit]=4&resources[options][unavailable_products]=last"
+>
+  <div class="predictive-search__bar">
+    <form action="{{ routes.search_url }}" method="get" role="search" data-predictive-search-form>
+      <input type="hidden" name="type" value="product">
+      <input
+        type="search"
+        name="q"
+        class="predictive-search__input"
+        placeholder="Search"
+        autocomplete="off"
+        data-predictive-search-input
+      >
+      <button type="submit" class="predictive-search__submit" aria-label="Search">{% render 'icon', name: 'search' %}</button>
+    </form>
+    <button type="button" class="predictive-search__close" data-predictive-search-dismiss aria-label="Close search">
+      {% render 'icon', name: 'plus' %}
+    </button>
+  </div>
+
+  <div class="predictive-search__results" data-predictive-search-results>
+    {%- if predictive_search.performed -%}
+      {%- assign has_results = false -%}
+
+      {%- if predictive_search.resources.queries.size > 0 -%}
+        {%- assign has_results = true -%}
+        <div class="predictive-search__section">
+          <p class="predictive-search__section-title">Suggestions</p>
+          <div class="predictive-search__suggestions">
+            {%- for suggestion in predictive_search.resources.queries -%}
+              <a class="predictive-search__suggestion" href="{{ suggestion.url }}">{{ suggestion.styled_text }}</a>
+            {%- endfor -%}
+          </div>
+        </div>
+      {%- endif -%}
+
+      {%- if predictive_search.resources.products.size > 0 -%}
+        {%- assign has_results = true -%}
+        <div class="predictive-search__section">
+          <div class="predictive-search__section-header">
+            <p class="predictive-search__section-title">Products</p>
+            <a class="predictive-search__view-all" href="{{ routes.search_url }}?q={{ predictive_search.terms | url_encode }}&type=product">
+              View All {% render 'icon', name: 'chevron-right' %}
+            </a>
+          </div>
+          <div class="predictive-search__products">
+            {%- for product in predictive_search.resources.products -%}
+              <a class="predictive-search__product" href="{{ product.url }}">
+                <span class="predictive-search__product-image">
+                  {%- if product.featured_image -%}
+                    {{ product.featured_image | image_url: width: 160 | image_tag: loading: 'lazy' }}
+                  {%- endif -%}
+                </span>
+                <span class="predictive-search__product-info">
+                  <span class="predictive-search__product-title">{{ product.title }}</span>
+                  <span class="predictive-search__product-price">
+                    <span>{{ product.price_min | money }}</span>
+                    {%- if product.compare_at_price_min > product.price_min -%}
+                      <s>{{ product.compare_at_price_min | money }}</s>
+                    {%- endif -%}
+                  </span>
+                </span>
+              </a>
+            {%- endfor -%}
+          </div>
+        </div>
+      {%- endif -%}
+
+      {%- if predictive_search.resources.collections.size > 0 -%}
+        {%- assign has_results = true -%}
+        <div class="predictive-search__section">
+          <p class="predictive-search__section-title">Collections</p>
+          <div class="predictive-search__collections">
+            {%- for collection in predictive_search.resources.collections -%}
+              <a class="predictive-search__collection" href="{{ collection.url }}">
+                <span class="predictive-search__collection-image">
+                  {%- if collection.featured_image -%}
+                    {{ collection.featured_image | image_url: width: 160 | image_tag: loading: 'lazy' }}
+                  {%- endif -%}
+                </span>
+                <span class="predictive-search__collection-title">{{ collection.title }}</span>
+              </a>
+            {%- endfor -%}
+          </div>
+        </div>
+      {%- endif -%}
+
+      {%- unless has_results -%}
+        <p class="predictive-search__empty">No results for &ldquo;{{ predictive_search.terms }}&rdquo;</p>
+      {%- endunless -%}
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Predictive search",
+  "settings": []
+}
+{% endschema %}

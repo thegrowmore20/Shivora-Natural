@@ -1,0 +1,57 @@
+{%- comment -%}
+  Accepts: title (string), content (string, HTML), open (boolean)
+{%- endcomment -%}
+
+<div class="accordion-item{% if open %} active{% endif %}">
+    <button type="button" class="accordion-item__summary">
+        <span>{{ title }}</span>
+
+        <span class="accordion-item__icon">
+        <span class="accordion-item__icon-plus">
+            {% render 'icon', name: 'plus' %}
+        </span>
+
+        <span class="accordion-item__icon-minus">
+            {% render 'icon', name: 'minus' %}
+        </span>
+        </span>
+    </button>
+
+    <div class="accordion-item__content-wrapper">
+        <div class="accordion-item__content">
+        {{ content }}
+        </div>
+    </div>
+    </div>
+
+
+<style>
+  .accordion-item__content-wrapper {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.35s ease;
+  }
+
+  .accordion-item__summary {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    padding: 0;
+  }
+
+  .accordion-item__icon-minus {
+    display: none;
+  }
+
+  .accordion-item.active .accordion-item__icon-plus {
+    display: none;
+  }
+
+  .accordion-item.active .accordion-item__icon-minus {
+    display: inline-flex;
+  }
+</style>

@@ -1,0 +1,148 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "current": {
+    "color_primary": "#1F3A52",
+    "color_secondary": "#3B7C9C",
+    "color_dark": "#153342",
+    "color_surface": "#E7EEF2",
+    "color_background": "#FFFFFF",
+    "color_text": "#2B2B2B",
+    "color_star": "#F2A93B",
+    "font_heading": "playfair_display_n4",
+    "font_body": "poppins_n4",
+    "sections": {
+      "header": {
+        "type": "header",
+        "blocks": {
+          "shop-products": {
+            "type": "dropdown_item",
+            "settings": {
+              "label": "Shop Products",
+              "collection": "best-sellers",
+              "products_to_show": 4,
+              "view_all_label": "View all",
+              "link": "/collections/all"
+            }
+          },
+          "shop-bundles": {
+            "type": "dropdown_item",
+            "settings": {
+              "label": "Shop Bundles",
+              "collection": "bundles",
+              "products_to_show": 4,
+              "view_all_label": "View all",
+              "link": "/collections/all"
+            }
+          }
+        },
+        "block_order": [
+          "shop-products",
+          "shop-bundles"
+        ],
+        "settings": {
+          "logo": "shopify://shop_images/Logo.svg",
+          "brand_name": "",
+          "brand_subtitle": "",
+          "drawer_menu": "drawer-menu",
+          "social_instagram": "https://www.instagram.com/shivoranatural.official",
+          "social_facebook": "https://www.facebook.com/shivoranatural",
+          "social_tiktok": "https://www.tiktok.com/@shivoranatural",
+          "social_youtube": "https://www.youtube.com/@ShivoraNatural"
+        }
+      },
+      "footer": {
+        "type": "footer",
+        "blocks": {
+          "menu_JQcxn7": {
+            "type": "menu",
+            "settings": {
+              "menu_title": "Quick Links",
+              "menu": "main-footer-menu"
+            }
+          },
+          "menu_djM6Qm": {
+            "type": "menu",
+            "settings": {
+              "menu_title": "Privacy Policy",
+              "menu": "privacy-policy"
+            }
+          }
+        },
+        "block_order": [
+          "menu_JQcxn7",
+          "menu_djM6Qm"
+        ],
+        "settings": {
+          "logo": "shopify://shop_images/Logo.svg",
+          "description": "",
+          "note": "Get Extra 5% on Prepaid Order",
+          "phone": "+92 319 5072880",
+          "phone_link": "tel:+923195072880",
+          "email": "info@shivoranatural.com",
+          "email_link": "mailto:info@shivoranatural.com",
+          "facebook": "https://www.facebook.com/shivoranatural",
+          "instagram": "https://www.instagram.com/shivoranatural.official",
+          "tiktok": "https://www.tiktok.com/@shivoranatural",
+          "youtube": "https://www.youtube.com/@ShivoraNatural",
+          "pages_menu": "",
+          "help_menu": ""
+        }
+      },
+      "discount-popup": {
+        "type": "discount-popup",
+        "settings": {
+          "heading": "Get 15% Off Your First Order",
+          "subtext": "Sign up for our newsletter and get an exclusive discount code sent straight to your inbox.",
+          "discount_code": "WELCOME15",
+          "button_label": "Claim My Discount",
+          "terms_text": "Valid on your first order only. Cannot be combined with other offers."
+        }
+      },
+      "predictive-search": {
+        "type": "predictive-search",
+        "settings": {}
+      },
+      "cart-drawer": {
+        "type": "cart-drawer",
+        "settings": {
+          "upsell_collection": "offers",
+          "upsell_heading": "You may also like"
+        }
+      }
+    },
+    "content_for_index": [],
+    "blocks": {
+      "12342438634123318931": {
+        "type": "shopify://apps/xb-wishlist/blocks/xo-wishlist/cc07f1e9-907b-431d-99f8-4fce3efa75f1",
+        "disabled": false,
+        "settings": {
+          "selector_collection": "",
+          "selector_cart_item": ""
+        }
+      },
+      "13305437469741356523": {
+        "type": "shopify://apps/gsc-instagram-feed/blocks/embed/96970b1b-b770-454f-b16b-51f47e1aa4ed",
+        "disabled": false,
+        "settings": {}
+      },
+      "8208493610395315515": {
+        "type": "shopify://apps/dondy-whatsapp/blocks/app-block/7f5a70cb-e171-4cc7-ac02-e2220203abd6",
+        "disabled": false,
+        "settings": {}
+      },
+      "14060646107696862457": {
+        "type": "shopify://apps/judge-me-reviews/blocks/judgeme_core/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+        "disabled": false,
+        "settings": {}
+      }
+    }
+  }
+}

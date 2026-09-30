@@ -1,0 +1,38 @@
+<section class="cart-page">
+  <div class="container">
+    <h1 class="cart-page__heading section-heading">Your Cart</h1>
+
+    {%- if cart.item_count > 0 -%}
+      {%- form 'cart', cart -%}
+        <div class="cart-page__layout">
+          <div class="cart-page__items">
+            {%- for item in cart.items -%}
+              {%- render 'cart-line-item', item: item -%}
+            {%- endfor -%}
+          </div>
+
+          <div class="cart-page__summary">
+            <div class="cart-page__subtotal">
+              <span>Subtotal</span>
+              <strong>{{ cart.total_price | money }}</strong>
+            </div>
+            <p class="cart-page__note">Shipping and taxes calculated at checkout.</p>
+            <button type="submit" name="checkout" class="button button--accent cart-page__checkout">Checkout</button>
+          </div>
+        </div>
+      {%- endform -%}
+    {%- else -%}
+      <div class="cart-page__empty">
+        <p>Your cart is currently empty.</p>
+        <a href="{{ routes.all_products_collection_url }}" class="button button--dark">Continue Shopping</a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Cart page",
+  "settings": []
+}
+{% endschema %}

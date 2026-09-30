@@ -1,0 +1,153 @@
+{%- comment -%}
+  Purpose-built for the closing "join us on a journey..." paragraph — a
+  large centered statement rather than a paragraph block, with an optional
+  CTA button. Text default is your exact wording, unedited.
+{%- endcomment -%}
+
+{%- liquid
+  assign scheme_class = 'color-' | append: section.settings.color_scheme
+-%}
+
+<section
+  class="brand-statement {{ scheme_class }}"
+  style="
+    --padding-top-desktop: {{ section.settings.padding_top_desktop }}px;
+    --padding-bottom-desktop: {{ section.settings.padding_bottom_desktop }}px;
+    --padding-top-mobile: {{ section.settings.padding_top_mobile }}px;
+    --padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;
+  "
+>
+  <div class="container">
+    <div class="brand-statement__inner">
+      <p class="brand-statement__text">{{ section.settings.text }}</p>
+
+      {%- if section.settings.button_text != blank -%}
+        <a
+          href="{{ section.settings.button_url | default: '#' }}"
+          class="btn btn--{{ section.settings.button_style }} brand-statement__button"
+        >
+          {{ section.settings.button_text }}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .brand-statement {
+    padding-top: var(--padding-top-mobile);
+    padding-bottom: var(--padding-bottom-mobile);
+  }
+
+  @media (min-width: 750px) {
+    .brand-statement {
+      padding-top: var(--padding-top-desktop);
+      padding-bottom: var(--padding-bottom-desktop);
+    }
+  }
+
+  .brand-statement__inner {
+    max-width: 760px;
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .brand-statement__text {
+    margin: 0;
+    font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.25rem);
+    line-height: 1.3;
+  }
+
+  .brand-statement__button {
+    display: inline-flex;
+    margin-top: var(--space-6, 2rem);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Brand statement",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Statement",
+      "default": "Join us and embark on a journey of hydration, glow, and youthful skin, like you have never experienced before, with Shivora Natural."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button link"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button style",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" }
+      ],
+      "default": "primary"
+    },
+    {
+      "type": "header",
+      "content": "Padding — desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 96
+    },
+    {
+      "type": "header",
+      "content": "Padding — mobile"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 48
+    }
+  ],
+  "presets": [
+    {
+      "name": "Brand statement"
+    }
+  ]
+}
+{% endschema %}

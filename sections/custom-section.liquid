@@ -1,0 +1,128 @@
+{%- comment -%}
+App widget wrapper — a plain, lightweight section whose only job is to
+give app blocks (reviews, loyalty, UGC, etc.) the color scheme, spacing,
+and heading controls they don't bring with them on their own.
+
+Header is the "heading" theme block (blocks/heading.liquid), embedded as
+a STATIC block so it's always present/configurable but can't be dragged
+into the middle of the app-widget list or deleted by accident. The
+app-widget area itself is fully merchant-controlled via @app.
+{%- endcomment -%}
+
+	
+	{% style %}
+	#CustomSection-{{ section.id }} {
+		padding-top: {{ section.settings.padding_top_mobile }}px;
+		padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+	}
+	
+	@media screen and (min-width: 750px) {
+		#CustomSection-{{ section.id }} {
+			padding-top: {{ section.settings.padding_top }}px;
+			padding-bottom: {{ section.settings.padding_bottom }}px;
+		}
+	}
+	{% endstyle %}
+	
+	<div id="CustomSection-{{ section.id }}" class="custom-section">
+		<div {% if section.settings.width == 'page' %}class="container"{% endif %}>
+			{% content_for 'block', type: 'heading', id: 'header' %}
+			
+			<div class="custom-section__content">
+				{% content_for 'blocks' %}
+			</div>
+		</div>
+	</div>
+	
+	{% stylesheet %}
+	.custom-section {
+		display: block;
+	}
+	
+	.custom-section__content {
+		display: block;
+	}
+	
+	{% endstylesheet %}
+	
+	{% schema %}
+	{
+		"name": "Custom Section",
+		"tag": "section",
+		"settings": [
+			{
+				"type": "header",
+				"content": "Layout"
+			},
+			{
+				"type": "select",
+				"id": "width",
+				"label": "Container width",
+				"options": [
+					{ "value": "full", "label": "Full width" },
+					{ "value": "page", "label": "Page width" }
+				],
+				"default": "page"
+			},
+			{
+				"type": "header",
+				"content": "Section spacing"
+			},
+			{
+				"type": "range",
+				"id": "padding_top",
+				"label": "Padding top — desktop",
+				"min": 0,
+				"max": 120,
+				"step": 4,
+				"unit": "px",
+				"default": 48
+			},
+			{
+				"type": "range",
+				"id": "padding_bottom",
+				"label": "Padding bottom — desktop",
+				"min": 0,
+				"max": 120,
+				"step": 4,
+				"unit": "px",
+				"default": 48
+			},
+			{
+				"type": "range",
+				"id": "padding_top_mobile",
+				"label": "Padding top — mobile",
+				"min": 0,
+				"max": 80,
+				"step": 4,
+				"unit": "px",
+				"default": 32
+			},
+			{
+				"type": "range",
+				"id": "padding_bottom_mobile",
+				"label": "Padding bottom — mobile",
+				"min": 0,
+				"max": 80,
+				"step": 4,
+				"unit": "px",
+				"default": 32
+			}
+		],
+		"blocks": [
+			{
+				"type": "heading"
+			},
+			{
+				"type": "custom-liquid"
+			},
+			{
+				"type": "@app"
+			}
+		],
+		"presets": [
+			{ "name": "Custom Section" }
+		]
+	}
+	{% endschema %}
+	

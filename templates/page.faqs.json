@@ -1,0 +1,234 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page-faq",
+      "blocks": {
+        "category_4WqeQd": {
+          "type": "category",
+          "settings": {
+            "label": "SKIN TYPE"
+          }
+        },
+        "faq_yr3jFX": {
+          "type": "faq",
+          "settings": {
+            "question": "Are Shivora Natural products suitable for all skin types (dry, oily, combination)?",
+            "answer": "<p>Yes! Shivora’s formulations, like the Snail Mucin Nectar Serum and Anti‑Wrinkle Cream, are lightweight, non‑greasy, and designed to deliver hydration without clogging pores, making them suitable for dry, oily, combination, and even sensitive skin types.</p>"
+          }
+        },
+        "q1": {
+          "type": "faq",
+          "settings": {
+            "question": "Can sensitive skin use snail mucin products?",
+            "answer": "<p>Absolutely, snail mucin is naturally soothing and rarely irritates. Since Shivora’s formulas are chemical‑free and dermatologist‑approved, they’re generally gentle enough for sensitive skin.</p>"
+          }
+        },
+        "q2": {
+          "type": "faq",
+          "settings": {
+            "question": "Will Shivora products break out acne‑prone skin?",
+            "answer": "<p>Snail mucin helps support skin repair and hydration without harsh actives that can aggravate acne. However, always patch‑test if your skin is extremely reactive.</p>"
+          }
+        },
+        "category_KU9brg": {
+          "type": "category",
+          "settings": {
+            "label": "GENDER & USE"
+          }
+        },
+        "q3": {
+          "type": "faq",
+          "settings": {
+            "question": "Can men use Shivora Natural products?",
+            "answer": "<p>Yes! All products are gender‑neutral and work well on men’s skin, including for post‑shave soothing, beard conditioning, and daily hydration.</p>"
+          }
+        },
+        "faq_xr3Ljq": {
+          "type": "faq",
+          "settings": {
+            "question": "Are these products good after shaving?",
+            "answer": "<p>Yes, the hydration and soothing nature of snail mucin can calm razor irritation and help with skin healing.</p>"
+          }
+        },
+        "faq_MBeHJd": {
+          "type": "faq",
+          "settings": {
+            "question": "Is there a difference between skincare for men and women?",
+            "answer": "<p>No, both genders benefit from hydration, anti‑aging effects, and skin repair offered by snail mucin formulas like Shivora’s.</p>"
+          }
+        },
+        "category_Tr4ETm": {
+          "type": "category",
+          "settings": {
+            "label": "WEATHER & ENVIRONMENT"
+          }
+        },
+        "faq_pN3t8V": {
+          "type": "faq",
+          "settings": {
+            "question": "How do Shivora products perform in hot, humid climates (e.g., Karachi)?",
+            "answer": "<p>Snail mucin serum and gel are lightweight and non‑greasy, making them ideal for humid weather without feeling heavy or sticky.</p>"
+          }
+        },
+        "faq_UJYd3g": {
+          "type": "faq",
+          "settings": {
+            "question": "What about dry climates (e.g., Islamabad winters)?",
+            "answer": "<p>The deeply hydrating Snail Mucin Serum and Anti‑Wrinkle Cream provide intense moisture and help reduce dryness and flakiness.</p>"
+          }
+        },
+        "faq_6BUDRj": {
+          "type": "faq",
+          "settings": {
+            "question": "Can the products protect against pollution damage?",
+            "answer": "<p>While they’re not SPF, the antioxidants and repair‑supporting ingredients help defend skin from pollution stress and environmental damage when used consistently.</p>"
+          }
+        },
+        "category_XziWJD": {
+          "type": "category",
+          "settings": {
+            "label": "RANDOM / GENERAL"
+          }
+        },
+        "faq_yXjkJ4": {
+          "type": "faq",
+          "settings": {
+            "question": "What is snail mucin, and why is it used in skincare?",
+            "answer": "<p>Snail mucin is a natural secretion from snails, rich in proteins, glycolic acids, hyaluronic acid, and antioxidants. It helps hydrate, repair, and rejuvenate the skin, making it ideal for improving texture, reducing scars, and boosting overall radiance.</p>"
+          }
+        },
+        "faq_XDeXc6": {
+          "type": "faq",
+          "settings": {
+            "question": "Is snail mucin safe for all skin types?",
+            "answer": "<p>Yes. Our products are formulated to be gentle and effective for all skin types, including sensitive skin. However, we always recommend doing a patch test before full use.</p>"
+          }
+        },
+        "faq_xxxpAL": {
+          "type": "faq",
+          "settings": {
+            "question": "How is snail mucin collected at Shivora?",
+            "answer": "<p>At Shivora, we follow ethical and cruelty-free methods to collect snail mucin without harming the snails. As Pakistan’s first women-owned snail farm, we prioritize sustainable and humane practices.</p>"
+          }
+        },
+        "faq_TGw9RA": {
+          "type": "faq",
+          "settings": {
+            "question": "Do your products contain any harmful chemicals?",
+            "answer": "<p>No. Our formulations are free from parabens, sulfates, and other harmful chemicals. We use clean, skin-friendly ingredients.</p>"
+          }
+        },
+        "faq_fXE6Ht": {
+          "type": "faq",
+          "settings": {
+            "question": "Are your products suitable for men?",
+            "answer": "<p>Yes, skincare is for everyone. Shivora products are effective for all genders and skin types.</p>"
+          }
+        },
+        "faq_WETgY3": {
+          "type": "faq",
+          "settings": {
+            "question": "What results can I expect from using snail mucin products?",
+            "answer": "<p>With regular use, you may notice improved skin hydration, reduced appearance of acne scars and fine lines, and a brighter, smoother complexion.</p>"
+          }
+        },
+        "category_RcTjN7": {
+          "type": "category",
+          "settings": {
+            "label": "Shipping Information"
+          }
+        },
+        "faq_iM7ie3": {
+          "type": "faq",
+          "settings": {
+            "question": "Do you offer nationwide delivery in Pakistan?",
+            "answer": "<p>Yes, we deliver across Pakistan. Whether you're in a major city or a remote area, Shivora ensures your skincare reaches you safely.</p>"
+          }
+        },
+        "faq_xYEmPN": {
+          "type": "faq",
+          "settings": {
+            "question": "How long will it take to get my package?",
+            "answer": "<p>Standard delivery takes <strong>3–5 working days</strong>. Delivery times may vary slightly depending on your location and public holidays</p>"
+          }
+        },
+        "faq_HXCReL": {
+          "type": "faq",
+          "settings": {
+            "question": "Do you offer cash on delivery (COD)?",
+            "answer": "<p>Yes, we offer <strong>Cash on Delivery (COD)</strong> for your convenience.</p>"
+          }
+        },
+        "category_Bgm6fC": {
+          "type": "category",
+          "settings": {
+            "label": "Order & Returns"
+          }
+        },
+        "faq_gJGf3F": {
+          "type": "faq",
+          "settings": {
+            "question": "Do you accept returns?",
+            "answer": "<p>Yes, we accept returns if the product is <strong>damaged</strong>, <strong>defective</strong>, or <strong>incorrect</strong> upon delivery. To be eligible, you must contact us within <strong>48 hours</strong> of receiving your order.</p>"
+          }
+        },
+        "faq_hbQdrY": {
+          "type": "faq",
+          "settings": {
+            "question": "What products are not eligible for return?",
+            "answer": "<p>Due to hygiene reasons, we <strong>do not accept returns</strong> for used or opened skincare products unless there is a clear quality or packaging issue.</p>"
+          }
+        },
+        "faq_TfRHT9": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I get a refund?",
+            "answer": "<p>We currently offer <strong>exchange only</strong>. If your return is approved, we will replace your item or issue a store credit for your next purchase.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "category_4WqeQd",
+        "faq_yr3jFX",
+        "q1",
+        "q2",
+        "category_KU9brg",
+        "q3",
+        "faq_xr3Ljq",
+        "faq_MBeHJd",
+        "category_Tr4ETm",
+        "faq_pN3t8V",
+        "faq_UJYd3g",
+        "faq_6BUDRj",
+        "category_XziWJD",
+        "faq_yXjkJ4",
+        "faq_XDeXc6",
+        "faq_xxxpAL",
+        "faq_TGw9RA",
+        "faq_fXE6Ht",
+        "faq_WETgY3",
+        "category_RcTjN7",
+        "faq_iM7ie3",
+        "faq_xYEmPN",
+        "faq_HXCReL",
+        "category_Bgm6fC",
+        "faq_gJGf3F",
+        "faq_hbQdrY",
+        "faq_TfRHT9"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

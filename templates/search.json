@@ -1,0 +1,34 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "banner": {
+      "type": "search-banner",
+      "settings": {}
+    },
+    "grid": {
+      "type": "search-product-grid",
+      "settings": {
+        "sidebar_title": "Shop by Category",
+        "products_per_page": 12,
+        "empty_text": "No products matched your search.",
+        "prompt_text": "Enter a search term above to find products."
+      },
+      "blocks": {
+        "c1": { "type": "category", "settings": { "label": "Shop All" } },
+        "c2": { "type": "category", "settings": { "label": "Clearance Sale" } },
+        "c3": { "type": "category", "settings": { "label": "Glow Set Bundle" } },
+        "c4": { "type": "category", "settings": { "label": "Offers" } }
+      },
+      "block_order": ["c1", "c2", "c3", "c4"]
+    }
+  },
+  "order": ["banner", "grid"]
+}

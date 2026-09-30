@@ -1,0 +1,122 @@
+<footer class="footer" style="background-image: url('https://cdn.shopify.com/s/files/1/0734/7657/1376/files/Frame_15157_1.png?v=1789454306')">
+  <div class="container footer__inner">
+    <div>
+      <a href="{{ routes.root_url }}" class="footer__logo">
+        {%- if section.settings.logo -%}
+          {{ section.settings.logo | image_url: width: 185 | image_tag }}
+        {%- else -%}
+          <svg width="70" height="70" viewBox="0 0 40 40" fill="none" stroke="{{ settings.color_primary }}" stroke-width="1.6"><path d="M6 24c0 6 5 10 11 10s11-4 11-10-5-11-11-11c-4 0-7 3-7 6s3 5 6 5 5-2 5-4"/><circle cx="24" cy="10" r="2" fill="{{ settings.color_primary }}"/></svg>
+        {%- endif -%}
+      </a>
+      <p class="footer__desc">{{ section.settings.description | default: "Unlock the secrets to beautiful, glowing skin with Shivora Natural! Our skincare line is powered by Snail Mucin, a natural wonder that helps treat acne, hydrate, and repair your skin. Treat yourself to a little luxury and let your skin soak up all the hydration it craves. You're going to love the way your skin looks and feels!" }}</p>
+
+      <p class="footer__newsletter-title">NEWSLETTER SIGN UP</p>
+      {%- form 'customer', id: 'FooterNewsletterForm' -%}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <div class="footer__newsletter-form">
+          <input type="email" name="contact[email]" placeholder="Email Address" required>
+          <button type="submit">Subscribe</button>
+        </div>
+      {%- endform -%}
+
+      <p class="footer__note">{{ section.settings.note | default: 'Get Extra 5% on Prepaid Order' }}</p>
+
+      <div class="footer__contact">
+        {%- if section.settings.phone != blank -%}
+          <a href="{{ section.settings.phone_link }}">{% render 'icon', name: 'phone' %} {{ section.settings.phone }}</a> |
+        {%- endif -%}
+        {%- if section.settings.email != blank -%}
+          <a href="{{ section.settings.email_link }}">{% render 'icon', name: 'mail' %} {{ section.settings.email }}</a>
+        {%- endif -%}
+      </div>
+
+      <div class="footer__social">
+        {%- if section.settings.facebook != blank -%}<a href="{{ section.settings.facebook }}" aria-label="Facebook">{% render 'icon', name: 'facebook' %}</a>{%- endif -%}
+        {%- if section.settings.instagram != blank -%}<a href="{{ section.settings.instagram }}" aria-label="Instagram">{% render 'icon', name: 'instagram' %}</a>{%- endif -%}
+        {%- if section.settings.tiktok != blank -%}<a href="{{ section.settings.tiktok }}" aria-label="TikTok">{% render 'icon', name: 'tiktok' %}</a>{%- endif -%}
+        {%- if section.settings.youtube != blank -%}<a href="{{ section.settings.youtube }}" aria-label="YouTube">{% render 'icon', name: 'youtube' %}</a>{%- endif -%}
+      </div>
+    </div>
+
+    {% for block in section.blocks %}
+      {% if block.type == 'menu' %}
+      <div>
+        <h3 class="footer__col-title">
+          {% if block.settings.menu_title != blank %}
+            {{ block.settings.menu_title }}
+          {% else %}
+            {{ block.settings.menu.title }}
+          {% endif %}  
+        </h3>
+        <ul class="footer__links">
+          {%- for link in block.settings.menu.links -%}
+            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {%- endfor -%}
+        </ul>
+      </div>
+
+      {% comment %} <div>
+        <h3 class="footer__col-title">Help Desk</h3>
+        <ul class="footer__links">
+          {%- for link in section.settings.help_menu.links -%}
+            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {%- else -%}
+            <li><a href="{{ routes.root_url }}">About Us</a></li>
+            <li><a href="{{ routes.root_url }}">FAQ</a></li>
+            <li><a href="{{ routes.root_url }}">Shipping &amp; Returns</a></li>
+            <li><a href="{{ routes.root_url }}">Contact</a></li>
+            <li><a href="{{ routes.root_url }}">Privacy Policy</a></li>
+            <li><a href="{{ routes.root_url }}">Exchange Policy</a></li>
+            <li><a href="{{ routes.root_url }}">Shipping Policy</a></li>
+          {%- endfor -%}
+        </ul>
+      </div> {% endcomment %}
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  <div class="footer__bottom">
+    &copy; {{ 'now' | date: '%Y' }} {{ shop.name }} All Rights Reserved | Developed by <a href="https://www.thegrowmore.com" target="_blank" rel="noopener">GrowMore</a>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Logo" },
+    { "type": "textarea", "id": "description", "label": "Description" },
+    { "type": "text", "id": "note", "label": "Newsletter note", "default": "Get Extra 5% on Prepaid Order" },
+    { "type": "text", "id": "phone", "label": "Phone", "default": "+92 319 5072880" },
+    { "type": "url", "id": "phone_link", "label": "Phone link" },
+    { "type": "text", "id": "email", "label": "Email", "default": "info@shivoranatural.com" },
+    { "type": "url", "id": "email_link", "label": "Email link" },
+    { "type": "url", "id": "facebook", "label": "Facebook URL" },
+    { "type": "url", "id": "instagram", "label": "Instagram URL" },
+    { "type": "url", "id": "tiktok", "label": "TikTok URL" },
+    { "type": "url", "id": "youtube", "label": "YouTube URL" },
+    { "type": "link_list", "id": "pages_menu", "label": "Pages menu" },
+    { "type": "link_list", "id": "help_menu", "label": "Help desk menu" }
+  ],
+  "blocks": [
+    {
+      "type": "menu",
+      "name": "Menu",
+      "limit": 2,
+      "settings": [
+        {
+          "type": "text",
+          "id": "menu_title",
+          "label": "Menu Title",
+          "info": "Leave blank to show navigation title"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,14 @@
+{%- doc -%}
+  Renders the header wishlist button as its own header item so it can be ordered
+  independently (e.g. before the search icon)
+
+  @example
+  {% render 'header-wishlist' %}
+{%- enddoc -%}
+<div class="wishtlist-wrapper-header">
+  <div class="wishtlist-wrapper header-actions__action action__cart hover-icon-scale">
+    <xb-wishlist-header class='header-icon-btn xb-wishlist_header'>
+      <span class='xb-product-quantity xb-product-quantity--top-right'></span>
+    </xb-wishlist-header>
+  </div>
+</div>

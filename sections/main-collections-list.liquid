@@ -1,0 +1,99 @@
+<section class="collections-section collections-listing-page">
+	<div class="container">
+		
+		<h1 class="section-heading">
+			{{ section.settings.heading | default: 'Collections' }}
+		</h1>
+		
+		{%- paginate collections by section.settings.collections_per_page -%}
+			<div class="collections-grid main-collection-list">
+				
+				
+				{%- for collection in collections -%}
+					
+					<a class="collection-card" href="{{ collection.url }}">
+						
+						<span class="collection-card__media">
+							{%- if collection.featured_image -%}
+								{{ collection.featured_image 
+									| image_url: width: 600 
+									| image_tag: loading: 'lazy' 
+								}}
+							{%- else -%}
+								{{ 'collection-1' | placeholder_svg_tag }}
+							{%- endif -%}
+						</span>
+						
+						<span class="collection-card__title">
+							{{ collection.title }}
+						</span>
+						
+					</a>
+					
+				{%- endfor -%}
+			</div>
+			
+			{% if paginate.pages > 1 %}
+				<nav class="pagination" aria-label="Pagination">
+					{%- if paginate.previous -%}
+						<a class="pagination__link" href="{{ paginate.previous.url }}" aria-label="Previous page">{% render 'icon', name: 'chevron-left' %}</a>
+					{%- endif -%}
+					{%- for part in paginate.parts -%}
+						{%- if part.is_link -%}
+							<a class="pagination__link" href="{{ part.url }}">{{ part.title }}</a>
+						{%- else -%}
+							<span class="pagination__link{% if part.title == paginate.current_page %} is-current{% endif %}">{{ part.title }}</span>
+						{%- endif -%}
+					{%- endfor -%}
+					{%- if paginate.next -%}
+						<a class="pagination__link" href="{{ paginate.next.url }}" aria-label="Next page">{% render 'icon', name: 'chevron-right' %}</a>
+					{%- endif -%}
+				</nav>
+			{% endif %}
+			
+		{%- endpaginate -%}
+		
+	</div>
+</section>
+
+<style>
+	.main-collection-list .collection-card__media {
+		display: block;
+	}
+	.main-collection-list.collections-grid {
+		display: grid
+	}
+	@media (max-width: 749px) {
+		.collections-listing-page .container {
+			padding-inline: 20px;
+		}
+	}
+</style>    
+
+{% schema %}
+{
+	"name": "Collection List Page",
+	"settings": [
+		{
+			"type": "text",
+			"id": "heading",
+			"label": "Heading",
+			"default": "Collections"
+		},
+		{
+			"type": "range",
+			"id": "collections_per_page",
+			"label": "Collections per page",
+			"min": 4,
+			"max": 48,
+			"step": 4,
+			"default": 12
+		}
+	],
+	"presets": [
+		{
+			"name": "Collection List Page"
+		}
+	]
+}
+{% endschema %}

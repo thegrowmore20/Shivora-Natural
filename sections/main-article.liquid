@@ -1,0 +1,93 @@
+<article class="article">
+  <div class="container container--narrow">
+    <nav class="breadcrumb" aria-label="breadcrumb">
+      <a href="{{ routes.root_url }}">Home</a>
+      <span class="breadcrumb__sep">/</span>
+      <a href="{{ blog.url }}">{{ blog.title }}</a>
+      <span class="breadcrumb__sep">/</span>
+      <span class="breadcrumb__current">{{ article.title }}</span>
+    </nav>
+
+    <header class="article__header">
+      {%- if section.settings.show_tags and article.tags.size > 0 -%}
+        <div class="article__tags">
+          {%- for tag in article.tags -%}
+            <a class="article__tag" href="{{ blog.url }}/tagged/{{ tag | handle }}">{{ tag }}</a>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      <h1 class="article__title">{{ article.title }}</h1>
+
+      <div class="article__meta">
+        {%- if section.settings.show_author -%}
+          <span>By {{ article.author }}</span>
+        {%- endif -%}
+        {%- if section.settings.show_date -%}
+          <span>{{ article.published_at | date: '%B %d, %Y' }}</span>
+        {%- endif -%}
+      </div>
+    </header>
+
+    {%- if article.image -%}
+      <div class="article__media">
+        {{ article.image | image_url: width: 1400 | image_tag: loading: 'eager', widths: '600, 900, 1200, 1400' }}
+      </div>
+    {%- endif -%}
+
+    <div class="article__content">
+      {{ article.content }}
+    </div>
+
+    <div class="article__footer">
+      <button type="button" class="article__share" data-share data-share-title="{{ article.title | escape }}">
+        {% render 'icon', name: 'share' %} Share this post
+      </button>
+    </div>
+
+    {%- if blog.previous_article or blog.next_article -%}
+      <nav class="article__pager" aria-label="Article navigation">
+        {%- if blog.previous_article -%}
+          <a class="article__pager-link article__pager-link--prev" href="{{ blog.previous_article }}">
+            {% render 'icon', name: 'chevron-left' %}
+            <span>{{ blog.previous_article.title }}</span>
+          </a>
+        {%- else -%}
+          <span></span>
+        {%- endif -%}
+        {%- if blog.next_article -%}
+          <a class="article__pager-link article__pager-link--next" href="{{ blog.next_article }}">
+            <span>{{ blog.next_article.title }}</span>
+            {% render 'icon', name: 'chevron-right' %}
+          </a>
+        {%- endif -%}
+      </nav>
+    {%- endif -%}
+  </div>
+</article>
+
+{% schema %}
+{
+  "name": "Article",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_author",
+      "label": "Show author",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_date",
+      "label": "Show publish date",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tags",
+      "label": "Show tags",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

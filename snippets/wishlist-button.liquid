@@ -1,0 +1,77 @@
+{%- doc -%}
+  Renders the XB Wishlist add/remove control.
+
+  The app's script binds to the `xb-wishlist__add` / `xb-wishlist__remove` elements and
+  toggles which of the two is visible, so both are always rendered here.
+
+  @param {object} [product] - The product to wishlist.
+  @param {object} [card_product] - Alternative to `product`, for the card contexts that
+    already use this name. Whichever is passed, the button renders the same markup.
+
+  @example
+  {% render 'wishtlist-button', product: closest.product %}
+{%- enddoc -%}
+
+{%- liquid
+  assign wishlist_product = product | default: card_product
+  assign variant_id = wishlist_product.selected_or_first_available_variant.id
+-%}
+
+{%- if wishlist_product != blank -%}
+  <script src="{{ 'wishlist-reveal.js' | asset_url }}" defer></script>
+  <div class="custom-wishlist-button">
+    <div class="xb-wishlist__btn-custom">
+      <div
+        class="xb-wishlist__add"
+        xb-product-id="{{ wishlist_product.id }}"
+        xb-product-title="{{ wishlist_product.title | escape }}"
+        xb-product-variant="{{ variant_id }}"
+        xb-is-in-stock="{{ wishlist_product.available }}"
+        xb-product-handle="{{ wishlist_product.handle }}"
+      >
+        <button type="button" aria-label="{{ 'accessibility.add_to_wishlist' | t }}">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+          </svg>
+        </button>
+      </div>
+
+      <div
+        class="xb-wishlist__remove"
+        xb-product-id="{{ wishlist_product.id }}"
+        xb-is-in-stock="{{ wishlist_product.available }}"
+        xb-product-variant="{{ variant_id }}"
+      >
+        <button type="button" aria-label="{{ 'accessibility.remove_from_wishlist' | t }}">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+{%- endif -%}

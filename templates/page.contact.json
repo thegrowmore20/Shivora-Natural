@@ -1,0 +1,165 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero_banner_rjgHgT": {
+      "type": "hero-banner",
+      "blocks": {
+        "slide_aBygT9": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Frame_15157_1.png",
+            "eyebrow": "",
+            "heading": "Contact",
+            "content": "",
+            "button_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "slide_aBygT9"
+      ],
+      "name": "Hero banner",
+      "settings": {
+        "autoplay": true,
+        "autoplay_speed": 5,
+        "section_height": "small",
+        "margin_top": 0,
+        "margin_bottom": 40
+      }
+    },
+    "contact_T7zJKC": {
+      "type": "contact",
+      "blocks": {
+        "subheading_xwHEB3": {
+          "type": "subheading",
+          "settings": {
+            "text": "Got any questions?"
+          }
+        },
+        "heading_mamETx": {
+          "type": "heading",
+          "settings": {
+            "text": "Get in touch"
+          }
+        },
+        "description_Hf9j8C": {
+          "type": "description",
+          "settings": {
+            "text": "<p>Your feedback is important to us. Whatever your needs, please don't hesitate to reach out.</p>"
+          }
+        },
+        "cards_gzXpKf": {
+          "type": "cards",
+          "settings": {
+            "card_1_bg": "#153342",
+            "card_1_color": "#ffffff",
+            "card_1_svg": "",
+            "card_1_heading": "Location",
+            "card_1_body": "<p>Office 303 Khyber Plaza Lari Ada, Mansehra</p>",
+            "card_2_bg": "#153342",
+            "card_2_color": "#ffffff",
+            "card_2_svg": "",
+            "card_2_heading": "Email",
+            "card_2_body": "<p><a href=\"mailto:info@shivoranatural.com\">info@shivoranatural.com</a></p>"
+          }
+        },
+        "social_8birya": {
+          "type": "social",
+          "settings": {
+            "label": "Our social media",
+            "social_facebook_url": "https://www.facebook.com/shivoranatural",
+            "social_instagram_url": "https://www.instagram.com/shivoranatural.official",
+            "social_youtube_url": "https://www.youtube.com/@ShivoraNatural",
+            "social_tiktok_url": "https://www.tiktok.com/@shivoranatural",
+            "social_x_url": "",
+            "social_pinterest_url": "",
+            "social_linkedin_url": ""
+          }
+        },
+        "richtext_7ztHa4": {
+          "type": "richtext",
+          "settings": {
+            "text": "<p>Drop us a message, we are looking forward to your input. We are eagerly waiting to help you in your journey toward fairness and glow.  Stay Connected and Glow Naturally with Shivora Natural.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "subheading_xwHEB3",
+        "heading_mamETx",
+        "description_Hf9j8C",
+        "cards_gzXpKf",
+        "social_8birya",
+        "richtext_7ztHa4"
+      ],
+      "name": "Contact",
+      "settings": {
+        "show_left_content": true,
+        "form_heading": "Contact Us",
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20
+      }
+    },
+    "custom_section_rwhbCR": {
+      "type": "custom-section",
+      "blocks": {
+        "custom_liquid_Ya4zTC": {
+          "type": "custom-liquid",
+          "name": "Custom Liquid",
+          "settings": {
+            "custom_liquid": "<div style=\"position:relative;width:100%;max-width:100%;margin:0 auto;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.15);border:1px solid rgba(0,0,0,0.06);\">\n  <iframe\n    src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d26351.47994777023!2d73.16524711083983!3d34.352132499999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38de3dcba2134779%3A0x97fb345c2ddb0027!2sKhyber%20Plaza!5e0!3m2!1sen!2sus!4v1787139640124!5m2!1sen!2sus\"\n    width=\"100%\"\n    height=\"500\"\n    style=\"border:0;display:block;\"\n    allowfullscreen=\"\"\n    loading=\"lazy\"\n    referrerpolicy=\"strict-origin-when-cross-origin\">\n  </iframe>\n</div>"
+          },
+          "blocks": {}
+        },
+        "header": {
+          "type": "heading",
+          "static": true,
+          "settings": {
+            "heading": "",
+            "heading_size_desktop": 28,
+            "heading_size_mobile": 20,
+            "subheading": "",
+            "subheading_link": "",
+            "subheading_icon_start": "",
+            "subheading_icon_end": "",
+            "description": "",
+            "header_spacing_bottom": 32
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "custom_liquid_Ya4zTC"
+      ],
+      "name": "Custom Section",
+      "settings": {
+        "width": "page",
+        "padding_top": 40,
+        "padding_bottom": 80,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 40
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {}
+    }
+  },
+  "order": [
+    "hero_banner_rjgHgT",
+    "contact_T7zJKC",
+    "custom_section_rwhbCR",
+    "main"
+  ]
+}

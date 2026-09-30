@@ -1,0 +1,111 @@
+<section class="reviews-section">
+  <div class="container">
+    <h2 class="section-heading">{{ section.settings.heading | default: 'Why do People Love Shivora Natural?' }}</h2>
+
+    <div class="reviews-summary">
+      <div class="reviews-summary__score">
+        <div class="stars">{% render 'star-rating', rating: section.settings.average_rating %}</div>
+        <p>{{ section.settings.average_rating | default: 4.7 }} out of 5</p>
+        <span>Based on {{ section.settings.review_count | default: 3597 }} reviews</span>
+      </div>
+
+      <div class="reviews-summary__bars">
+        {%- assign bar_data = '5.0,1234|4.0,500|3.0,100|2.0,40|1.0,10' | split: '|' -%}
+        {%- assign max_count = 1234 -%}
+        {%- for row in bar_data -%}
+          {%- assign parts = row | split: ',' -%}
+          {%- assign score = parts[0] -%}
+          {%- assign count = parts[1] | times: 1 -%}
+          {%- assign pct = count | times: 100.0 | divided_by: max_count | round -%}
+          <div class="rating-bar">
+            <span>{{ score }} {% render 'icon', name: 'star' %}</span>
+            <span class="rating-bar__track"><span class="rating-bar__fill" style="width:{{ pct }}%;"></span></span>
+            <span>{{ count }}</span>
+          </div>
+        {%- endfor -%}
+      </div>
+
+      <div class="reviews-summary__cta">
+        <a href="#" class="button button--accent">Write a Review</a>
+      </div>
+    </div>
+
+    <div class="reviews-grid">
+      {%- for block in section.blocks -%}
+        <div class="review-card" {{ block.shopify_attributes }}>
+          <div class="review-card__media">
+            {%- if block.settings.image -%}
+              {{ block.settings.image | image_url: width: 500 | image_tag: loading: 'lazy' }}
+            {%- else -%}
+              {{ 'product-2' | placeholder_svg_tag }}
+            {%- endif -%}
+          </div>
+          <div class="review-card__body">
+            <p class="review-card__name">{{ block.settings.name }}</p>
+            <p class="review-card__date">{{ block.settings.date }}</p>
+            <div class="review-card__stars">{% render 'star-rating', rating: block.settings.rating %} {{ block.settings.rating }}</div>
+            <p class="review-card__text">{{ block.settings.text }}</p>
+            <div class="review-card__product">
+              {%- if block.settings.product_image -%}
+                {{ block.settings.product_image | image_url: width: 80 | image_tag: loading: 'lazy' }}
+              {%- endif -%}
+              <span>{{ block.settings.product_name }}</span>
+            </div>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Reviews",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Why do People Love Shivora Natural?"
+    },
+    {
+      "type": "number",
+      "id": "average_rating",
+      "label": "Average rating",
+      "default": 4.7
+    },
+    {
+      "type": "number",
+      "id": "review_count",
+      "label": "Review count",
+      "default": 3597
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Review image" },
+        { "type": "text", "id": "name", "label": "Name", "default": "Sobia R." },
+        { "type": "text", "id": "date", "label": "Date", "default": "2 January 2026" },
+        { "type": "number", "id": "rating", "label": "Rating", "default": 5 },
+        { "type": "textarea", "id": "text", "label": "Review text", "default": "My skin looks more hydrated and fresh. It also helps fade dark spots and gives a healthy glow." },
+        { "type": "image_picker", "id": "product_image", "label": "Product thumbnail" },
+        { "type": "text", "id": "product_name", "label": "Product name", "default": "DE-LUM Snail Mucin Anti-Wrinkle Cream (50gm)" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Reviews",
+      "blocks": [
+        { "type": "review" },
+        { "type": "review" },
+        { "type": "review" },
+        { "type": "review" }
+      ]
+    }
+  ]
+}
+{% endschema %}

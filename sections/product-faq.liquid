@@ -1,0 +1,109 @@
+{%- comment -%}
+  Reads product.metafields.custom.faqs and handles two possible field
+  types, since either works with this markup:
+    - List of metaobjects (a "FAQ" metaobject with "question"/"answer"
+      fields) — renders one accordion item per entry.
+    - A single text/rich text field — rendered as one accordion item using
+      the section heading as its title.
+  Leave the metafield empty on a product to hide this section for it.
+{%- endcomment -%}
+
+
+
+{%- assign faqs = product.metafields.custom.faqs.value -%}
+
+{%- if faqs != blank -%}
+  <section class="product-faq">
+    <div class="container container--narrow">
+      <h2 class="section-heading">{{ section.settings.heading | default: 'Frequently Asked Questions' }}</h2>
+      <div class="product-faq__list">
+        {%- for faq in faqs -%}
+          {% assign faq_answer = faq.answer | metafield_tag %}
+          {% render 'accordion-item-custom', title: faq.question, content: faq_answer, open: forloop.first %}
+        {%- endfor -%}
+        {% comment %} {%- if faqs.first.question -%}  
+        {%- else -%}
+          {% render 'accordion-item', title: section.settings.heading | default: 'Frequently Asked Questions', content: faqs, open: true %}
+        {%- endif -%} {% endcomment %}
+      </div>
+    </div>
+  </section>
+{%- endif -%}
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+  const accordions = document.querySelectorAll('.product-faq .accordion-item');
+
+  if (!accordions.length) return;
+
+  accordions.forEach((accordion) => {
+    const trigger = accordion.querySelector('.accordion-item__summary');
+    const wrapper = accordion.querySelector('.accordion-item__content-wrapper');
+
+    if (!trigger || !wrapper) return;
+
+
+    // Initial opened accordion
+    if (accordion.classList.contains('active')) {
+      wrapper.style.maxHeight = wrapper.scrollHeight + 'px';
+    } else {
+      wrapper.style.maxHeight = '0px';
+    }
+
+
+    trigger.addEventListener('click', function () {
+
+      const isActive = accordion.classList.contains('active');
+
+
+      // Close all others
+      accordions.forEach((item) => {
+        if (item !== accordion && item.classList.contains('active')) {
+
+          item.classList.remove('active');
+
+          const itemWrapper = item.querySelector('.accordion-item__content-wrapper');
+
+          if (itemWrapper) {
+            itemWrapper.style.maxHeight = '0px';
+          }
+        }
+      });
+
+
+      // Toggle current
+      if (isActive) {
+
+        accordion.classList.remove('active');
+        wrapper.style.maxHeight = '0px';
+
+      } else {
+
+        accordion.classList.add('active');
+        wrapper.style.maxHeight = wrapper.scrollHeight + 'px';
+
+      }
+
+    });
+  });
+});
+</script>  
+
+{% schema %}
+{
+  "name": "Product FAQ",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Frequently Asked Questions"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product FAQ"
+    }
+  ]
+}
+{% endschema %}

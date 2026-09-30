@@ -1,0 +1,62 @@
+{%- comment -%}
+  Renders a sort-by select.
+  Accepts:
+    results   - collection or search object
+    section   - parent section
+    variant   - 'toolbar' (default) or 'drawer' — controls which breakpoint it's visible on
+    id_suffix - string, keeps the id unique when rendered twice on the same page
+{%- endcomment -%}
+
+{%- liquid
+  assign variant = variant | default: 'toolbar'
+  assign id_suffix = id_suffix | default: 'Default'
+-%}
+
+<div class="sort-by sort-by--{{ variant }}">
+  <label for="SortBy-{{ section.id }}-{{ id_suffix }}" class="visually-hidden">
+    Sort by
+  </label>
+  <select
+    name="sort_by"
+    id="SortBy-{{ section.id }}-{{ id_suffix }}"
+    class="sort-by__select"
+  >
+    {%- for option in results.sort_options -%}
+      <option value="{{ option.value }}" {% if option.value == results.sort_by %}selected{% endif %}>
+        {{ option.name }}
+      </option>
+    {%- endfor -%}
+  </select>
+</div>
+
+{% stylesheet %}
+  .sort-by__select {
+    padding: var(--space-2, 0.5rem) var(--space-3, 0.75rem);
+    border: 1px solid var(--color-border, #e5e5e5);
+    border-radius: var(--radius-sm, 4px);
+    background: var(--color-background, #fff);
+    cursor: pointer;
+  }
+
+  .sort-by--drawer {
+    display: block;
+    margin-bottom: var(--space-4, 1rem);
+    width: 100%;
+  }
+
+  .sort-by--drawer .sort-by__select {
+    width: 100%;
+  }
+
+  @media (min-width: 990px) {
+    .sort-by--drawer {
+      display: none;
+    }
+  }
+
+  @media (max-width: 989px) {
+    .sort-by--toolbar {
+      display: none;
+    }
+  }
+{% endstylesheet %}

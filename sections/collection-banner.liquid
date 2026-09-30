@@ -1,0 +1,35 @@
+<section class="shop-banner">
+  {%- if section.settings.image -%}
+    {{ section.settings.image | image_url: width: 2000 | image_tag: loading: 'eager', class: 'shop-banner__image' }}
+  {%- elsif collection.featured_image -%}
+    {{ collection.featured_image | image_url: width: 2000 | image_tag: loading: 'eager', class: 'shop-banner__image' }}
+  {%- endif -%}
+
+  <div class="shop-banner__content{% if section.settings.image or collection.featured_image %} shop-banner__content--overlay{% endif %}">
+    <div class="container">
+      <h1 class="shop-banner__heading">{{ collection.title }}</h1>
+      {%- if collection.description != blank -%}
+        <div class="shop-banner__text">{{ collection.description }}</div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collection banner",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Custom banner image",
+      "info": "Falls back to the collection's own image when left empty"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection banner"
+    }
+  ]
+}
+{% endschema %}

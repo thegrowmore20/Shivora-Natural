@@ -1,0 +1,46 @@
+<section class="error-404">
+  <div class="container container--narrow">
+    <p class="error-404__code">{{ section.settings.code | default: '404' }}</p>
+    <h1 class="error-404__heading">{{ section.settings.heading | default: 'Page Not Found' }}</h1>
+    <p class="error-404__text">
+      {{ section.settings.text | default: "The page you're looking for doesn't exist or has been moved." }}
+    </p>
+
+    <div class="error-404__actions">
+      <a href="{{ routes.root_url }}" class="button button--dark">Return to Homepage</a>
+      <a href="{{ routes.all_products_collection_url }}" class="button button--light">Shop All Products</a>
+    </div>
+
+    <form action="{{ routes.search_url }}" method="get" class="shop-banner__search error-404__search" role="search">
+      <input type="hidden" name="type" value="product">
+      <input type="search" name="q" placeholder="Search products" aria-label="Search products">
+      <button type="submit" aria-label="Search">{% render 'icon', name: 'search' %}</button>
+    </form>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "404 page",
+  "settings": [
+    {
+      "type": "text",
+      "id": "code",
+      "label": "Code",
+      "default": "404"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Page Not Found"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Text",
+      "default": "The page you're looking for doesn't exist or has been moved."
+    }
+  ]
+}
+{% endschema %}

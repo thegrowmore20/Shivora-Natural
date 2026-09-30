@@ -1,0 +1,77 @@
+<section class="page">
+  <div class="container container--narrow">
+    <h1 class="page__title section-heading">{{ page.title | default: 'Frequently Asked Questions' }}</h1>
+
+    {%- if page.content != blank -%}
+      <div class="page__content page__content--intro">{{ page.content }}</div>
+    {%- endif -%}
+
+    <div class="page__accordions">
+      {%- for block in section.blocks -%}
+
+        {%- if block.type == 'category' -%}
+          {%- if block.settings.label != blank -%}
+            <p class="faq-section__category" {{ block.shopify_attributes }}>
+              {{ block.settings.label }}
+            </p>
+          {%- endif -%}
+
+        {%- elsif block.type == 'faq' -%}
+
+          {%- if block.settings.answer != blank -%}
+            {%- render 'accordion-item', title: block.settings.question, content: block.settings.answer -%}
+          {%- endif -%}
+
+      {% endif %}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "FAQ page",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "Question",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "Question goes here?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer"
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "name": "Category label",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Category name",
+          "default": "General"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ page",
+      "blocks": [
+        { "type": "faq" },
+        { "type": "faq" },
+        { "type": "faq" }
+      ]
+    }
+  ]
+}
+{% endschema %}

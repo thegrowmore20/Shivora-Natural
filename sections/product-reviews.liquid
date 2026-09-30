@@ -1,0 +1,127 @@
+{%- comment -%}
+  A simple, self-contained product reviews block: overall score + count,
+  a list of review cards, and a real "Write a Review" form. No review app —
+  submissions go through Shopify's native contact form (so they land as a
+  normal customer message/email you can read and then add as a block here
+  yourself), which needs no extra setup or app install.
+{%- endcomment -%}
+<section class="product-reviews">
+  <div class="container container--narrow">
+    <h2 class="section-heading">{{ section.settings.heading | default: 'Customer Reviews' }}</h2>
+
+    <div class="product-reviews__summary">
+      <div class="product-reviews__score">
+        {% render 'star-rating', rating: section.settings.average_rating %}
+        <p>{{ section.settings.average_rating }} out of 5</p>
+        <span>Based on {{ section.settings.review_count }} reviews</span>
+      </div>
+      <div data-review-form-wrapper>
+        <button type="button" class="button button--accent" data-review-form-toggle aria-expanded="false">Write a Review</button>
+
+        <div class="review-form" data-review-form hidden>
+          {%- capture review_form_id -%}ReviewForm-{{ section.id }}{%- endcapture -%}
+          {%- form 'contact', id: review_form_id -%}
+            {%- if form.posted_successfully? -%}
+              <p class="review-form__success">Thanks! Your review has been sent for the team to review.</p>
+            {%- else -%}
+              <input type="hidden" name="contact[Product]" value="{{ product.title }} ({{ product.url | prepend: request.origin }})">
+              <input type="hidden" name="contact[Subject]" value="New product review: {{ product.title }}">
+
+              <fieldset class="review-form__rating">
+                <legend>Your Rating</legend>
+                <div class="star-input">
+                  {%- for i in (1..5) reversed -%}
+                    <input type="radio" name="contact[Rating]" id="ReviewRating-{{ section.id }}-{{ i }}" value="{{ i }}" {% if i == 5 %}checked{% endif %}>
+                    <label for="ReviewRating-{{ section.id }}-{{ i }}" aria-label="{{ i }} stars">{% render 'icon', name: 'star' %}</label>
+                  {%- endfor -%}
+                </div>
+              </fieldset>
+
+              <div class="review-form__row">
+                <label for="ReviewName-{{ section.id }}">Name</label>
+                <input type="text" id="ReviewName-{{ section.id }}" name="contact[name]" required>
+              </div>
+
+              <div class="review-form__row">
+                <label for="ReviewEmail-{{ section.id }}">Email (optional)</label>
+                <input type="email" id="ReviewEmail-{{ section.id }}" name="contact[email]">
+              </div>
+
+              <div class="review-form__row">
+                <label for="ReviewBody-{{ section.id }}">Your Review</label>
+                <textarea id="ReviewBody-{{ section.id }}" name="contact[body]" rows="4" required></textarea>
+              </div>
+
+              <button type="submit" class="button button--dark">Submit Review</button>
+            {%- endif -%}
+          {%- endform -%}
+        </div>
+      </div>
+    </div>
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="product-reviews__list">
+        {%- for block in section.blocks -%}
+          <div class="product-review" {{ block.shopify_attributes }}>
+            <div class="product-review__header">
+              <span class="product-review__name">{{ block.settings.name }}</span>
+              {% render 'star-rating', rating: block.settings.rating %}
+            </div>
+            {%- if block.settings.date != blank -%}
+              <p class="product-review__date">{{ block.settings.date }}</p>
+            {%- endif -%}
+            <p class="product-review__text">{{ block.settings.text }}</p>
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product reviews",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Customer Reviews"
+    },
+    {
+      "type": "number",
+      "id": "average_rating",
+      "label": "Average rating",
+      "default": 4.7
+    },
+    {
+      "type": "number",
+      "id": "review_count",
+      "label": "Review count",
+      "default": 34
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        { "type": "text", "id": "name", "label": "Name", "default": "Happy Customer" },
+        { "type": "text", "id": "date", "label": "Date" },
+        { "type": "number", "id": "rating", "label": "Rating", "default": 5 },
+        { "type": "textarea", "id": "text", "label": "Review text" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product reviews",
+      "blocks": [
+        { "type": "review" },
+        { "type": "review" },
+        { "type": "review" }
+      ]
+    }
+  ]
+}
+{% endschema %}

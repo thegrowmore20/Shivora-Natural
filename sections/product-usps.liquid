@@ -1,0 +1,75 @@
+{%- comment -%}
+  This section lives on the shared product.json template, so the blocks you
+  configure here in the theme editor appear identically on every product page.
+{%- endcomment -%}
+<section class="product-usps">
+  <div class="container">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="section-heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    <div class="product-usps__grid">
+      {%- for block in section.blocks -%}
+        <div class="product-usps__item" {{ block.shopify_attributes }}>
+          {%- if block.settings.image -%}
+            <span class="product-usps__icon">
+              {{ block.settings.image | image_url: width: 88 | image_tag: loading: 'lazy' }}
+            </span>
+          {%- endif -%}
+          <h3 class="product-usps__title">{{ block.settings.title }}</h3>
+          <p class="product-usps__text">{{ block.settings.text }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product USPs",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Why You'll Love It"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "usp",
+      "name": "USP",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Icon image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Dermatologically Tested"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "Gentle enough for daily use, tested to be safe and effective for all skin types."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product USPs",
+      "blocks": [
+        { "type": "usp", "settings": { "title": "Dermatologically Tested", "text": "Gentle enough for daily use, tested to be safe and effective for all skin types." } },
+        { "type": "usp", "settings": { "title": "Halal Certified", "text": "Formulated and certified halal, so you can use it with complete peace of mind." } },
+        { "type": "usp", "settings": { "title": "Cruelty-Free", "text": "Never tested on animals, at any stage of formulation or production." } },
+        { "type": "usp", "settings": { "title": "Made in Pakistan", "text": "Produced locally under GMP-certified processes, for skin that knows our climate." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

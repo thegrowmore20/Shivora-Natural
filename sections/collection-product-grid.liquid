@@ -1,0 +1,326 @@
+{%- comment -%}
+  Structure below matches your original: <section class="shop-section">
+  wrapping <div class="container shop-layout"> with category-sidebar first,
+  then .shop-main. New pieces: an overlay for the mobile drawer, a toolbar
+  above the grid (filter toggle + count + sort), and the pagination markup
+  wrapped in an always-rendered id'd div — see the comment above it for why
+  that specific wrapper can't be conditional.
+{%- endcomment -%}
+<section class="shop-section{% if section.settings.mobile_columns %} shop-section--mobile-cols-{{ section.settings.mobile_columns }}{% endif %}" data-section-id="{{ section.id }}">
+  <div class="container shop-layout">
+    {%- comment -%} NEW: backdrop for the mobile filter drawer {%- endcomment -%}
+    <div class="shop-sidebar-overlay" data-sidebar-close></div>
+
+    {% render 'category-sidebar', title: section.settings.sidebar_title, blocks: section.blocks, results: collection, section: section %}
+
+    <div class="shop-main">
+
+      <div class="mobile-collection-tabs">
+        {% for link in section.settings.tabs_menu.links %}
+          {%- if link.type == 'collection_link' and link.object -%}
+            {%- assign link_count = link.object.all_products_count | default: link.object.products_count -%}
+          {%- endif -%}
+          <a href="{{ link.url }}" data-count="{{ link_count }}" {% if link.current %}class="active-tab"{% endif %}>
+            {% if link.handle == 'devices' %}{% render 'icon-tab-devices' %}{% elsif link.handle == 'accessories' %}{% render 'icon-tab-accessories' %}{% endif %}
+            <span>{{ link.title }}{% if link_count != blank %}<span class="collection-tabs-count">&nbsp;({{ link_count }})</span>{% endif %}</span>
+          </a>
+        {% endfor %}
+      </div>
+
+      {%- paginate collection.products by section.settings.products_per_page -%}
+
+        {%- comment -%} NEW: toolbar — filter-toggle (mobile) + count + sort (desktop) {%- endcomment -%}
+        <div class="shop-toolbar" id="ShopToolbar-{{ section.id }}">
+          <button
+            type="button"
+            class="button button--light shop-toolbar__filter-toggle"
+            aria-expanded="false"
+            aria-controls="ShopSidebar-{{ section.id }}"
+          >
+            Filter
+            <span class="filter-toggle-icon">
+              <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9.375 3.125C8.56687 3.125 7.87813 3.6525 7.61688 4.375H2.5V5.625H7.6175C7.87812 6.3475 8.56687 6.875 9.375 6.875C10.1831 6.875 10.8719 6.3475 11.1331 5.625H17.5V4.375H11.1325C10.8719 3.6525 10.1838 3.125 9.375 3.125ZM9.375 4.375C9.72687 4.375 10 4.64875 10 5C10 5.35188 9.72625 5.625 9.375 5.625C9.02313 5.625 8.75 5.35125 8.75 5C8.75 4.64812 9.02375 4.375 9.375 4.375ZM13.75 8.125C12.9419 8.125 12.2531 8.6525 11.9919 9.375H2.5V10.625H11.9925C12.2531 11.3475 12.9419 11.875 13.75 11.875C14.5581 11.875 15.2469 11.3475 15.5081 10.625H17.5V9.375H15.5075C15.2469 8.6525 14.5581 8.125 13.75 8.125ZM13.75 9.375C14.1019 9.375 14.375 9.64875 14.375 10C14.375 10.3519 14.1012 10.625 13.75 10.625C13.3981 10.625 13.125 10.3513 13.125 10C13.125 9.64813 13.3988 9.375 13.75 9.375ZM6.875 13.125C6.06687 13.125 5.37813 13.6525 5.11688 14.375H2.5V15.625H5.1175C5.37812 16.3475 6.06687 16.875 6.875 16.875C7.68313 16.875 8.37187 16.3475 8.63312 15.625H17.5V14.375H8.6325C8.37188 13.6525 7.68313 13.125 6.875 13.125ZM6.875 14.375C7.22687 14.375 7.5 14.6488 7.5 15C7.5 15.3519 7.22625 15.625 6.875 15.625C6.52313 15.625 6.25 15.3512 6.25 15C6.25 14.6481 6.52375 14.375 6.875 14.375Z" fill="currentColor"></path>
+              </svg>
+            </span>
+          </button>
+
+          <p class="shop-count body-text text-muted">
+            {{ collection.products_count }} Products
+          </p>
+
+          {%- if section.settings.enable_sorting -%}
+            {%- render 'sort-by', results: collection, section: section, variant: 'toolbar', id_suffix: 'Toolbar' -%}
+          {%- endif -%}
+        </div>
+
+        {%- comment -%}
+          Grid container is now separate from the empty-state check inside it
+          rather than wrapping both grid+pagination in one if/else like the
+          original — needed so this container always exists as a stable AJAX
+          swap target. Functionally identical when there are 0 products:
+          paginate.pages is then <= 1, so the pagination wrapper below still
+          renders empty either way.
+        {%- endcomment -%}
+        <div id="ShopProductGridContainer-{{ section.id }}" aria-live="polite">
+          {%- if collection.products.size > 0 -%}
+            <div class="product-grid" id="ShopProductGrid-{{ section.id }}">
+              {%- for product in collection.products -%}
+                {% render 'product-card', product: product %}
+              {%- endfor -%}
+            </div>
+          {%- else -%}
+            <p class="shop-empty">{{ section.settings.empty_text | default: 'No products found in this collection.' }}</p>
+          {%- endif -%}
+        </div>
+
+        {%- comment -%}
+          This wrapper div ALWAYS renders, even with 0 pages — only its
+          contents are conditional. It must never be conditionally omitted:
+          the AJAX swap targets this element by id, and if the fetched HTML
+          didn't contain it (because a filter reduced results to one page),
+          the old stale pagination links — pointing at page 2/3 of the
+          UNFILTERED collection — would stay live and clickable, bypassing
+          whatever filter was just applied. This is the exact bug from the
+          ENSO build; same fix, same reason, ported as-is. Your pagination
+          markup itself (classes, icon renders) is untouched.
+        {%- endcomment -%}
+        <div class="shop-pagination-wrapper" id="ShopPaginationWrapper-{{ section.id }}">
+          {%- if paginate.pages > 1 -%}
+            <nav class="pagination" aria-label="Pagination">
+              {%- if paginate.previous -%}
+                <a class="pagination__link" href="{{ paginate.previous.url }}" aria-label="Previous page">{% render 'icon', name: 'chevron-left' %}</a>
+              {%- endif -%}
+              {%- for part in paginate.parts -%}
+                {%- if part.is_link -%}
+                  <a class="pagination__link" href="{{ part.url }}">{{ part.title }}</a>
+                {%- else -%}
+                  <span class="pagination__link{% if part.title == paginate.current_page %} is-current{% endif %}">{{ part.title }}</span>
+                {%- endif -%}
+              {%- endfor -%}
+              {%- if paginate.next -%}
+                <a class="pagination__link" href="{{ paginate.next.url }}" aria-label="Next page">{% render 'icon', name: 'chevron-right' %}</a>
+              {%- endif -%}
+            </nav>
+          {%- endif -%}
+        </div>
+      {%- endpaginate -%}
+    </div>
+  </div>
+</section>
+
+<script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
+
+{% stylesheet %}
+  /* NEW: mobile drawer overlay */
+  .shop-sidebar-overlay {
+    display: none;
+  }
+
+  @media (max-width: 989px) {
+    .shop-sidebar-overlay {
+      display: block;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.4);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s ease;
+      z-index: 40;
+    }
+
+    .shop-sidebar-overlay.is-open {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+  /* NEW: toolbar */
+  .shop-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4, 1rem);
+    margin-bottom: var(--space-5, 1.5rem);
+  }
+
+  .shop-toolbar__filter-toggle {
+    display: none;
+  }
+
+  @media (max-width: 989px) {
+    .shop-toolbar__filter-toggle {
+      display: inline-flex;
+      padding: 8px 12px;
+      align-items: center;
+    }
+    .filter-toggle-icon {
+      display: inline-flex;
+      align-items: center;
+    }
+    .shop-toolbar__filter-toggle svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  .shop-count {
+    margin: 0;
+  }
+
+  /* NEW: loading state while an AJAX filter/sort request is in flight */
+  .shop-section.is-loading .shop-main {
+    opacity: 0.5;
+    pointer-events: none;
+    transition: opacity 0.15s ease;
+  }
+
+  .shop-pagination-wrapper:empty {
+    margin-top: 0;
+  }
+
+    .mobile-collection-tabs {
+    display: none;
+  }
+
+  /* Mobile: sidebar becomes an off-canvas drawer */
+  @media (max-width: 989px) {
+    .shop-section {
+      padding-top: 32px;
+    }
+    .mobile-collection-tabs {
+      display: flex;
+      width: 100%;
+      justify-content: flex-start;
+      justify-items: center;
+      margin-bottom: 12px;
+      flex-wrap: nowrap;
+      overflow: auto;
+      padding: 0 2px 5px;
+      gap: 8px;
+    }
+    .mobile-collection-tabs a {
+      width: 100%;
+      text-align: center;
+      padding: 14px;
+      border: 1px solid var(--color-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      line-height: 1;
+      white-space: nowrap;
+      color: var(--color-dark);
+      border-radius: 99px;
+    }
+    .mobile-collection-tabs a.active-tab {
+        background: var(--color-dark);
+        color: var(--color-background);
+        order: -1;
+    }
+    .mobile-collection-tabs a svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  /*
+    NEW, optional: per-section override for how many columns show below
+    589px. I don't have your global .product-grid CSS, so I can't confirm
+    whether it already forces 1 column the way ENSO's theme CSS did — if it
+    does and this doesn't take effect, add !important here (mirroring the
+    ENSO fix) or check what's actually setting it. If your grid already
+    reflows fine without this, it's harmless: the modifier class only
+    exists on .shop-section when mobile_columns is set.
+  */
+  @media (max-width: 589px) {
+    .shop-section--mobile-cols-2 .product-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .shop-section--mobile-cols-1 .product-grid {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Collection product grid",
+  "settings": [
+    {
+      "type": "text",
+      "id": "sidebar_title",
+      "label": "Sidebar title",
+      "default": "Shop by Category"
+    },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "label": "Products per page",
+      "min": 8,
+      "max": 24,
+      "step": 4,
+      "default": 12
+    },
+    {
+      "type": "text",
+      "id": "empty_text",
+      "label": "Empty state text",
+      "default": "No products found in this collection."
+    },
+    {
+      "type": "link_list",
+      "id": "tabs_menu",
+      "label": "Mobile Tabs"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_filtering",
+      "label": "Enable filters",
+      "info": "Adds real Search & Discovery filters (price, availability, etc.) below the category links.",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sorting",
+      "label": "Enable sorting",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "mobile_columns",
+      "label": "Products per row on mobile",
+      "info": "Below 589px.",
+      "options": [
+        { "value": "1", "label": "1 column" },
+        { "value": "2", "label": "2 columns" }
+      ],
+      "default": "1"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Custom label (optional)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection product grid"
+    }
+  ]
+}
+{% endschema %}

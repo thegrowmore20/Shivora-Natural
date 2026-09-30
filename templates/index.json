@@ -1,0 +1,621 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "hero-banner",
+      "blocks": {
+        "slide_9xgm78": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Main_Banner_1.webp",
+            "image_mobile": "shopify://shop_images/Mobile_1.png",
+            "eyebrow": "From our own snail farm",
+            "heading": "AUTHENTIC  SNAIL MUCUS",
+            "content": "<p>Sourced and made in Mansehra</p>",
+            "button_label": "Shop Now",
+            "link": "shopify://collections/shop-all",
+            "custom_liquid": "<div class=\"store-reviews\">\n              <!-- Start of Judge.me code -->\n              <a href='javascript:void(0)'>\n                <span data-score='{{ shop.metafields.judgeme.all_reviews_rating }}' class='jdgm-all-reviews-rating'></span>\n                <span class='jdgm-all-reviews-text__text' data-score='{{ shop.metafields.judgeme.all_reviews_rating }}' data-number-of-reviews='{{ shop.metafields.judgeme.all_reviews_count }}' data-locale='en'>\n                  {{ shop.metafields.judgeme.all_reviews_rating | round: 1 }} ({{ shop.metafields.judgeme.all_reviews_count }} reviews)\n                </span>\n              </a>  \n              <!-- End of Judge.me code -->\n<style>\n.store-reviews {\n    margin-top: 24px;\n}\n.jdgm-all-reviews-text__text {\n    font-size: 18px;\n}\n\n@media screen and (max-width:600px){\n.jdgm-all-reviews-text__text {\n    font-size: 16px;\n}\n.store-reviews {\n    margin-top: 16px;\n}\n}\n</style>\n            </div>"
+          }
+        },
+        "slide-1": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Main_Banner_2.webp",
+            "image_mobile": "shopify://shop_images/Mobile_2.png",
+            "eyebrow": "",
+            "heading": "GLASS SKIN.  GROWN IN PAKISTAN.",
+            "content": "<p>Snail mucin serum + cream, 78.5% pure, from our own farm in Mansehra.</p>",
+            "button_label": "Shop the Duo",
+            "link": "shopify://collections/bundles",
+            "custom_liquid": "<div class=\"store-reviews\">\n              <!-- Start of Judge.me code -->\n              <a href='javascript:void(0)'>\n                <span data-score='{{ shop.metafields.judgeme.all_reviews_rating }}' class='jdgm-all-reviews-rating'></span>\n                <span class='jdgm-all-reviews-text__text' data-score='{{ shop.metafields.judgeme.all_reviews_rating }}' data-number-of-reviews='{{ shop.metafields.judgeme.all_reviews_count }}' data-locale='en'>\n                  {{ shop.metafields.judgeme.all_reviews_rating | round: 1 }} ({{ shop.metafields.judgeme.all_reviews_count }} reviews)\n                </span>\n              </a>  \n              <!-- End of Judge.me code -->\n<style>\n.store-reviews {\n    margin-top: 24px;\n}\n.jdgm-all-reviews-text__text {\n    font-size: 18px;\n}\n\n@media screen and (max-width:600px){\n.jdgm-all-reviews-text__text {\n    font-size: 16px;\n}\n.store-reviews {\n    margin-top: 16px;\n}\n}\n</style>\n            </div>"
+          }
+        },
+        "slide_dwyfd6": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Main_Banner_3.webp",
+            "image_mobile": "shopify://shop_images/Mobile_3.png",
+            "eyebrow": "",
+            "heading": "",
+            "content": "",
+            "button_label": "Shop Now",
+            "link": "shopify://collections/best-sellers",
+            "custom_liquid": "<div class=\"store-reviews\">\n              <!-- Start of Judge.me code -->\n              <a href='javascript:void(0)'>\n                <span data-score='{{ shop.metafields.judgeme.all_reviews_rating }}' class='jdgm-all-reviews-rating'></span>\n                <span class='jdgm-all-reviews-text__text' data-score='{{ shop.metafields.judgeme.all_reviews_rating }}' data-number-of-reviews='{{ shop.metafields.judgeme.all_reviews_count }}' data-locale='en'>\n                  {{ shop.metafields.judgeme.all_reviews_rating | round: 1 }} ({{ shop.metafields.judgeme.all_reviews_count }} reviews)\n                </span>\n              </a>  \n              <!-- End of Judge.me code -->\n<style>\n.store-reviews {\n    margin-top: 24px;\n}\n.jdgm-all-reviews-text__text {\n    font-size: 18px;\n}\n\n@media screen and (max-width:600px){\n.jdgm-all-reviews-text__text {\n    font-size: 16px;\n}\n.store-reviews {\n    margin-top: 16px;\n}\n}\n</style>\n            </div>"
+          }
+        }
+      },
+      "block_order": [
+        "slide_9xgm78",
+        "slide-1",
+        "slide_dwyfd6"
+      ],
+      "settings": {
+        "autoplay": true,
+        "autoplay_speed": 10,
+        "section_height": "auto",
+        "margin_top": 0,
+        "margin_bottom": 0
+      }
+    },
+    "best-sellers": {
+      "type": "featured-collection",
+      "settings": {
+        "heading": "Shop Products",
+        "content": "",
+        "collection": "all-products",
+        "products_to_show": 4,
+        "padding_top": 56,
+        "padding_bottom": 56,
+        "padding_top_mobile": 28,
+        "padding_bottom_mobile": 28
+      }
+    },
+    "instagram_feed_NaRbgn": {
+      "type": "instagram-feed",
+      "blocks": {
+        "image_BcCiA6": {
+          "type": "image",
+          "settings": {
+            "link": ""
+          }
+        },
+        "image_4kdPwy": {
+          "type": "image",
+          "settings": {
+            "link": ""
+          }
+        },
+        "image_XGF8yr": {
+          "type": "image",
+          "settings": {
+            "link": ""
+          }
+        },
+        "image_QB4nb8": {
+          "type": "image",
+          "settings": {
+            "link": ""
+          }
+        },
+        "image_KXYj4W": {
+          "type": "image",
+          "settings": {
+            "link": ""
+          }
+        },
+        "image_wA7CGg": {
+          "type": "image",
+          "settings": {
+            "link": ""
+          }
+        },
+        "image_Q7cRUR": {
+          "type": "image",
+          "settings": {
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_BcCiA6",
+        "image_4kdPwy",
+        "image_XGF8yr",
+        "image_QB4nb8",
+        "image_KXYj4W",
+        "image_wA7CGg",
+        "image_Q7cRUR"
+      ],
+      "disabled": true,
+      "name": "Instagram feed",
+      "settings": {
+        "heading": "Follow Us on Instagram",
+        "handle": "@shivoranatural.official",
+        "description": "Join our community for daily skincare inspiration and an exclusive look at our science-backed creations."
+      }
+    },
+    "custom_section_hmjRCj": {
+      "type": "custom-section",
+      "blocks": {
+        "gsc_instagram_feed_instafeed_CVQnxV": {
+          "type": "shopify://apps/gsc-instagram-feed/blocks/instafeed/96970b1b-b770-454f-b16b-51f47e1aa4ed",
+          "settings": {
+            "widget_id": "GSC-haoFXNjbmyMghvL",
+            "min_height": 0
+          }
+        },
+        "header": {
+          "type": "heading",
+          "static": true,
+          "settings": {
+            "heading": "Follow Us on Instagram",
+            "heading_size_desktop": 44,
+            "heading_size_mobile": 32,
+            "subheading": "@shivoranatural.official",
+            "subheading_link": "https://www.instagram.com/shivoranatural.official",
+            "subheading_icon_start": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"25px\" height=\"25px\" viewBox=\"0 0 2500 2500\"><defs><radialGradient id=\"0\" cx=\"332.14\" cy=\"2511.81\" r=\"3263.54\" gradientUnits=\"userSpaceOnUse\"><stop offset=\".09\" stop-color=\"#fa8f21\"></stop><stop offset=\".78\" stop-color=\"#d82d7e\"></stop></radialGradient><radialGradient id=\"1\" cx=\"1516.14\" cy=\"2623.81\" r=\"2572.12\" gradientUnits=\"userSpaceOnUse\"><stop offset=\".64\" stop-color=\"#8c3aaa\" stop-opacity=\"0\"></stop><stop offset=\"1\" stop-color=\"#8c3aaa\"></stop></radialGradient></defs><path d=\"M833.4,1250c0-230.11,186.49-416.7,416.6-416.7s416.7,186.59,416.7,416.7-186.59,416.7-416.7,416.7S833.4,1480.11,833.4,1250m-225.26,0c0,354.5,287.36,641.86,641.86,641.86S1891.86,1604.5,1891.86,1250,1604.5,608.14,1250,608.14,608.14,895.5,608.14,1250M1767.27,582.69a150,150,0,1,0,150.06-149.94h-0.06a150.07,150.07,0,0,0-150,149.94M745,2267.47c-121.87-5.55-188.11-25.85-232.13-43-58.36-22.72-100-49.78-143.78-93.5s-70.88-85.32-93.5-143.68c-17.16-44-37.46-110.26-43-232.13-6.06-131.76-7.27-171.34-7.27-505.15s1.31-373.28,7.27-505.15c5.55-121.87,26-188,43-232.13,22.72-58.36,49.78-100,93.5-143.78s85.32-70.88,143.78-93.5c44-17.16,110.26-37.46,232.13-43,131.76-6.06,171.34-7.27,505-7.27s373.28,1.31,505.15,7.27c121.87,5.55,188,26,232.13,43,58.36,22.62,100,49.78,143.78,93.5s70.78,85.42,93.5,143.78c17.16,44,37.46,110.26,43,232.13,6.06,131.87,7.27,171.34,7.27,505.15s-1.21,373.28-7.27,505.15c-5.55,121.87-25.95,188.11-43,232.13-22.72,58.36-49.78,100-93.5,143.68s-85.42,70.78-143.78,93.5c-44,17.16-110.26,37.46-232.13,43-131.76,6.06-171.34,7.27-505.15,7.27s-373.28-1.21-505-7.27M734.65,7.57c-133.07,6.06-224,27.16-303.41,58.06C349,97.54,279.38,140.35,209.81,209.81S97.54,349,65.63,431.24c-30.9,79.46-52,170.34-58.06,303.41C1.41,867.93,0,910.54,0,1250s1.41,382.07,7.57,515.35c6.06,133.08,27.16,223.95,58.06,303.41,31.91,82.19,74.62,152,144.18,221.43S349,2402.37,431.24,2434.37c79.56,30.9,170.34,52,303.41,58.06C868,2498.49,910.54,2500,1250,2500s382.07-1.41,515.35-7.57c133.08-6.06,223.95-27.16,303.41-58.06,82.19-32,151.86-74.72,221.43-144.18s112.18-139.24,144.18-221.43c30.9-79.46,52.1-170.34,58.06-303.41,6.06-133.38,7.47-175.89,7.47-515.35s-1.41-382.07-7.47-515.35c-6.06-133.08-27.16-224-58.06-303.41-32-82.19-74.72-151.86-144.18-221.43S2150.95,97.54,2068.86,65.63c-79.56-30.9-170.44-52.1-303.41-58.06C1632.17,1.51,1589.56,0,1250.1,0S868,1.41,734.65,7.57\" fill=\"url(#0)\"></path><path d=\"M833.4,1250c0-230.11,186.49-416.7,416.6-416.7s416.7,186.59,416.7,416.7-186.59,416.7-416.7,416.7S833.4,1480.11,833.4,1250m-225.26,0c0,354.5,287.36,641.86,641.86,641.86S1891.86,1604.5,1891.86,1250,1604.5,608.14,1250,608.14,608.14,895.5,608.14,1250M1767.27,582.69a150,150,0,1,0,150.06-149.94h-0.06a150.07,150.07,0,0,0-150,149.94M745,2267.47c-121.87-5.55-188.11-25.85-232.13-43-58.36-22.72-100-49.78-143.78-93.5s-70.88-85.32-93.5-143.68c-17.16-44-37.46-110.26-43-232.13-6.06-131.76-7.27-171.34-7.27-505.15s1.31-373.28,7.27-505.15c5.55-121.87,26-188,43-232.13,22.72-58.36,49.78-100,93.5-143.78s85.32-70.88,143.78-93.5c44-17.16,110.26-37.46,232.13-43,131.76-6.06,171.34-7.27,505-7.27s373.28,1.31,505.15,7.27c121.87,5.55,188,26,232.13,43,58.36,22.62,100,49.78,143.78,93.5s70.78,85.42,93.5,143.78c17.16,44,37.46,110.26,43,232.13,6.06,131.87,7.27,171.34,7.27,505.15s-1.21,373.28-7.27,505.15c-5.55,121.87-25.95,188.11-43,232.13-22.72,58.36-49.78,100-93.5,143.68s-85.42,70.78-143.78,93.5c-44,17.16-110.26,37.46-232.13,43-131.76,6.06-171.34,7.27-505.15,7.27s-373.28-1.21-505-7.27M734.65,7.57c-133.07,6.06-224,27.16-303.41,58.06C349,97.54,279.38,140.35,209.81,209.81S97.54,349,65.63,431.24c-30.9,79.46-52,170.34-58.06,303.41C1.41,867.93,0,910.54,0,1250s1.41,382.07,7.57,515.35c6.06,133.08,27.16,223.95,58.06,303.41,31.91,82.19,74.62,152,144.18,221.43S349,2402.37,431.24,2434.37c79.56,30.9,170.34,52,303.41,58.06C868,2498.49,910.54,2500,1250,2500s382.07-1.41,515.35-7.57c133.08-6.06,223.95-27.16,303.41-58.06,82.19-32,151.86-74.72,221.43-144.18s112.18-139.24,144.18-221.43c30.9-79.46,52.1-170.34,58.06-303.41,6.06-133.38,7.47-175.89,7.47-515.35s-1.41-382.07-7.47-515.35c-6.06-133.08-27.16-224-58.06-303.41-32-82.19-74.72-151.86-144.18-221.43S2150.95,97.54,2068.86,65.63c-79.56-30.9-170.44-52.1-303.41-58.06C1632.17,1.51,1589.56,0,1250.1,0S868,1.41,734.65,7.57\" fill=\"url(#1)\"></path></svg>",
+            "subheading_icon_end": "",
+            "description": "",
+            "header_spacing_bottom": 32
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "gsc_instagram_feed_instafeed_CVQnxV"
+      ],
+      "name": "Instagram Feed",
+      "settings": {
+        "width": "page",
+        "padding_top": 48,
+        "padding_bottom": 48,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 32
+      }
+    },
+    "17896238492a533560": {
+      "type": "apps",
+      "blocks": {
+        "gsc_instagram_feed_instafeed_JRX3jd": {
+          "type": "shopify://apps/gsc-instagram-feed/blocks/instafeed/96970b1b-b770-454f-b16b-51f47e1aa4ed",
+          "settings": {
+            "widget_id": "GSC-haoFXNjbmyMghvL",
+            "min_height": 600
+          }
+        }
+      },
+      "block_order": [
+        "gsc_instagram_feed_instafeed_JRX3jd"
+      ],
+      "disabled": true,
+      "settings": {}
+    },
+    "chemical-free": {
+      "type": "featured-collection",
+      "settings": {
+        "heading": "Shop Bundles",
+        "content": "<p>Chemical-Free, Lab Tested Skincare Products</p>",
+        "collection": "glow-set-bundle-offer",
+        "products_to_show": 8,
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
+      }
+    },
+    "feature-product-banner": {
+      "type": "feature-product-banner",
+      "settings": {
+        "heading": "Skincare for Men",
+        "subheading": "Men deserve quality skincare—choose the best with Shivora.",
+        "image": "shopify://shop_images/image_26.png",
+        "overlay_eyebrow": "",
+        "overlay_heading": "Men Deserve Healthy Skin",
+        "overlay_text": "Skincare isn't just for women. Nourish, protect, and refresh your skin with simple daily care made for men.\n\nAchieve healthier-looking skin, improved confidence, and a fresh natural glow every day.",
+        "collection": "glow-set-bundle-offer",
+        "products_to_show": 6,
+        "products_per_view": "3"
+      }
+    },
+    "brand-story": {
+      "type": "brand-story",
+      "blocks": {
+        "reel_bXcgQw": {
+          "type": "reel",
+          "settings": {
+            "video": "shopify://files/videos/1.mp4",
+            "caption": ""
+          }
+        },
+        "reel-2": {
+          "type": "reel",
+          "settings": {
+            "video": "shopify://files/videos/IMG_0388 (1).MOV",
+            "caption": ""
+          }
+        },
+        "reel-3": {
+          "type": "reel",
+          "settings": {
+            "video": "shopify://files/videos/02 (1).mp4",
+            "caption": ""
+          }
+        },
+        "reel-4": {
+          "type": "reel",
+          "settings": {
+            "video": "shopify://files/videos/7654564c161d4f91896f122179d3eb1d.mp4",
+            "caption": ""
+          }
+        },
+        "reel-5": {
+          "type": "reel",
+          "settings": {
+            "video": "shopify://files/videos/IMG_7515 (1).MOV",
+            "caption": ""
+          }
+        },
+        "reel-6": {
+          "type": "reel",
+          "settings": {
+            "video": "shopify://files/videos/IMG_2683.mp4",
+            "caption": ""
+          }
+        }
+      },
+      "block_order": [
+        "reel_bXcgQw",
+        "reel-2",
+        "reel-3",
+        "reel-4",
+        "reel-5",
+        "reel-6"
+      ],
+      "settings": {
+        "heading": "Pakistan’s Trusted Organic Skincare Brand – Shivora Naturals",
+        "text": "<p>At Shivora Naturals, we’re proud to be recognized as one of Pakistan’s most trusted organic skincare brands. Our mission is to create safe, chemical-free, and dermatologist-approved products that actually work especially for Pakistani skin. Whether you’re dealing with dry skin during Islamabad’s cold winters or oily breakouts in Karachi’s humidity, our formulas are made to adapt to your local environment. Every product is crafted with powerful natural ingredients like snail mucin, aloe vera, and niacinamide, all chosen for their proven benefits. Made in Pakistan with GMP-certified processes and cruelty-free ethics, Shivora Naturals is more than skincare – it’s a commitment to healthy, radiant, and naturally glowing skin. Trusted by thousands of men and women across the country, Shivora is your go-to for clean, honest, and effective beauty.</p>",
+        "button_label": "Shop Now",
+        "button_link": "/collections/all"
+      }
+    },
+    "why-trust": {
+      "type": "features-with-image",
+      "blocks": {
+        "f1": {
+          "type": "feature",
+          "settings": {
+            "image": "shopify://shop_images/Organic_7844b458-a4b0-4985-86dd-4f6f57b957a7.png",
+            "title": "Glutathione",
+            "text": "Brightens skin tone and enhances natural glow."
+          }
+        },
+        "f2": {
+          "type": "feature",
+          "settings": {
+            "image": "shopify://shop_images/Organic_2.png",
+            "title": "Made for Local Skin Needs",
+            "text": "Pure, organic, and halal-certified skincare made with nature's finest ingredients. Free from harsh chemicals for gentle, effective care."
+          }
+        },
+        "f3": {
+          "type": "feature",
+          "settings": {
+            "image": "shopify://shop_images/Organic_1.png",
+            "title": "Easy to use",
+            "text": "Science-backed skincare combining natural ingredients with proven formulas for effective results."
+          }
+        },
+        "f4": {
+          "type": "feature",
+          "settings": {
+            "image": "shopify://shop_images/skin_1.png",
+            "title": "Results You Can See",
+            "text": "Science-backed skincare combining natural ingredients with proven formulas for effective results."
+          }
+        }
+      },
+      "block_order": [
+        "f1",
+        "f2",
+        "f3",
+        "f4"
+      ],
+      "settings": {
+        "heading": "Why Pakistanis Trust Shivora for Skincare",
+        "image": "shopify://shop_images/Group_79_1.png"
+      }
+    },
+    "top-collections": {
+      "type": "collection-list",
+      "blocks": {
+        "c1": {
+          "type": "collection",
+          "settings": {
+            "collection": "all-products",
+            "image": "shopify://shop_images/image_36.png",
+            "title": "Shop All"
+          }
+        },
+        "c2": {
+          "type": "collection",
+          "settings": {
+            "collection": "clearance-sale",
+            "image": "shopify://shop_images/image_36_1.png",
+            "title": "Clearance Sale"
+          }
+        },
+        "c3": {
+          "type": "collection",
+          "settings": {
+            "collection": "glow-set-bundle-offer",
+            "image": "shopify://shop_images/image_36_2.png",
+            "title": "Glow Set Bundle"
+          }
+        },
+        "c4": {
+          "type": "collection",
+          "settings": {
+            "collection": "offers",
+            "image": "shopify://shop_images/image_36_3.png",
+            "title": "Offers"
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4"
+      ],
+      "settings": {
+        "heading": "Top Collections"
+      }
+    },
+    "custom_section_keiCG8": {
+      "type": "custom-section",
+      "blocks": {
+        "judge_me_reviews_reviews_grid_widget_ABX8q3": {
+          "type": "shopify://apps/judge-me-reviews/blocks/reviews_grid_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "disabled": true,
+          "settings": {
+            "show_sample_reviews": false,
+            "review_selection": "product_reviews",
+            "products": [],
+            "filter_pinned": false,
+            "filter_featured": false,
+            "filter_custom_tags": "",
+            "show_media_only": false,
+            "display_order": "media_first",
+            "card_grouping": "per_media",
+            "columns_desktop": 3,
+            "rows_desktop": 3,
+            "columns_mobile": "2",
+            "rows_mobile": 6,
+            "show_stars": true,
+            "show_reviewer_name": true,
+            "show_review_title_on_hover_desktop": true,
+            "max_width": 1000,
+            "corner_styling": "round",
+            "card_spacing": "medium",
+            "header_text_color": "#3b7c9c",
+            "star_and_reviewer_name_color": "#3b7c9c",
+            "drop_shadow_color": "#3b7c9c",
+            "overlay_and_background_color": "#3b7c9c",
+            "content_color": "#3b7c9c",
+            "header_text": "",
+            "show_average_rating": true,
+            "rating_display": "show_avg_text"
+          }
+        },
+        "judge_me_reviews_review_widget_homepage_fjBDQH": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget_homepage/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "product": "de-lum-snail-mucin-eye-gel",
+            "review_data": "real_data",
+            "max_width": 1200
+          }
+        },
+        "header": {
+          "type": "heading",
+          "static": true,
+          "settings": {
+            "heading": "Why do People Love Shivora Natural?",
+            "heading_size_desktop": 44,
+            "heading_size_mobile": 32,
+            "subheading": "",
+            "subheading_link": "",
+            "subheading_icon_start": "",
+            "subheading_icon_end": "",
+            "description": "",
+            "header_spacing_bottom": 32
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_reviews_grid_widget_ABX8q3",
+        "judge_me_reviews_review_widget_homepage_fjBDQH"
+      ],
+      "custom_css": [
+        "#ThemeHeading-ASUc2VXR0Zk9PKzQyT__header {margin: 0;}",
+        ".jm-stack.jm-stack--space-400.jdgm-reviews-grid-widget {padding: 0;}",
+        "p.jm-text.jm-text--align-center.jm-grid-header__text {display: none;}",
+        "button.jm-show-more-button {color: #3b7c9c !important;}"
+      ],
+      "name": "Custom Section",
+      "settings": {
+        "width": "page",
+        "padding_top": 64,
+        "padding_bottom": 64,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 32
+      }
+    },
+    "reviews": {
+      "type": "reviews",
+      "blocks": {
+        "r1": {
+          "type": "review",
+          "settings": {
+            "name": "Sobia R.",
+            "date": "2 January 2026",
+            "rating": 5,
+            "text": "My skin looks more hydrated and fresh. It also helps fade dark spots and gives a healthy glow.",
+            "product_name": "DE-LUM Snail Mucin Anti-Wrinkle Cream (50gm)"
+          }
+        },
+        "r2": {
+          "type": "review",
+          "settings": {
+            "name": "Sobia R.",
+            "date": "2 January 2026",
+            "rating": 5,
+            "text": "My skin looks more hydrated and fresh. It also helps fade dark spots and gives a healthy glow.",
+            "product_name": "DE-LUM Snail Mucin Anti-Wrinkle Cream (50gm)"
+          }
+        },
+        "r3": {
+          "type": "review",
+          "settings": {
+            "name": "Sobia R.",
+            "date": "2 January 2026",
+            "rating": 5,
+            "text": "My skin looks more hydrated and fresh. It also helps fade dark spots and gives a healthy glow.",
+            "product_name": "DE-LUM Snail Mucin Anti-Wrinkle Cream (50gm)"
+          }
+        },
+        "r4": {
+          "type": "review",
+          "settings": {
+            "name": "Sobia R.",
+            "date": "2 January 2026",
+            "rating": 5,
+            "text": "My skin looks more hydrated and fresh. It also helps fade dark spots and gives a healthy glow.",
+            "product_name": "DE-LUM Snail Mucin Anti-Wrinkle Cream (50gm)"
+          }
+        }
+      },
+      "block_order": [
+        "r1",
+        "r2",
+        "r3",
+        "r4"
+      ],
+      "disabled": true,
+      "settings": {
+        "heading": "Why do People Love Shivora Natural?",
+        "average_rating": 4.7,
+        "review_count": 3597
+      }
+    },
+    "pakistani-skin-banner": {
+      "type": "split-banner",
+      "custom_css": [
+        ".button--light {border: 2px solid #fff; transition: 0.5s all;}",
+        "a.button.button--light:hover {background: none; color: #fff;}"
+      ],
+      "settings": {
+        "layout": "image_right",
+        "style": "accent",
+        "image": "shopify://shop_images/image_26_1.png",
+        "heading": "Natural Skincare For Pakistani Skin",
+        "subheading": "Organic Skincare for Pakistani Skin – 100% Natural, Halal & Dermatologist-Approved",
+        "text": "<p>Shivora Naturals is proud to be Pakistan's first women-owned skincare brand, setting a new standard in clean, halal-certified, and organic beauty. Our mission is clear: to provide skincare that is not only safe and effective but also created with the real needs of Pakistani skin in mind. We believe your skin deserves the best without chemicals, without harmful toxins, and without compromises.</p><p>At Shivora, every product is the result of combining nature's healing power with scientific research...</p>",
+        "button_label": "Read More",
+        "button_link": "/pages/about-us"
+      }
+    },
+    "blogs": {
+      "type": "blog-posts",
+      "settings": {
+        "heading": "Blogs",
+        "blog": "shivora-naturals",
+        "view_all_label": "View all"
+      }
+    },
+    "faq-support": {
+      "type": "faq-support",
+      "blocks": {
+        "q1": {
+          "type": "faq",
+          "settings": {
+            "question": "What should I do if my order hasn't arrived?",
+            "answer": "<p>Contact our support team with your order number and we'll track it down for you right away.</p>"
+          }
+        },
+        "q2": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I change my delivery address after placing an order?",
+            "answer": "<p>Yes, as long as the order hasn't shipped yet. Reach out to us as soon as possible with the updated address.</p>"
+          }
+        },
+        "q3": {
+          "type": "faq",
+          "settings": {
+            "question": "Does Shivora Naturals provide free delivery?",
+            "answer": "<p>Free shipping is available across Pakistan on orders over PKR 30,000.</p>"
+          }
+        },
+        "q4": {
+          "type": "faq",
+          "settings": {
+            "question": "Does Shivora Naturals ship internationally?",
+            "answer": "<p>Currently we ship within Pakistan only. International shipping is coming soon.</p>"
+          }
+        },
+        "q5": {
+          "type": "faq",
+          "settings": {
+            "question": "What is the Shivora Naturals returns policy?",
+            "answer": "<p>We accept unused, unopened items within 7 days of delivery. See our Exchange Policy page for full details.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5"
+      ],
+      "settings": {
+        "eyebrow": "Support",
+        "heading": "FAQ",
+        "subtext": "Can't find what you're looking for? Reach out to our team directly.",
+        "contact_link_label": "Contact us",
+        "contact_link": "/pages/contact",
+        "card_heading": "Contact Information",
+        "phone": "",
+        "email": "",
+        "hours": "",
+        "address": "",
+        "response_time": "24h"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "best-sellers",
+    "instagram_feed_NaRbgn",
+    "custom_section_hmjRCj",
+    "17896238492a533560",
+    "chemical-free",
+    "feature-product-banner",
+    "brand-story",
+    "why-trust",
+    "top-collections",
+    "custom_section_keiCG8",
+    "reviews",
+    "pakistani-skin-banner",
+    "blogs",
+    "faq-support"
+  ]
+}

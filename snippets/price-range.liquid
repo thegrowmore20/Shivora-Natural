@@ -1,0 +1,193 @@
+{%- comment -%}
+  Renders the price filter: a dual-handle range slider synced with two
+  number inputs.
+
+  Unit fix: filter.min_value.value, filter.max_value.value and
+  filter.range_max are all returned in the shop's currency SUBUNIT (cents) —
+  the same convention as product.price. They need dividing by 100 before
+  they're usable as a number/range input's value/min/max attribute (which
+  must be a plain, locale-independent decimal — a money-formatted string
+  with a currency symbol or thousands separator isn't a valid attribute
+  value at all). Rendering the raw cents value directly here was the cause
+  of "type 30, it becomes 3000" — each round trip re-submitted whatever was
+  displayed, so it compounded on every edit.
+
+  Accepts: filter (a price_range filter object from collection.filters)
+{%- endcomment -%}
+
+{%- liquid
+  assign min_display = ''
+  assign max_display = ''
+  assign range_max_display = filter.range_max | divided_by: 100.0 | round: 2
+  if filter.min_value.value != blank
+    assign min_display = filter.min_value.value | divided_by: 100.0 | round: 2
+  endif
+  if filter.max_value.value != blank
+    assign max_display = filter.max_value.value | divided_by: 100.0 | round: 2
+  endif
+-%}
+
+<div class="price-range">
+  <div class="price-range__slider" data-price-slider>
+    <div class="price-range__track"></div>
+    <div class="price-range__track-fill"></div>
+    <input
+      type="range"
+      class="price-range__range price-range__range--min"
+      min="0"
+      max="{{ range_max_display }}"
+      step="1"
+      value="{{ min_display | default: 0 }}"
+      aria-label="{{ 'collections.filters.from' | t }}"
+    >
+    <input
+      type="range"
+      class="price-range__range price-range__range--max"
+      min="0"
+      max="{{ range_max_display }}"
+      step="1"
+      value="{{ max_display | default: range_max_display }}"
+      aria-label="{{ 'collections.filters.to' | t }}"
+    >
+  </div>
+
+  <div class="price-range__inputs">
+    <label class="visually-hidden" for="Filter-{{ filter.param_name }}-GTE">
+      {{ 'collections.filters.from' | t }}
+    </label>
+    <span class="price-range__currency">{{ cart.currency.symbol }}</span>
+    <input
+      type="number"
+      class="price-range__input price-range__input--min"
+      name="{{ filter.min_value.param_name }}"
+      id="Filter-{{ filter.param_name }}-GTE"
+      value="{{ min_display }}"
+      placeholder="0"
+      min="0"
+      max="{{ range_max_display }}"
+      step="0.01"
+      inputmode="decimal"
+    >
+
+    <span class="price-range__separator" aria-hidden="true">&ndash;</span>
+
+    <label class="visually-hidden" for="Filter-{{ filter.param_name }}-LTE">
+      {{ 'collections.filters.to' | t }}
+    </label>
+    <span class="price-range__currency">{{ cart.currency.symbol }}</span>
+    <input
+      type="number"
+      class="price-range__input price-range__input--max"
+      name="{{ filter.max_value.param_name }}"
+      id="Filter-{{ filter.param_name }}-LTE"
+      value="{{ max_display }}"
+      placeholder="{{ range_max_display }}"
+      min="0"
+      max="{{ range_max_display }}"
+      step="0.01"
+      inputmode="decimal"
+    >
+  </div>
+</div>
+
+{% stylesheet %}
+  .price-range__slider {
+    position: relative;
+    height: 20px;
+    margin-bottom: var(--space-4, 1rem);
+  }
+
+  .price-range__track,
+  .price-range__track-fill {
+    position: absolute;
+    top: 50%;
+    height: 4px;
+    transform: translateY(-50%);
+    border-radius: 999px;
+    pointer-events: none;
+  }
+
+  .price-range__track {
+    left: 0;
+    right: 0;
+    background: var(--color-border, #e5e5e5);
+  }
+
+  .price-range__track-fill {
+    left: 0;
+    right: 0;
+    background: #1a1813;
+  }
+
+  .price-range__range {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    margin: 0;
+    background: none;
+    pointer-events: none;
+    -webkit-appearance: none;
+    appearance: none;
+    z-index: 1;
+  }
+
+  .price-range__range:active,
+  .price-range__range:focus {
+    z-index: 2;
+  }
+
+  .price-range__range::-webkit-slider-runnable-track {
+    -webkit-appearance: none;
+    background: none;
+    height: 20px;
+  }
+
+  .price-range__range::-moz-range-track {
+    background: none;
+    height: 20px;
+    border: none;
+  }
+
+  .price-range__range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    pointer-events: auto;
+    width: 16px;
+    height: 16px;
+    margin-top: 2px;
+    border-radius: 50%;
+    background: #1a1813;
+    border: 2px solid var(--color-background, #fff);
+    box-shadow: 0 0 0 1px var(--color-border, #e5e5e5);
+    cursor: pointer;
+  }
+
+  .price-range__range::-moz-range-thumb {
+    pointer-events: auto;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #1a1813;
+    border: 2px solid var(--color-background, #fff);
+    box-shadow: 0 0 0 1px var(--color-border, #e5e5e5);
+    cursor: pointer;
+  }
+
+  .price-range__inputs {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2, 0.5rem);
+  }
+
+  .price-range__input {
+    flex: 1;
+    min-width: 0;
+    padding: var(--space-2, 0.5rem);
+    border: 1px solid var(--color-border, #e5e5e5);
+    border-radius: var(--radius-sm, 4px);
+  }
+
+  .price-range__currency {
+    color: var(--color-text-muted, #6b6b6b);
+  }
+{% endstylesheet %}
