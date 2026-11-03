@@ -1813,6 +1813,11 @@ article.blog-card {
   }
 }
 
+.product__media {
+  min-width: 0;
+  overflow: hidden;
+}
+
 /* Gallery */
 .product-gallery {
   display: flex;
@@ -1825,6 +1830,13 @@ article.blog-card {
   }
   .product {
     padding-block: 32px;
+  }
+  .product-gallery__thumbs {
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .product-gallery__thumbs::-webkit-scrollbar {
+    display: none;
   }
 }
 
@@ -1939,6 +1951,7 @@ article.blog-card {
   display: flex;
   flex-wrap: wrap;
   gap: 18px;
+  min-width: 0;
 }
 
 .product__info .jdgm-preview-badge .jdgm-star {
@@ -4911,9 +4924,12 @@ p.hero-slider__eyebrow {
 header.header {
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
-.product-gallery {
+@media screen and (min-width: 990px) {
+  .product-gallery {
     position: sticky;
     top: 20px;
+    align-self: start;
+  }
 }
 button.button.button--accent.product__add-to-cart {
   height: 44px;
