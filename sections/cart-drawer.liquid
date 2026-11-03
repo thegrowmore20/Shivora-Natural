@@ -31,9 +31,73 @@
   </div>
 
   <div class="cart-drawer__target" data-cart-drawer-target>
-    {% if cart.item_count > 0 %}
-      {% render 'cart-shipping-bar' %}
-    {% endif %}
+    {%- liquid
+      assign show_shipping_bar = false
+      if settings.show_free_shipping_bar
+        assign show_shipping_bar = true
+        assign markets_raw = settings.free_shipping_markets | strip
+        assign countries_raw = settings.free_shipping_countries | strip
+        if markets_raw != blank
+          assign show_shipping_bar = false
+          assign markets_list = markets_raw | newline_to_br | strip_newlines | split: '<br />'
+          for market_handle in markets_list
+            assign normalized_handle = market_handle | strip | handleize
+            if normalized_handle == localization.market.handle
+              assign show_shipping_bar = true
+            endif
+          endfor
+        elsif countries_raw != blank
+          assign show_shipping_bar = false
+          assign countries_list = countries_raw | newline_to_br | strip_newlines | split: '<br />'
+          for country_code in countries_list
+            assign normalized_code = country_code | strip | upcase
+            if normalized_code == 'UK'
+              assign normalized_code = 'GB'
+            endif
+            if normalized_code == localization.country.iso_code
+              assign show_shipping_bar = true
+            endif
+          endfor
+        endif
+      endif
+    -%}
+    {%- if show_shipping_bar and cart.item_count > 0 -%}
+      {%- liquid
+        assign show_gift_bar = settings.show_free_gift_bar
+        assign shipping_threshold_cents = settings.free_shipping_threshold | times: 100
+        assign gift_threshold_cents = settings.free_gift_threshold | times: 100
+        assign progress_percent = 100
+        assign bar_stage = 'done'
+
+        if shipping_threshold_cents > 0 and cart.total_price < shipping_threshold_cents
+          assign remaining_money = shipping_threshold_cents | minus: cart.total_price | money
+          assign progress_percent = cart.total_price | times: 100.0 | divided_by: shipping_threshold_cents
+          assign bar_stage = 'shipping'
+        elsif show_gift_bar and gift_threshold_cents > 0 and cart.total_price < gift_threshold_cents
+          assign remaining_money = gift_threshold_cents | minus: cart.total_price | money
+          assign progress_percent = cart.total_price | times: 100.0 | divided_by: gift_threshold_cents
+          assign bar_stage = 'gift'
+        endif
+
+        assign progress_percent = progress_percent | at_most: 100
+      -%}
+      <div class="cart-drawer__shipping-bar">
+        <p class="cart-drawer__shipping-message">
+          {%- if bar_stage == 'shipping' -%}
+            Spend <strong>{{ remaining_money }}</strong> more for <strong>Free Shipping</strong>!
+          {%- elsif bar_stage == 'gift' -%}
+            Spend <strong>{{ remaining_money }}</strong> more for a <strong>Free Gift</strong>!
+          {%- elsif show_gift_bar -%}
+            You've unlocked a <strong>Free Gift</strong>!
+          {%- else -%}
+            You've unlocked <strong>Free Shipping</strong>!
+          {%- endif -%}
+        </p>
+        <div class="cart-drawer__shipping-track" role="progressbar" aria-valuenow="{{ progress_percent | round }}" aria-valuemin="0" aria-valuemax="100" style="background: {{ settings.free_shipping_bar_track_color }};">
+          <div class="cart-drawer__shipping-fill" style="width: {{ progress_percent }}%; background: {{ settings.free_shipping_bar_fill_color }};"></div>
+        </div>
+      </div>
+    {%- endif -%}
     {%- if cart.item_count > 0 -%}
       <div class="cart-drawer__items">
         {%- for item in cart.items -%}
@@ -41,38 +105,65 @@
         {%- endfor -%}
       </div>
 
+      <cart-recs
+        class="cart-drawer__recs"
+        data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&limit=6"
+        data-product-id="{{ cart.items.last.product.id }}"
+      >
+        {%- if recommendations.performed and recommendations.products_count > 0 -%}
+          <p class="cart-drawer__recs-heading">You may also like</p>
+          <div class="cart-drawer__recs-wrapper">
+            <div class="cart-drawer__recs-track" data-slider-track>
+              {%- for recommended_product in recommendations.products -%}
+                {%- unless recommended_product.available == false -%}
+                  <div class="cart-drawer__recs-slide" data-slider-slide>
+                    {% render 'product-card', product: recommended_product %}
+                  </div>
+                {%- endunless -%}
+              {%- endfor -%}
+            </div>
+            <button type="button" class="cart-drawer__recs-arrow cart-drawer__recs-arrow--prev" data-slider-prev aria-label="Previous products" disabled>
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+            </button>
+            <button type="button" class="cart-drawer__recs-arrow cart-drawer__recs-arrow--next" data-slider-next aria-label="Next products">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+            </button>
+          </div>
+        {%- endif -%}
+      </cart-recs>
+
       <div class="cart-drawer__footer">
         <div class="total-with-discount-wrapper">
 						{% liquid
-							
+
 							assign compare_at_total = 0
 							assign total_compare_at_savings = 0
 							assign c_savings_percent = 0
 							assign regular_price_total = 0
 							assign discount_total = cart.total_discount
-							
+
 							for item in cart.items
 							assign item_total_compare_price = 0
 							assign quantity = item.quantity
 							assign regular_price = item.variant.price
 							assign compare_price = item.variant.compare_at_price
 							assign item_total_regular_price = regular_price | times: quantity
-							
+
 							if compare_price and compare_price > regular_price
 							assign item_total_compare_price = compare_price | times: quantity
 							else
 							assign item_total_compare_price = regular_price | times: quantity
 							endif
-							
+
 							assign compare_at_total = compare_at_total | plus: item_total_compare_price
 							assign regular_price_total = regular_price_total | plus: item_total_regular_price
-							
+
 							if compare_price and compare_price > regular_price
 							assign single_item_save = compare_price | minus: regular_price
 							assign line_item_save = single_item_save | times: quantity
 							assign total_compare_at_savings = total_compare_at_savings | plus: line_item_save
 							endif
-							
+
 							assign item_level_discount_percentage = 0
 							if item.line_level_discount_allocations.size > 0
 							for discount in item.line_level_discount_allocations
@@ -80,23 +171,23 @@
 							endfor
 							endif
 							endfor
-							
+
 							if compare_at_total > 0 and total_compare_at_savings > 0
 							assign c_savings_percent = total_compare_at_savings | times: 100.0 | divided_by: compare_at_total | round
 							endif
-							
+
 							assign cart_level_discount_percentage = 0
 							for discount in cart.cart_level_discount_applications
 							assign cart_level_discount_percentage = cart_level_discount_percentage | plus: discount.value | round
 							endfor
-							
+
 							assign grand_saving = c_savings_percent | plus: item_level_discount_percentage | plus: cart_level_discount_percentage
-							
+
 							assign total_line_price = compare_at_total | minus: regular_price_total
 							assign total_saved_amount = total_line_price | plus: discount_total
-							
-						%}  
-						
+
+						%}
+
 						<style>
 							#grand-saving {
 								font-size: 12px;
@@ -113,9 +204,9 @@
 							#grand-saving svg {
 								width: 12px;
 							}
-							
+
 						</style>
-						
+
 						<div class="cart-original-total-row cart__summary-item cart__total summary-total-price-wrapper">
 							<span class="cart__original-total-label">
 								Total Price
@@ -144,55 +235,6 @@
         <a href="{{ routes.cart_url }}" class="button button--light cart-drawer__view-cart">View Cart</a>
         <a href="{{ routes.cart_url }}/checkout" class="button button--accent cart-drawer__checkout">Checkout</a>
       </div>
-
-      {%- assign upsell_collection = collections[section.settings.upsell_collection] -%}
-      {%- if upsell_collection != blank -%}
-        <div class="cart-drawer__upsell">
-          <p class="cart-drawer__upsell-title">{{ section.settings.upsell_heading | default: 'You may also like' }}</p>
-          <div class="cart-upsell-slider">
-            {%- assign upsell_shown = 0 -%}
-            {%- for product in upsell_collection.products -%}
-              {%- assign already_in_cart = false -%}
-              {%- for item in cart.items -%}
-                {%- if item.product_id == product.id -%}
-                  {%- assign already_in_cart = true -%}
-                {%- endif -%}
-              {%- endfor -%}
-              {%- unless already_in_cart or upsell_shown >= 8 -%}
-                {%- assign upsell_shown = upsell_shown | plus: 1 -%}
-                <div class="cart-upsell-item">
-                  <a href="{{ product.url }}" class="cart-upsell-item__media">
-                    {%- if product.featured_image -%}
-                      {{ product.featured_image | image_url: width: 200 | image_tag: loading: 'lazy', alt: product.title }}
-                    {%- else -%}
-                      {{ 'product-1' | placeholder_svg_tag }}
-                    {%- endif -%}
-                  </a>
-                  <p class="cart-upsell-item__title" title="{{ product.title }}">
-                    {{ product.title | truncate: 28 }}
-                  </p>
-                  <p class="cart-upsell-item__price">{{ product.price | money }}</p>
-                  {%- if product.variants.size > 1 -%}
-                    <a href="{{ product.url }}" class="button button--light cart-upsell-item__add">Options</a>
-                  {%- else -%}
-                    {%- form 'product', product -%}
-                      <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-                      <input type="hidden" name="quantity" value="1">
-                      <button
-                        type="submit"
-                        class="button button--light cart-upsell-item__add"
-                        {% unless product.available %}disabled{% endunless %}
-                      >
-                        {%- if product.available -%}Add{%- else -%}Sold out{%- endif -%}
-                      </button>
-                    {%- endform -%}
-                  {%- endif -%}
-                </div>
-              {%- endunless -%}
-            {%- endfor -%}
-          </div>
-        </div>
-      {%- endif -%}
     {%- else -%}
       <div class="cart-drawer__empty">
         <p>Your cart is empty.</p>
@@ -202,64 +244,225 @@
   </div>
 </aside>
 
+{% stylesheet %}
+.cart-drawer__shipping-bar {
+  padding: 14px 20px 12px;
+  background: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.cart-drawer__shipping-message {
+  font-size: 13px;
+  margin: 0 0 8px;
+}
+
+.cart-drawer__shipping-track {
+  height: 6px;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.cart-drawer__shipping-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+
+.cart-drawer__recs {
+  display: block;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.cart-drawer__recs-heading {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0 0 12px;
+}
+
+.cart-drawer__recs-wrapper {
+  position: relative;
+}
+
+.cart-drawer__recs-track {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 46%;
+  gap: 10px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding-bottom: 4px;
+}
+
+.cart-drawer__recs-track::-webkit-scrollbar {
+  display: none;
+}
+
+.cart-drawer__recs-slide {
+  scroll-snap-align: start;
+  min-width: 0;
+}
+
+.cart-drawer__recs-slide .product-card__body {
+  padding: 8px;
+}
+
+.cart-drawer__recs-slide .product-card__title {
+  font-size: 12px;
+  min-height: 0;
+  margin-bottom: 4px;
+}
+
+.cart-drawer__recs-slide .card-product-rating,
+.cart-drawer__recs-slide .product-card__rating {
+  font-size: 11px;
+  margin-bottom: 6px;
+  gap: 4px;
+}
+
+.cart-drawer__recs-slide .price {
+  font-size: 12px;
+  margin-bottom: 4px;
+  gap: 4px;
+}
+
+.cart-drawer__recs-slide .product-card .button {
+  font-size: 11px;
+  padding: 8px 10px;
+}
+
+.cart-drawer__recs-arrow {
+  position: absolute;
+  top: 95px;
+  transform: translateY(-50%);
+  width: 30px;
+  height: 30px;
+  background: #ffffff;
+  border: none;
+  border-radius: 50%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: opacity 0.2s ease;
+}
+
+.cart-drawer__recs-arrow--prev { left: -6px; }
+.cart-drawer__recs-arrow--next { right: -6px; }
+
+.cart-drawer__footer {
+  position: sticky;
+  bottom: 0;
+  background: #fff;
+  z-index: 2;
+}
+
+.cart-drawer__recs-arrow:disabled {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.cart-drawer__recs.has-arrows .cart-drawer__recs-arrow {
+  display: flex;
+}
+{% endstylesheet %}
+
+{% javascript %}
+class CartRecommendations extends HTMLElement {
+  #observer
+  #request
+  #track
+  #slides
+  #prevButton
+  #nextButton
+
+  connectedCallback() {
+    this.#observer?.disconnect()
+    this.#observer = new IntersectionObserver(
+      (entries, observer) => {
+        if (!entries[0].isIntersecting) return
+        observer.unobserve(this)
+        this.#load()
+      },
+      { rootMargin: '0px 0px 400px 0px' }
+    )
+    this.#observer.observe(this)
+  }
+
+  disconnectedCallback() {
+    this.#observer?.disconnect()
+    this.#request?.abort()
+  }
+
+  async #load() {
+    const productId = this.dataset.productId
+    if (!productId) return
+    try {
+      this.#request?.abort()
+      this.#request = new AbortController()
+      const response = await fetch(`${this.dataset.url}&product_id=${productId}`, {
+        signal: this.#request.signal,
+      })
+      if (!response.ok) throw new Error(`Cart recommendations request failed: ${response.status}`)
+      const text = await response.text()
+      if (!this.isConnected) return
+      const doc = new DOMParser().parseFromString(text, 'text/html')
+      const newContent = doc.querySelector('cart-recs')
+      if (newContent && newContent.innerHTML.trim().length) {
+        this.innerHTML = newContent.innerHTML
+        this.#initSlider()
+      }
+    } catch (error) {
+      if (error.name === 'AbortError') return
+      console.error('Cart recommendations error:', error)
+    }
+  }
+
+  #initSlider() {
+    this.#track = this.querySelector('[data-slider-track]')
+    if (!this.#track) return
+    this.#slides = Array.from(this.querySelectorAll('[data-slider-slide]'))
+    this.#prevButton = this.querySelector('[data-slider-prev]')
+    this.#nextButton = this.querySelector('[data-slider-next]')
+
+    this.#track.addEventListener('scroll', () => this.#updateArrows())
+    this.#prevButton?.addEventListener('click', () => this.#scrollByDirection(-1))
+    this.#nextButton?.addEventListener('click', () => this.#scrollByDirection(1))
+
+    const hasOverflow = this.#track.scrollWidth > this.#track.clientWidth + 2
+    this.classList.toggle('has-arrows', hasOverflow)
+    this.#updateArrows()
+  }
+
+  #updateArrows() {
+    if (!this.#track || !this.#prevButton || !this.#nextButton) return
+    this.#prevButton.disabled = this.#track.scrollLeft <= 2
+    this.#nextButton.disabled = this.#track.scrollLeft + this.#track.clientWidth >= this.#track.scrollWidth - 2
+  }
+
+  #scrollByDirection(direction) {
+    const slideWidth = this.#slides?.[0]?.clientWidth || 0
+    const gap = parseInt(window.getComputedStyle(this.#track).gap) || 0
+    this.#track.scrollBy({ left: (slideWidth + gap) * direction, behavior: 'smooth' })
+  }
+}
+
+if (!customElements.get('cart-recs')) {
+  customElements.define('cart-recs', CartRecommendations)
+}
+{% endjavascript %}
+
 {% schema %}
 {
-  "name": "Cart drawer",
-  "settings": [
-    {
-      "type": "header",
-      "content": "Free shipping bar"
-    },
-    {
-      "type": "checkbox",
-      "id": "free_shipping_bar_enable",
-      "label": "Show free shipping progress bar in cart",
-      "default": true
-    },
-    {
-      "type": "number",
-      "id": "free_shipping_bar_threshold",
-      "label": "Free shipping threshold",
-      "info": "Amount in your store's currency, e.g. 75 for $75.00",
-      "default": 75
-    },
-    {
-      "type": "text",
-      "id": "free_shipping_bar_message_below",
-      "label": "Message before threshold is reached",
-      "info": "Use [amount] to insert the remaining amount",
-      "default": "Spend [amount] more for free shipping!"
-    },
-    {
-      "type": "text",
-      "id": "free_shipping_bar_message_achieved",
-      "label": "Message once threshold is reached",
-      "default": "You've unlocked free shipping!"
-    },
-    {
-      "type": "color",
-      "id": "free_shipping_bar_fill_color",
-      "label": "Progress bar fill color",
-      "default": "#000000"
-    },
-    {
-      "type": "color",
-      "id": "free_shipping_bar_track_color",
-      "label": "Progress bar track color",
-      "default": "#E5E5E5"
-    },
-    {
-      "type": "collection",
-      "id": "upsell_collection",
-      "label": "Upsell collection",
-      "info": "Products from this collection appear as a slider at the bottom of the cart drawer."
-    },
-    {
-      "type": "text",
-      "id": "upsell_heading",
-      "label": "Upsell heading",
-      "default": "You may also like"
-    }
-  ]
+  "name": "Cart drawer"
 }
 {% endschema %}

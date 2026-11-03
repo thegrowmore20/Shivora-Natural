@@ -9,6 +9,18 @@
  */
 {
   "current": {
+    "font_heading": "playfair_display_n4",
+    "font_body": "poppins_n4",
+    "show_free_shipping_bar": true,
+    "free_shipping_threshold": 2000,
+    "free_shipping_message_before": "Spend [amount] more for Free Shipping!",
+    "free_shipping_message_after": "You've unlocked Free Shipping!",
+    "show_free_gift_bar": true,
+    "free_gift_threshold": 3000,
+    "free_gift_message_before": "Spend [amount] more for a Free Gift!",
+    "free_gift_message_after": "You've unlocked a Free Gift!",
+    "free_shipping_bar_fill_color": "#008FA3",
+    "free_shipping_bar_track_color": "#E7EEF2",
     "color_primary": "#1F3A52",
     "color_secondary": "#3B7C9C",
     "color_dark": "#153342",
@@ -16,8 +28,6 @@
     "color_background": "#FFFFFF",
     "color_text": "#2B2B2B",
     "color_star": "#F2A93B",
-    "font_heading": "playfair_display_n4",
-    "font_body": "poppins_n4",
     "sections": {
       "header": {
         "type": "header",
@@ -112,16 +122,36 @@
       },
       "cart-drawer": {
         "type": "cart-drawer",
+        "settings": {}
+      },
+      "announcement-bar": {
+        "type": "announcement-bar",
+        "blocks": {
+          "message_7EyJmw": {
+            "type": "message",
+            "settings": {
+              "content": "<p>Free shipping for all orders over Rs. 2000</p>"
+            }
+          },
+          "message_NQEMPM": {
+            "type": "message",
+            "settings": {
+              "content": "<p>Free gift for all orders over Rs. 3000</p>"
+            }
+          }
+        },
+        "block_order": [
+          "message_7EyJmw",
+          "message_NQEMPM"
+        ],
         "settings": {
-          "free_shipping_bar_enable": true,
-          "free_shipping_bar_threshold": 5000,
-          "free_shipping_bar_message_below": "Spend [amount] more for free shipping!",
-          "free_shipping_bar_message_achieved": "You've unlocked free shipping!",
-          "free_shipping_bar_fill_color": "#1F3A52",
-          "free_shipping_bar_track_color": "#e5e5e5",
-          "upsell_collection": "",
-          "upsell_heading": ""
+          "enable_auto_rotate": true,
+          "rotate_interval": 5
         }
+      },
+      "mobile-bottom-navbar": {
+        "type": "mobile-bottom-navbar",
+        "settings": {}
       }
     },
     "content_for_index": [],

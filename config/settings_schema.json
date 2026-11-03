@@ -1,1 +1,217 @@
-[]
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Shivora Naturals",
+    "theme_version": "1.0.0",
+    "theme_author": "GrowMore Agency",
+    "theme_documentation_url": "https://support.shopify.com/",
+    "theme_support_url": "https://support.shopify.com/"
+  },
+  {
+    "name": "Favicon",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon image",
+        "info": "Displayed at 32 x 32px"
+      }
+    ]
+  },
+  {
+    "name": "Fonts",
+    "settings": [
+      {
+        "type": "font_picker",
+        "id": "font_heading",
+        "label": "Heading font",
+        "default": "playfair_display_n4"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_body",
+        "label": "Body font",
+        "default": "poppins_n4"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_subheading",
+        "label": "Subheading font",
+        "default": "poppins_n4"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_accent",
+        "label": "Accent font",
+        "default": "poppins_n4"
+      }
+    ]
+  },
+  {
+    "name": "Buttons",
+    "settings": [
+      {
+        "type": "color",
+        "id": "button_primary_color",
+        "label": "Primary button color",
+        "default": "#008FA3"
+      },
+      {
+        "type": "color",
+        "id": "button_secondary_color",
+        "label": "Secondary button color",
+        "default": "#153342"
+      }
+    ]
+  },
+  {
+    "name": "Cart",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_free_shipping_bar",
+        "label": "Show free shipping progress bar in cart",
+        "default": true
+      },
+      {
+        "type": "number",
+        "id": "free_shipping_threshold",
+        "label": "Free shipping threshold",
+        "default": 2000,
+        "info": "Amount in your store's currency, e.g. 3500 for Rs.3500"
+      },
+      {
+        "type": "text",
+        "id": "free_shipping_message_before",
+        "label": "Message before threshold is reached",
+        "default": "Spend [amount] more for Free Shipping!",
+        "info": "[amount] is replaced with the remaining amount"
+      },
+      {
+        "type": "text",
+        "id": "free_shipping_message_after",
+        "label": "Message once threshold is reached",
+        "default": "You've unlocked Free Shipping!"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_free_gift_bar",
+        "label": "Show a second progress bar for a free gift after free shipping is unlocked",
+        "default": true
+      },
+      {
+        "type": "number",
+        "id": "free_gift_threshold",
+        "label": "Free gift threshold",
+        "default": 3000,
+        "info": "Amount in your store's currency. Shown as a second stage once the free shipping threshold above is reached."
+      },
+      {
+        "type": "text",
+        "id": "free_gift_message_before",
+        "label": "Message before free gift threshold is reached",
+        "default": "Spend [amount] more for a Free Gift!",
+        "info": "[amount] is replaced with the remaining amount"
+      },
+      {
+        "type": "text",
+        "id": "free_gift_message_after",
+        "label": "Message once free gift threshold is reached",
+        "default": "You've unlocked a Free Gift!"
+      },
+      {
+        "type": "color",
+        "id": "free_shipping_bar_fill_color",
+        "label": "Progress bar fill color",
+        "default": "#008FA3"
+      },
+      {
+        "type": "color",
+        "id": "free_shipping_bar_track_color",
+        "label": "Progress bar track color",
+        "default": "#E7EEF2"
+      },
+      {
+        "type": "url",
+        "id": "cart_empty_button_link",
+        "label": "Empty cart button link",
+        "info": "Defaults to all products if left blank"
+      },
+      {
+        "type": "textarea",
+        "id": "free_shipping_markets",
+        "label": "Show free-shipping bar only in these markets",
+        "info": "One market handle per line. Takes priority over the country list below — when this is filled in, the country list is ignored. Leave both blank to show the bar everywhere."
+      },
+      {
+        "type": "textarea",
+        "id": "free_shipping_countries",
+        "label": "Show free-shipping bar only in these countries",
+        "info": "One ISO country code per line (e.g. PK, US, GB). Leave both blank to show the bar in all countries."
+      }
+    ]
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "color",
+        "id": "color_primary",
+        "label": "Primary color",
+        "info": "Used for headings and sold out badges",
+        "default": "#18252B"
+      },
+      {
+        "type": "color",
+        "id": "color_secondary",
+        "label": "Secondary color",
+        "info": "Used for primary buttons and sale badges",
+        "default": "#008FA3"
+      },
+      {
+        "type": "color",
+        "id": "color_dark",
+        "label": "Dark color",
+        "default": "#153342"
+      },
+      {
+        "type": "color",
+        "id": "color_surface",
+        "label": "Surface color",
+        "default": "#E7EEF2"
+      },
+      {
+        "type": "color",
+        "id": "color_background",
+        "label": "Background color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "color_text",
+        "label": "Text color",
+        "default": "#18252B"
+      },
+      {
+        "type": "color",
+        "id": "color_star",
+        "label": "Star rating color",
+        "default": "#F2A93B"
+      },
+      {
+        "type": "color",
+        "id": "color_border",
+        "label": "Border color",
+        "info": "Used for hairline borders and dividers",
+        "default": "#ECEFF1"
+      },
+      {
+        "type": "color",
+        "id": "color_error",
+        "label": "Error color",
+        "info": "Used for form validation errors",
+        "default": "#C0392B"
+      }
+    ]
+  }
+]

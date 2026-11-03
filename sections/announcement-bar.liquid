@@ -1,0 +1,218 @@
+{%- if section.blocks.size > 0 -%}
+  <announcement-bar
+    class="announcement-bar"
+    data-auto-rotate="{{ section.settings.enable_auto_rotate }}"
+    data-interval="{{ section.settings.rotate_interval }}"
+  >
+    <div class="announcement-bar__track">
+      {%- if section.blocks.size > 1 -%}
+        <button type="button" class="announcement-bar__arrow announcement-bar__arrow--prev" data-announcement-prev aria-label="Previous announcement">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="15 6 9 12 15 18"></polyline></svg>
+        </button>
+      {%- endif -%}
+      {%- for block in section.blocks -%}
+        <div
+          class="announcement-bar__slide{% if forloop.first %} is-active{% endif %}"
+          data-announcement-slide
+          {% unless forloop.first %}hidden{% endunless %}
+          {{ block.shopify_attributes }}
+        >
+          <div class="container announcement-bar__content rte">{{ block.settings.content }}</div>
+        </div>
+      {%- endfor -%}
+      {%- if section.blocks.size > 1 -%}
+        <button type="button" class="announcement-bar__arrow announcement-bar__arrow--next" data-announcement-next aria-label="Next announcement">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="9 6 15 12 9 18"></polyline></svg>
+        </button>
+      {%- endif -%}
+    </div>
+  </announcement-bar>
+{%- endif -%}
+
+{% stylesheet %}
+/* base.css handles: position, z-index, background gradient, height, color */
+
+.announcement-bar__track {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.announcement-bar__slide {
+  flex: 0 1 auto;
+  min-width: 0;
+  animation: announcement-bar-fade-in 0.3s ease;
+}
+
+@keyframes announcement-bar-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.announcement-bar__content {
+  padding: 0 44px;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #fff;
+}
+
+.announcement-bar__arrow ~ .announcement-bar__slide .announcement-bar__content,
+.announcement-bar__slide:has(~ .announcement-bar__arrow) .announcement-bar__content {
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+.announcement-bar__content,
+.announcement-bar__content :is(p, a, strong, em, span) {
+  color: inherit;
+}
+
+.announcement-bar__content p {
+  margin: 0;
+}
+
+.announcement-bar__content a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.announcement-bar__arrow {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.15s ease;
+}
+
+.announcement-bar__arrow:hover,
+.announcement-bar__arrow:focus-visible {
+  opacity: 1;
+  outline: none;
+}
+{% endstylesheet %}
+
+{% javascript %}
+class AnnouncementBar extends HTMLElement {
+  #slides = []
+  #index = 0
+  #timer
+  #height = 0
+  #scrollHandler
+
+  constructor() {
+    super()
+    this.#slides = Array.from(this.querySelectorAll('[data-announcement-slide]'))
+    if (this.#slides.length <= 1) return
+
+    this.addEventListener('click', (event) => {
+      if (event.target.closest('[data-announcement-prev]')) this.#show(this.#index - 1)
+      if (event.target.closest('[data-announcement-next]')) this.#show(this.#index + 1)
+    })
+
+    if (this.dataset.autoRotate === 'true') {
+      const interval = (Number(this.dataset.interval) || 5) * 1000
+      this.#timer = window.setInterval(() => this.#show(this.#index + 1), interval)
+    }
+  }
+
+  connectedCallback() {
+    this.#height = this.offsetHeight || 34
+    this.#scrollHandler = () => this.#onScroll()
+    window.addEventListener('scroll', this.#scrollHandler, { passive: true })
+    this.#onScroll()
+  }
+
+  disconnectedCallback() {
+    window.clearInterval(this.#timer)
+    window.removeEventListener('scroll', this.#scrollHandler)
+  }
+
+  #onScroll() {
+    const y = window.scrollY
+    const h = this.#height
+    const header = document.querySelector('.header')
+    const progressBar = document.querySelector('.scroll-progress-bar')
+    if (y >= h) {
+      this.style.transform = `translateY(-${h}px)`
+      if (header) header.style.top = '0px'
+      if (progressBar) progressBar.style.top = '0px'
+    } else {
+      this.style.transform = y > 0 ? `translateY(-${y}px)` : ''
+      const offset = y > 0 ? `${h - y}px` : ''
+      if (header) header.style.top = offset || `${h}px`
+      if (progressBar) progressBar.style.top = offset || `${h}px`
+    }
+  }
+
+  #show(index) {
+    this.#index = (index + this.#slides.length) % this.#slides.length
+    this.#slides.forEach((slide, i) => {
+      const active = i === this.#index
+      slide.hidden = !active
+      slide.classList.toggle('is-active', active)
+    })
+  }
+}
+
+if (!customElements.get('announcement-bar')) {
+  customElements.define('announcement-bar', AnnouncementBar)
+}
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Announcement bar",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_auto_rotate",
+      "label": "Change messages automatically",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "rotate_interval",
+      "label": "Change message every",
+      "min": 3,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "default": 5
+    }
+  ],
+  "blocks": [
+    {
+      "type": "message",
+      "name": "Message",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Message",
+          "default": "<p>Free Shipping on orders over Rs.3500</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Announcement bar",
+      "blocks": [
+        { "type": "message", "settings": { "content": "<p>Free Shipping for all orders over Rs.3500</p>" } },
+        { "type": "message", "settings": { "content": "<p>100% Organic &amp; Dermatologically Tested</p>" } },
+        { "type": "message", "settings": { "content": "<p>Cash on Delivery Available Nationwide</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

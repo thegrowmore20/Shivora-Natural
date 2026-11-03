@@ -146,6 +146,24 @@ class HeroSlider {
   }
 }
 
+class AnnouncementSlider {
+  #items
+  #index = 0
+
+  constructor(root) {
+    this.#items = [...root.querySelectorAll('[data-announcement-item]')]
+    if (this.#items.length < 2) return
+
+    const seconds = Number(root.dataset.autoplaySpeed) || 4
+    setInterval(() => this.#step(), seconds * 1000)
+  }
+
+  #step() {
+    this.#index = (this.#index + 1) % this.#items.length
+    for (const [i, item] of this.#items.entries()) item.classList.toggle('is-active', i === this.#index)
+  }
+}
+
 class LoadMoreGrid {
   constructor(root) {
     const button = root.querySelector('[data-load-more]')
@@ -818,6 +836,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const heroSlider = document.querySelector('[data-hero-slider]')
   if (heroSlider) new HeroSlider(heroSlider)
+
+  const announcementSlider = document.querySelector('[data-announcement-slider]')
+  if (announcementSlider) new AnnouncementSlider(announcementSlider)
 
   for (const slider of document.querySelectorAll('[data-slider]')) new CardSlider(slider)
 

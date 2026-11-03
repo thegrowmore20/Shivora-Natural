@@ -197,25 +197,7 @@
                 {%- endif -%}
 
               {%- when 'addons' -%}
-                {%- assign addon_products = product.metafields.custom.addons.value -%}
-                {%- if addon_products != blank -%}
-                  <div class="product__addons" {{ block.shopify_attributes }}>
-                    {%- if block.settings.heading != blank -%}
-                      <p class="product__addons-heading">{{ block.settings.heading }}</p>
-                    {%- endif -%}
-                    <div class="product__addons-list">
-                      {%- for addon in addon_products -%}
-                        <a href="{{ addon.url }}" class="product__addon">
-                          {{ addon.featured_image | image_url: width: 120 | image_tag: loading: 'lazy', class: 'product__addon-image' }}
-                          <span class="product__addon-info">
-                            <span class="product__addon-title">{{ addon.title }}</span>
-                          </span>
-                          <span class="product__addon-price">+{{ addon.price | money }}</span>
-                        </a>
-                      {%- endfor -%}
-                    </div>
-                  </div>
-                {%- endif -%}
+                {% render 'frequently-bought-together', product: product %}
 
               {%- when 'trust_badges' -%}
                 <div class="product__trust" {{ block.shopify_attributes }}>
