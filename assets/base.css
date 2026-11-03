@@ -4459,6 +4459,7 @@ body:has(.predictive-search__overlay.is-open) {
   background: #fff;
   transform: translateX(100%);
   transition: transform 0.3s ease;
+  overflow-x: hidden;
 }
 
 .cart-drawer.is-open {
@@ -4508,6 +4509,7 @@ body:has(.cart-drawer.is-open) {
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .cart-drawer__target.is-loading {
