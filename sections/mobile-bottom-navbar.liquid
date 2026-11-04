@@ -1,0 +1,204 @@
+<div class="mobile-bottom-nav">
+	<div class="mobile-bottom-nav-left mobile-bottom-nav-right">
+		<a href="{{ routes.root_url }}" class="nav-item">
+			{% render 'icon', name: 'home' %}
+			<span>Home</span>
+		</a>
+		<a href="{{ routes.account_url }}" class="nav-item">
+			{% render 'icon', name: 'account' %}
+			<span>Account</span>
+		</a>
+		<a href="{{ routes.all_products_collection_url }}" class="nav-item nav-item-shop">
+			{% render 'icon', name: 'shop' %}
+				<span>Shop</span>
+		</a>
+		<div class="nav-item">
+			<div class="new-header-wishharea-mob">
+				{% render 'header-wishlist' %}
+			</div>
+			<span>Wishlist</span>
+		</div>
+		<div class="navbar-bottom__cart-icon nav-item">
+			<button type="button" class="header__cart" data-cart-toggle aria-label="Cart">
+				{% render 'icon', name: 'cart' %}
+				<span class="header__cart-count" data-cart-count>{{ cart.item_count }}</span>
+			</button>
+		<span>Cart</span>
+		</div>
+		
+	</div>
+</div>
+
+<style>
+	div#shopify-section-mobile-bottom-navbar {
+		position: relative;
+	}
+	.mobile-bottom-nav {
+		justify-content: space-between;
+		align-items: center;
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		background-color: #fff;
+		border-top: 1px solid #ccc;
+		padding: 8px 0 2px 0;
+		z-index: 39;
+		box-shadow: 0 -1px 5px rgba(0,0,0,0.1);
+	}
+	.mobile-bottom-nav .custom-whatsapp-connect {
+		position: absolute;
+		width: 50px;
+		height: 50px;
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%, -50%);
+	}
+	.mobile-bottom-nav-left, .mobile-bottom-nav-right {
+		display: flex;
+		justify-content: space-around;
+		width: 100%;
+		align-items: flex-start;
+	}
+	.nav-item {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		font-size: 12px;
+		text-decoration: none;
+		color: #333;
+	}
+	.nav-item-email svg path {
+		stroke-width: 1.5;
+	}
+	.nav-item.nav-item-whatsapp svg path {
+		fill: #000 !important
+	}
+	
+	.nav-item i {
+		font-size: 20px;
+		margin-bottom: 2px;
+	}
+	.nav-item .header__cart {
+		border: 0;
+		background: transparent;
+		padding: 0;
+		height: 28px;
+	}
+	.nav-item .header__cart .header__cart-count {
+    bottom: 0px;
+    right: -4px;
+	}
+	
+	.nav-item.whatsapp i {
+		color: #f0b400;
+		font-size: 26px;
+	}
+	
+	.nav-item svg,
+	.new-header-wishharea-mob .xb-wishlist-header__btn,
+	.new-header-wishharea-mob .xb-wishlist-header__btn:hover,
+	.new-header-wishharea-mob{
+		width:1.75rem;
+		height: 1.75rem;
+	}
+
+	.nav-item.nav-item-shop svg {
+		width: 24px;
+	}
+
+	.nav-item .header__cart svg {
+		width: 24px;
+		height: 24px;
+	}
+	
+	.new-header-wishharea-mob .header-icon-btn {
+		padding: 0;
+	}
+	
+	.new-header-wishharea-mob .xb-product-quantity--default.xb-product-quantity.show  {
+		background: var(--color-secondary);
+		bottom: 0px;
+    right: -2px;
+	}
+	
+	.mobile-bottom-nav-right .xb-wishlist-header__icon svg{
+		stroke-width: 3px;
+		stroke: #000;
+	}
+	
+	.mobile-bottom-nav {
+		display: none;
+	}
+	
+	.mobile-bottom-nav .xb-wishlist__header {
+		width: unset;
+		height: unset;
+	}
+	
+	/* Only show on mobile */
+	@media only screen and (max-width:767px) {
+		body:not(.temp--product) .mobile-bottom-nav {
+			display: flex;
+		}
+		body:not(.temp--product) {
+			padding-bottom: 62px;
+		}
+	}
+	
+</style>
+
+<script>
+	(function() {
+		if (window.innerWidth >= 767) return;
+		const sourceSelector = '.wishtlist-wrapper';
+		const targetSelector = '.new-header-wishharea-mob';
+		const iconClass = '.xb-wishlist-header__icon';
+		const quantityClass = '.xb-product-quantity';
+		
+		const observer = new MutationObserver((mutations, obs) => {
+			const source = document.querySelector(sourceSelector);
+			const target = document.querySelector(targetSelector);
+			
+			// We check for the wrapper and the icon first
+			if (source && target && source.querySelector(iconClass)) {
+				
+				// Remove the hidden class so it's visible in the new spot
+				source.classList.remove('hidden--mobile');
+				
+				// MOVE the elements instead of copying HTML
+				// This keeps the "live" link for the quantity to update
+				while (source.firstChild) {
+					target.appendChild(source.firstChild);
+				}
+				
+				// Once moved, we check if the quantity is there. 
+				// If the app is slow, the observer will keep running until it sees it.
+				if (target.querySelector(quantityClass)) {
+					obs.disconnect(); // Task complete
+				}
+			}
+		});
+		
+		observer.observe(document.body, {
+			childList: true,
+			subtree: true
+		});
+	})();
+</script>
+			
+
+			
+			
+			
+{% schema %}
+	{
+		"name": "Mobile Bottom Navbar",
+		"settings": [],
+		"presets": [
+			{
+				"name": "Mobile Bottom Navbar"
+			}
+		]
+	}
+{% endschema %}

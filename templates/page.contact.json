@@ -20,7 +20,8 @@
             "heading": "Contact",
             "content": "",
             "button_label": "",
-            "link": ""
+            "link": "",
+            "custom_liquid": ""
           }
         }
       },
@@ -64,7 +65,7 @@
             "card_1_color": "#ffffff",
             "card_1_svg": "",
             "card_1_heading": "Location",
-            "card_1_body": "<p>Office 303 Khyber Plaza Lari Ada, Mansehra</p>",
+            "card_1_body": "<p><a href=\"https://maps.app.goo.gl/z5DkBGAf7kGpbGdv5\" target=\"_blank\" title=\"https://maps.app.goo.gl/z5DkBGAf7kGpbGdv5\">Office 303 Khyber Plaza Lari Ada, Mansehra</a></p>",
             "card_2_bg": "#153342",
             "card_2_color": "#ffffff",
             "card_2_svg": "",

@@ -14,12 +14,26 @@
       "blocks": {
         "slide_9xgm78": {
           "type": "slide",
+          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/Main_Banner_1.webp",
             "image_mobile": "shopify://shop_images/Mobile_1.png",
-            "eyebrow": "From our own snail farm",
+            "eyebrow": "",
             "heading": "AUTHENTIC  SNAIL MUCUS",
-            "content": "<p>Sourced and made in Mansehra</p>",
+            "content": "<p>78.5% snail secretion filtrate in a lightweight serum and a barrier-supporting cream, formulated to hydrate and then protect.</p>",
+            "button_label": "Shop Now",
+            "link": "shopify://collections/shop-all",
+            "custom_liquid": "<div class=\"store-reviews\">\n              <!-- Start of Judge.me code -->\n              <a href='javascript:void(0)'>\n                <span data-score='{{ shop.metafields.judgeme.all_reviews_rating }}' class='jdgm-all-reviews-rating'></span>\n                <span class='jdgm-all-reviews-text__text' data-score='{{ shop.metafields.judgeme.all_reviews_rating }}' data-number-of-reviews='{{ shop.metafields.judgeme.all_reviews_count }}' data-locale='en'>\n                  {{ shop.metafields.judgeme.all_reviews_rating | round: 1 }} ({{ shop.metafields.judgeme.all_reviews_count }} reviews)\n                </span>\n              </a>  \n              <!-- End of Judge.me code -->\n<style>\n.store-reviews {\n    margin-top: 24px;\n}\n.jdgm-all-reviews-text__text {\n    font-size: 18px;\n}\n\n@media screen and (max-width:600px){\n.jdgm-all-reviews-text__text {\n    font-size: 16px;\n}\n.store-reviews {\n    margin-top: 16px;\n}\n}\n</style>\n            </div>"
+          }
+        },
+        "slide_KGB8Yp": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Main_Baanner-3.webp",
+            "image_mobile": "shopify://shop_images/3mbl.webp",
+            "eyebrow": "",
+            "heading": "AUTHENTIC  SNAIL MUCUS",
+            "content": "<p>78.5% snail secretion filtrate in a lightweight serum and a barrier-supporting cream, formulated to hydrate and then protect.</p>",
             "button_label": "Shop Now",
             "link": "shopify://collections/shop-all",
             "custom_liquid": "<div class=\"store-reviews\">\n              <!-- Start of Judge.me code -->\n              <a href='javascript:void(0)'>\n                <span data-score='{{ shop.metafields.judgeme.all_reviews_rating }}' class='jdgm-all-reviews-rating'></span>\n                <span class='jdgm-all-reviews-text__text' data-score='{{ shop.metafields.judgeme.all_reviews_rating }}' data-number-of-reviews='{{ shop.metafields.judgeme.all_reviews_count }}' data-locale='en'>\n                  {{ shop.metafields.judgeme.all_reviews_rating | round: 1 }} ({{ shop.metafields.judgeme.all_reviews_count }} reviews)\n                </span>\n              </a>  \n              <!-- End of Judge.me code -->\n<style>\n.store-reviews {\n    margin-top: 24px;\n}\n.jdgm-all-reviews-text__text {\n    font-size: 18px;\n}\n\n@media screen and (max-width:600px){\n.jdgm-all-reviews-text__text {\n    font-size: 16px;\n}\n.store-reviews {\n    margin-top: 16px;\n}\n}\n</style>\n            </div>"
@@ -30,9 +44,23 @@
           "settings": {
             "image": "shopify://shop_images/Main_Banner_2.webp",
             "image_mobile": "shopify://shop_images/Mobile_2.png",
-            "eyebrow": "From our own snail farm",
-            "heading": "GLASS SKIN. GROWN IN PAKISTAN.",
-            "content": "<p>Snail mucin serum + cream, 78.5% pure, from our own farm in Mansehra.</p>",
+            "eyebrow": "",
+            "heading": "YOUR COMPLETE SNAIL MUCIN ROUTINE.",
+            "content": "<p>Soap, toner, serum, cream and eye gel, five DE-LUM products with 78.5% snail mucin in every step, halal and made in Pakistan.</p>",
+            "button_label": "Shop the Duo",
+            "link": "shopify://collections/bundles",
+            "custom_liquid": "<div class=\"store-reviews\">\n              <!-- Start of Judge.me code -->\n              <a href='javascript:void(0)'>\n                <span data-score='{{ shop.metafields.judgeme.all_reviews_rating }}' class='jdgm-all-reviews-rating'></span>\n                <span class='jdgm-all-reviews-text__text' data-score='{{ shop.metafields.judgeme.all_reviews_rating }}' data-number-of-reviews='{{ shop.metafields.judgeme.all_reviews_count }}' data-locale='en'>\n                  {{ shop.metafields.judgeme.all_reviews_rating | round: 1 }} ({{ shop.metafields.judgeme.all_reviews_count }} reviews)\n                </span>\n              </a>  \n              <!-- End of Judge.me code -->\n<style>\n.store-reviews {\n    margin-top: 24px;\n}\n.jdgm-all-reviews-text__text {\n    font-size: 18px;\n}\n\n@media screen and (max-width:600px){\n.jdgm-all-reviews-text__text {\n    font-size: 16px;\n}\n.store-reviews {\n    margin-top: 16px;\n}\n}\n</style>\n            </div>"
+          }
+        },
+        "slide_Qxf3zy": {
+          "type": "slide",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/Main_Baanner-4.webp",
+            "image_mobile": "shopify://shop_images/4mbl.webp",
+            "eyebrow": "",
+            "heading": "YOUR COMPLETE SNAIL MUCIN ROUTINE.",
+            "content": "<p>Soap, toner, serum, cream and eye gel, five DE-LUM products with 78.5% snail mucin in every step, halal and made in Pakistan.</p>",
             "button_label": "Shop the Duo",
             "link": "shopify://collections/bundles",
             "custom_liquid": "<div class=\"store-reviews\">\n              <!-- Start of Judge.me code -->\n              <a href='javascript:void(0)'>\n                <span data-score='{{ shop.metafields.judgeme.all_reviews_rating }}' class='jdgm-all-reviews-rating'></span>\n                <span class='jdgm-all-reviews-text__text' data-score='{{ shop.metafields.judgeme.all_reviews_rating }}' data-number-of-reviews='{{ shop.metafields.judgeme.all_reviews_count }}' data-locale='en'>\n                  {{ shop.metafields.judgeme.all_reviews_rating | round: 1 }} ({{ shop.metafields.judgeme.all_reviews_count }} reviews)\n                </span>\n              </a>  \n              <!-- End of Judge.me code -->\n<style>\n.store-reviews {\n    margin-top: 24px;\n}\n.jdgm-all-reviews-text__text {\n    font-size: 18px;\n}\n\n@media screen and (max-width:600px){\n.jdgm-all-reviews-text__text {\n    font-size: 16px;\n}\n.store-reviews {\n    margin-top: 16px;\n}\n}\n</style>\n            </div>"
@@ -45,21 +73,37 @@
             "image": "shopify://shop_images/Main_Banner_3.webp",
             "image_mobile": "shopify://shop_images/Mobile_3.png",
             "eyebrow": "",
-            "heading": "",
-            "content": "",
-            "button_label": "Shop Now",
-            "link": "shopify://collections/best-sellers",
+            "heading": "GLASS SKIN. GROWN IN PAKISTAN.",
+            "content": "<p>Serum by day, cream by night, two DE-LUM best sellers with 78.5% snail mucin, halal-certified, sourced and made in Mansehra.</p>",
+            "button_label": "Shop the Range",
+            "link": "shopify://collections/bundles",
+            "custom_liquid": "<div class=\"store-reviews\">\n              <!-- Start of Judge.me code -->\n              <a href='javascript:void(0)'>\n                <span data-score='{{ shop.metafields.judgeme.all_reviews_rating }}' class='jdgm-all-reviews-rating'></span>\n                <span class='jdgm-all-reviews-text__text' data-score='{{ shop.metafields.judgeme.all_reviews_rating }}' data-number-of-reviews='{{ shop.metafields.judgeme.all_reviews_count }}' data-locale='en'>\n                  {{ shop.metafields.judgeme.all_reviews_rating | round: 1 }} ({{ shop.metafields.judgeme.all_reviews_count }} reviews)\n                </span>\n              </a>  \n              <!-- End of Judge.me code -->\n<style>\n.store-reviews {\n    margin-top: 24px;\n}\n.jdgm-all-reviews-text__text {\n    font-size: 18px;\n}\n\n@media screen and (max-width:600px){\n.jdgm-all-reviews-text__text {\n    font-size: 16px;\n}\n.store-reviews {\n    margin-top: 16px;\n}\n}\n</style>\n            </div>"
+          }
+        },
+        "slide_cBWBUx": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Main_Baanner-5.webp",
+            "image_mobile": "shopify://shop_images/5mbl.webp",
+            "eyebrow": "",
+            "heading": "GLASS SKIN. GROWN IN PAKISTAN.",
+            "content": "<p>Serum by day, cream by night, two DE-LUM best sellers with 78.5% snail mucin, halal-certified, sourced and made in Pakistan.</p>",
+            "button_label": "Shop the Range",
+            "link": "shopify://collections/bundles",
             "custom_liquid": "<div class=\"store-reviews\">\n              <!-- Start of Judge.me code -->\n              <a href='javascript:void(0)'>\n                <span data-score='{{ shop.metafields.judgeme.all_reviews_rating }}' class='jdgm-all-reviews-rating'></span>\n                <span class='jdgm-all-reviews-text__text' data-score='{{ shop.metafields.judgeme.all_reviews_rating }}' data-number-of-reviews='{{ shop.metafields.judgeme.all_reviews_count }}' data-locale='en'>\n                  {{ shop.metafields.judgeme.all_reviews_rating | round: 1 }} ({{ shop.metafields.judgeme.all_reviews_count }} reviews)\n                </span>\n              </a>  \n              <!-- End of Judge.me code -->\n<style>\n.store-reviews {\n    margin-top: 24px;\n}\n.jdgm-all-reviews-text__text {\n    font-size: 18px;\n}\n\n@media screen and (max-width:600px){\n.jdgm-all-reviews-text__text {\n    font-size: 16px;\n}\n.store-reviews {\n    margin-top: 16px;\n}\n}\n</style>\n            </div>"
           }
         }
       },
       "block_order": [
         "slide_9xgm78",
+        "slide_KGB8Yp",
         "slide-1",
-        "slide_dwyfd6"
+        "slide_Qxf3zy",
+        "slide_dwyfd6",
+        "slide_cBWBUx"
       ],
       "settings": {
-        "autoplay": true,
+        "autoplay": false,
         "autoplay_speed": 10,
         "section_height": "auto",
         "margin_top": 0,
@@ -252,7 +296,7 @@
         "reel-4": {
           "type": "reel",
           "settings": {
-            "video": "shopify://files/videos/7654564c161d4f91896f122179d3eb1d.mp4",
+            "video": "shopify://files/videos/02 (1).mp4",
             "caption": ""
           }
         },
@@ -333,6 +377,76 @@
         "image": "shopify://shop_images/Group_79_1.png"
       }
     },
+    "ingredient-benefits": {
+      "type": "ingredient-benefits",
+      "blocks": {
+        "row_1": {
+          "type": "row",
+          "settings": {
+            "ingredient": "Snail Mucin",
+            "benefit": "Hydrates and repairs skin for a smoother, healthier glow."
+          }
+        },
+        "row_2": {
+          "type": "row",
+          "settings": {
+            "ingredient": "Hyaluronic Acid",
+            "benefit": "Locks in moisture to keep skin plump, soft, and hydrated."
+          }
+        },
+        "row_3": {
+          "type": "row",
+          "settings": {
+            "ingredient": "Niacinamide",
+            "benefit": "Brightens uneven skin and smooths visible texture."
+          }
+        },
+        "row_4": {
+          "type": "row",
+          "settings": {
+            "ingredient": "Allantoin",
+            "benefit": "Soothes dry, stressed skin and leaves it feeling softer."
+          }
+        },
+        "row_5": {
+          "type": "row",
+          "settings": {
+            "ingredient": "Panthenol",
+            "benefit": "Moisturizes and supports a stronger, healthier skin barrier."
+          }
+        },
+        "row_6": {
+          "type": "row",
+          "settings": {
+            "ingredient": "Betaine",
+            "benefit": "Maintains hydration for smooth, refreshed-looking skin."
+          }
+        },
+        "row_7": {
+          "type": "row",
+          "settings": {
+            "ingredient": "Vitamin E",
+            "benefit": "Nourishes the skin and supports a soft, radiant appearance."
+          }
+        }
+      },
+      "block_order": [
+        "row_1",
+        "row_2",
+        "row_3",
+        "row_4",
+        "row_5",
+        "row_6",
+        "row_7"
+      ],
+      "disabled": true,
+      "settings": {
+        "heading": "Key Ingredients & Their Beauty Gains",
+        "content": "<p>Every Shivora formula is powered by dermatologist-approved ingredients, each chosen for a specific skin benefit you can actually see and feel.</p>",
+        "column_1_label": "Ingredients",
+        "column_2_label": "Beauty Gains"
+      }
+    },
     "top-collections": {
       "type": "collection-list",
       "blocks": {
@@ -375,6 +489,7 @@
         "c3",
         "c4"
       ],
+      "disabled": true,
       "settings": {
         "heading": "Top Collections"
       }
@@ -612,6 +727,7 @@
     "feature-product-banner",
     "brand-story",
     "why-trust",
+    "ingredient-benefits",
     "top-collections",
     "custom_section_keiCG8",
     "reviews",

@@ -12,10 +12,10 @@
     "font_heading": "playfair_display_n4",
     "font_body": "poppins_n4",
     "show_free_shipping_bar": true,
-    "free_shipping_threshold": 2000,
+    "free_shipping_threshold": 3500,
     "free_shipping_message_before": "Spend [amount] more for Free Shipping!",
     "free_shipping_message_after": "You've unlocked Free Shipping!",
-    "show_free_gift_bar": true,
+    "show_free_gift_bar": false,
     "free_gift_threshold": 3000,
     "free_gift_message_before": "Spend [amount] more for a Free Gift!",
     "free_gift_message_after": "You've unlocked a Free Gift!",
@@ -130,11 +130,12 @@
           "message_7EyJmw": {
             "type": "message",
             "settings": {
-              "content": "<p>Free shipping for all orders over Rs. 2000</p>"
+              "content": "<p>Free shipping for all orders over Rs. 3500</p>"
             }
           },
           "message_NQEMPM": {
             "type": "message",
+            "disabled": true,
             "settings": {
               "content": "<p>Free gift for all orders over Rs. 3000</p>"
             }

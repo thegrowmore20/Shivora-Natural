@@ -32,7 +32,8 @@
 
     {{ content_for_header }}
   </head>
-  <body class="template--{{ template.suffix }}">
+  <body class="temp--{{ template.name | handle }} template--{{ template.suffix }}">
+    {% section 'announcement-bar' %}
     <div class="scroll-progress-bar" data-scroll-progress></div>
     {% section 'header' %}
 
@@ -47,6 +48,8 @@
     {% section 'predictive-search' %}
 
     {% section 'cart-drawer' %}
+
+    {% section 'mobile-bottom-navbar' %}
 
     {{ 'global.js' | asset_url | script_tag }}
   </body>
